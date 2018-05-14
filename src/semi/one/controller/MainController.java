@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.one.service.BoardService;
 import semi.one.service.ProjectService;
-import com.sun.xml.internal.bind.v2.runtime.Location;
 
 import semi.one.service.CoinService;
 import semi.one.service.MemberService;
