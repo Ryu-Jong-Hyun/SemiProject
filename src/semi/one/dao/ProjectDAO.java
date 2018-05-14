@@ -28,48 +28,7 @@ public class ProjectDAO {
 			e.printStackTrace();
 		}	
 	}
-
-	/*자원반납*/
-	private void resClose() {
-		try {
-			if(rs != null) {
-				rs.close();
-			}
-			if(ps != null) {
-				ps.close();
-			}
-			if(conn != null) {
-				conn.close();
-			}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	
-	/*김응주 - 테스트용 로그인*/
-	public boolean login(String id, String pw) {
-		String sql = "SELECT id FROM member WHERE id=? AND pw=?";
-		System.out.println("로그인 DAO진입");
-		boolean success = false;
-		try {			
-			ps = conn.prepareStatement(sql);//prepareStatement 준비
-			//? 대응
-			ps.setString(1, id);
-			ps.setString(2, pw);			
-			rs = ps.executeQuery();//쿼리 실행			
-			success = rs.next();//resultSet 으로 부터 결과 확인
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}finally {
-			resClose();
-		}
-		return success;
-	}
-
-
-
-
 
 	/*김응주 - 마이페이지(기획자)*/
 	public boolean mypage(String loginId) {
@@ -155,4 +114,21 @@ public class ProjectDAO {
 		}
 		return successList2;
 	}
+	
+	/*자원반납*/
+	private void resClose() {
+		try {
+			if(rs != null) {
+				rs.close();
+			}
+			if(ps != null) {
+				ps.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 }

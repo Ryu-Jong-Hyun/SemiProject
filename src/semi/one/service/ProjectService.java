@@ -32,23 +32,6 @@ public class ProjectService {
 	}
 
 
-
-	/*김응주 - 테스트용 로그인 */
-	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		ProjectDAO dao = new ProjectDAO();
-		String id = request.getParameter("userId");
-		String pw = request.getParameter("userPw");
-		if(dao.login(id,pw)) {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginId", id);
-			response.sendRedirect("list");
-		}else {
-			request.setAttribute("msg", "아이디 또는 비밀번호를 확인 하세요");
-			RequestDispatcher dis = request.getRequestDispatcher("index.jsp");
-			dis.forward(request, response);
-		}
-	}
-
 	/*윤영 - 성공한 프로젝트 리스트 요청*/
 	public void successList1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		/*투자자 페이지*/
