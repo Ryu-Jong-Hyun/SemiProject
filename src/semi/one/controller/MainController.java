@@ -15,7 +15,7 @@ import semi.one.service.ProjectService;
 import semi.one.service.CoinService;
 import semi.one.service.MemberService;
 
-@WebServlet("/")
+@WebServlet({"/","/list","/projectDetail","/","/sponsorList","/detail","/login","/sponsorListCheck","/mypageChk","/myProject","/myAdmin","/projectOk","/projectNo","/project","/projectList","/noPopup","/projectNoMsg"})
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class MainController extends HttpServlet {
 
 		MemberService member = null;
 		CoinService coin = null;
-
+		ProjectService service = null;
 		
 		switch(subAddr) {
 			case "/main":
@@ -125,14 +125,14 @@ public class MainController extends HttpServlet {
 
 			 case "/mypageChk":
 				 System.out.println("마이페이지(권한체크)");
-				 project = new ProjectService();
-				 project.mypage(request,response);
+				 project = new ProjectService(request, response);
+				 project.mypage();
 				 break;
 				 
 			/*윤영 - 후기작성&확인*/
 			case "/successList1": //투자자 페이지
 				System.out.println("투자자-성공한 프로젝트 리스트 요청");
-				project = new ProjectService();
+				project = new ProjectService(request, response);
 				project.successList1(request, response);
 				break;
 			case "/review":
@@ -142,7 +142,7 @@ public class MainController extends HttpServlet {
 				break;	
 			case "/successList2": //기획자 페이지
 				System.out.println("기획자-성공한 프로젝트 리스트 요청");
-				project = new ProjectService();
+				project = new ProjectService(request, response);
 				project.successList2(request, response);
 				break;
 			case "/reviewList":
@@ -184,7 +184,88 @@ public class MainController extends HttpServlet {
 				board = new BoardService();
 				board.reply(request, response);
 				break;
+			
+				/**응주 */
+			case "/list":
+				System.out.println("프로젝트 리스트 진입");
+				service = new ProjectService(request,response);
+				service.list();
+				break;
+			
+			case "/projectDetail":
+				System.out.println("AJAX 상세보기값 받아오기");
+				service =  new ProjectService(request, response);
+				service.detail(request, response);
+				break;
 				
+			 case "/detail":	// detail -> projectDetail.jsp -> projectDetail
+				 System.out.println("prj_no 세션저장 + MVC 사진 받아오기");
+				 request.getSession().setAttribute("prj_no", request.getParameter("prj_no"));
+				 service = new ProjectService(request,response);
+				 service.photoDetail();
+				 break;
+			
+			 case "/sponsorList":
+				 System.out.println("스폰서 리스트보기");
+				 service = new ProjectService(request,response);
+				 service.sponList();
+				 break;
+				 
+				 
+			 case "/sponsorListCheck":
+				 System.out.println("투자자 목록 확인전 권한확인");
+				 service = new ProjectService(request,response);
+				 service.sponsorListCheck();
+				 break;
+				 
+			 case "/pick":
+				 System.out.println("찜하기");
+				 service = new ProjectService(request,response);
+				 service.pick();
+				 break;
+				
+				 
+			 case "/myProject":
+				 System.out.println("마이페이지(기획자-내프로젝트)");
+				 service = new ProjectService(request,response);
+				 service.myProject();
+				 break;
+				 
+			 case "/myAdmin":
+				 System.out.println("마이페이지(관리자-프로젝트승인)");
+				 service = new ProjectService(request,response);
+				 service.myAdmin();
+				 break;
+				 
+			 case "/projectOk":
+				 System.out.println("프로젝트 승인");
+				 service = new ProjectService(request,response);
+				 service.projectOk();
+				 break;
+				 
+			 case "/projectNoMsg":
+				 System.out.println("프로젝트 거절메세지작성");
+				 service = new ProjectService(request,response);
+				 service.projectNoMsg();
+				 break;
+				 
+			 case "/projectNo":
+				 System.out.println("프로젝트 거절");
+				 service = new ProjectService(request,response);
+				 service.projectMsg();
+				 break;
+				 
+			 case "/project":
+				 System.out.println("프로젝트불러오기(초기값:픽순)");
+				 service = new ProjectService(request,response);
+				 service.projectList();
+				 break;
+				 
+			 case "/projectArr":
+				 System.out.println("프로젝트정렬불러오기");
+				 service = new ProjectService(request,response);
+				 service.projectArr();
+				 break;
 		}
 	}
 }

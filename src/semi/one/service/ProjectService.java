@@ -2,6 +2,7 @@ package semi.one.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,32 +10,73 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import semi.one.dao.ProjectDAO;
+import semi.one.dao.SponsorDTO;
 import semi.one.dto.ProjectDTO;
+import semi.one.dto.RewardDTO;
 
 public class ProjectService {
 	
-	/*김응주 - 마이페이지(기획자,관리자,일반회원) */
-	public void mypage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean mypagePdchk = false;
-		boolean mypageAdminchk = false;
-		String loginId = (String) request.getSession().getAttribute("loginId");
+	
+	HttpServletRequest request = null;
+	HttpServletResponse response = null;
+	
+	public ProjectService(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
+	}
+	/**김응주 - 프로젝트 상세보기 mvc(사진),리워드*/
+	public void photoDetail() throws ServletException, IOException{
+		String prj_no = request.getParameter("prj_no");
 		ProjectDAO dao = new ProjectDAO();
-		mypagePdchk = dao.mypage(loginId);		
-		mypageAdminchk = dao.mypageAdmin(loginId);
-		if(mypagePdchk) {
-			response.sendRedirect("mypage_prod.jsp");	//기획자 마이페이지
-		}else if(mypageAdminchk) {
-			response.sendRedirect("mypage_admin.jsp");		//관리자 마이페이지
-		}else {
-			response.sendRedirect("mypage_spon.jsp");		//일반회원 마이페이지
-		}
+		ProjectDTO dto = dao.photoDetail(prj_no);
+		RewardDTO rdto = dao.rewardDetail(prj_no); //리워드
+		request.setAttribute("info", dto);
+		request.setAttribute("rwd", rdto);
+		RequestDispatcher dis = request.getRequestDispatcher("projectDetail.jsp");
+		dis.forward(request, response);
+		
+	}
+	
+	/**김응주 - 테스트용 프로젝트 리스트*/
+	public void list() throws ServletException, IOException {
+		System.out.println("프로젝트리스트메서드(서비스)");
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<ProjectDTO> list = dao.list();
+		request.setAttribute("list", list);
+		RequestDispatcher dis = request.getRequestDispatcher("list.jsp");
+		dis.forward(request, response);
 	}
 
+	/**김응주 - 투자자목록 읽어오기*/
+	public void sponList() throws ServletException, IOException {
+		System.out.println("스폰서리스트 메서드진입");
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<SponsorDTO> list = dao.sponList(request.getParameter("prj_no"));
+		String prj = request.getParameter("prj_no");
+		request.setAttribute("list", list);
+		 RequestDispatcher dis = request.getRequestDispatcher("sponsorList.jsp");
+		 dis.forward(request, response);
+		
+	}
 
+	/**김응주 - 프로젝트 상세보기 ajax(사진 외 값)*/
+	public void detail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String prj_no = (String) request.getSession().getAttribute("prj_no");
+		ProjectDAO dao = new ProjectDAO();
+		ProjectDTO dto = dao.detailView(prj_no);
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("dto", dto);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);
+	}
 
-	/*김응주 - 테스트용 로그인 */
-	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	/**김응주 - 테스트용 로그인*/
+	public void login() throws IOException, ServletException {
 		ProjectDAO dao = new ProjectDAO();
 		String id = request.getParameter("userId");
 		String pw = request.getParameter("userPw");
@@ -48,6 +90,159 @@ public class ProjectService {
 			dis.forward(request, response);
 		}
 	}
+
+	/**김응주 - 투자자 리스트 확인전 권한 확인*/
+	public void sponsorListCheck() throws ServletException, IOException {
+		String prj_no = request.getParameter("prj_no");
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		ProjectDAO dao = new ProjectDAO();
+		if(dao.sponCheck(prj_no, loginId)) {
+			 RequestDispatcher dis = request.getRequestDispatcher("sponsorList");
+			 dis.forward(request, response);
+		}else {
+		     request.setAttribute("msg", "본인의 프로젝트만 확인 가능");
+			 RequestDispatcher dis = request.getRequestDispatcher("detail");
+			 dis.forward(request, response);
+		}
+	}
+
+	/**김응주 - 찜하기*/
+	public void pick() throws IOException {
+		int success = 0;
+		int pick=0;
+		int pickup=0;
+		int pickCancel=0;
+		int pickDown=0;
+		int chk = 0; // 0 = 로그인 ON
+		String prj_no = request.getParameter("prj_no");
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		ProjectDAO dao = new ProjectDAO();
+		success = dao.pick(prj_no, loginId);
+		
+		if(loginId != null) {	//로그인이 된 상태여야만 찜하기 가능
+		if(success>0) {
+			pickup = dao.pickUp(prj_no);
+			if(pickup>0) {
+				pick = 1;
+			}
+		}else {
+		pickCancel	= dao.pickCancel(prj_no, loginId);
+			if(pickCancel>0) {
+				pickDown = dao.pickDown(prj_no);
+				if(pickDown>0) {
+					pick=0;	
+				}
+			}		
+		}
+	}else {
+		chk = 1; 
+	}
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pick", pick);
+		map.put("chk", chk);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);
+	}
+	
+	/**김응주 - 마이페이지(기획자,투자자,관리자)*/
+	public void mypage() throws ServletException, IOException {
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		ProjectDAO dao = new ProjectDAO();
+		if(dao.mypageAdmin(loginId)) {
+			response.sendRedirect("myAdmin");	//관리자 마이페이지
+		}else {
+			response.sendRedirect("myProject"); //일반회원 마이페이지
+		}
+	}
+		
+	
+	/**김응주 - 마이페이지(기획자-내 프로젝트)*/
+	public void myProject() throws IOException, ServletException {
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<ProjectDTO> dto = dao.myProject(loginId);
+		request.setAttribute("dto", dto);
+		ArrayList<ProjectDTO> dto2 = dao.myProject2(loginId);
+		request.setAttribute("dto2", dto2);
+		ArrayList<ProjectDTO> dto3 = dao.myProject3(loginId);
+		request.setAttribute("dto3", dto3);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("mypagePd.jsp");
+		dis.forward(request, response);
+	}
+
+	/**김응주 - 마이페이지(관리자-프로젝트-승인)*/
+	public void myAdmin() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<ProjectDTO> dto = dao.AdminPd();
+		request.setAttribute("dto", dto);
+		RequestDispatcher dis = request.getRequestDispatcher("mypageAdmin.jsp");
+		dis.forward(request, response);
+	}
+
+	
+	/**김응주 - 마이페이지(관리자-프로젝트승인)*/
+	public void projectOk() throws ServletException, IOException {
+		int ok = 0;
+		String prj_no = request.getParameter("prj_no");
+		ProjectDAO dao = new ProjectDAO();
+		ok = dao.projectOk(prj_no);
+		RequestDispatcher dis = request.getRequestDispatcher("myAdmin");
+		dis.forward(request, response);
+	}
+
+	/**김응주 - 마이페이지(관리자-프로젝트거절메세지) */
+	public void projectNoMsg() throws ServletException, IOException {
+		String prj_no = request.getParameter("prj_no");
+		request.setAttribute("prj_no", prj_no);
+		RequestDispatcher dis = request.getRequestDispatcher("projectNo.jsp");
+		dis.forward(request, response);
+	}
+	
+	/**김응주 - 마이페이지(관리자-프로젝트거절)  */
+	public void projectMsg() throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		int success = 1;
+		ProjectDTO dto = new ProjectDTO();
+		dto.setPrj_no(Integer.parseInt(request.getParameter("prj_no")));
+		dto.setPrj_comment(request.getParameter("msg"));
+		ProjectDAO dao = new ProjectDAO();
+		if(success == dao.projectNo(dto)) {
+			RequestDispatcher dis = request.getRequestDispatcher("myAdmin");
+			dis.forward(request, response);
+		}
+	}
+
+	/**김응주 - 메인화면 -> 프로젝트*/
+	public void projectList() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<ProjectDTO> dto = dao.projectList();
+		request.setAttribute("dto", dto);
+		RequestDispatcher dis = request.getRequestDispatcher("projectList.jsp");
+		dis.forward(request, response);
+	}
+
+	/**김응주 - 메인화면 -> 프로젝트 -> 검색필터*/
+	public void projectArr() throws ServletException, IOException {
+		ArrayList<ProjectDTO> dto = new ArrayList<ProjectDTO>();
+		String choice = request.getParameter("choice");
+		ProjectDAO dao = new ProjectDAO();
+		if(choice.equals("date")) {
+			dto = dao.projectArrChoice(choice);
+		}else if(choice.equals("goal")) {
+			dto = dao.projectArrChoice(choice);
+		}else if(choice.equals("due")) {
+			dto = dao.projectArrChoice(choice);
+		}else if(choice.equals("pick")) {
+			dto = dao.projectArrChoice(choice);
+		}
+		request.setAttribute("dto", dto);
+		RequestDispatcher dis = request.getRequestDispatcher("projectList.jsp");
+		dis.forward(request, response);
+	}
+
 
 	/*윤영 - 성공한 프로젝트 리스트 요청*/
 	public void successList1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
