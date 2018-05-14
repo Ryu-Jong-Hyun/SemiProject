@@ -19,11 +19,25 @@ public class ProjectDTO {
    private String prj_url;
    private String prj_bank;
    private String prj_comment;
+	private int prj_dday;
+	private float prj_gc;
    //사진
    private String prj_photo;
    
    
-   public int getPrj_no() {
+   public int getPrj_dday() {
+	return prj_dday;
+}
+public void setPrj_dday(int prj_dday) {
+	this.prj_dday = prj_dday;
+}
+public float getPrj_gc() {
+	return prj_gc;
+}
+public void setPrj_gc(float prj_gc) {
+	this.prj_gc = prj_gc;
+}
+public int getPrj_no() {
       return prj_no;
    }
    public void setPrj_no(int prj_no) {

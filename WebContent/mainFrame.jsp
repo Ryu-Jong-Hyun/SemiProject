@@ -8,8 +8,8 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
 		.frame{
-			width: 100%;
-			height: 10%;
+			width: 1550px;
+			height: 75px;
 			background-color: aqua;
 			position: relative;
 			min-width: 1500px;
@@ -57,7 +57,7 @@
 	<div class="frame">
 		<div id="list1">
 			<ul class="listT">
-					<li><a href="#">프로젝트</a></li>
+					<li><a href="./project">프로젝트</a></li>
 					<li><a href="#">기획하기</a></li>
 			</ul>
 		</div>
@@ -78,7 +78,7 @@
 					<c:otherwise>
 						<li><a href="./memberUpdateForm?id=${sessionScope.loginId}">${loginId}</a></li>
 						<li><a href="./logout">로그아웃</a></li>
-			    		<li><a href="myPageTab.jsp">마이페이지</a></li>
+			    		<li><a href="./mypage">마이페이지</a></li>
 			    	</c:otherwise>
 				</c:choose>
 			</ul>
