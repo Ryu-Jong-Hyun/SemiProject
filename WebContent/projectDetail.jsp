@@ -8,11 +8,13 @@
 		<title>Insert title here</title>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
-	table,th,td{
-		border: 1px solid black;
-		border-collapse: collapse;
-		padding : 20px 10px;
-	}
+
+			#prjDetail th, td{
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding : 5px 10px;
+			}
+			
 input[type=text]{
   font-size: 12pt;
   font-family:"돋움";
@@ -29,14 +31,30 @@ textarea { resize: none; }
 	left:350px;
 	}
 
-	
+
+
+.qnaPlace{
+				position : absolute;
+				display : none;
+				width : 100%;
+				height: 700px;
+			}
+			#qnaTable{
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				padding: 0 10px;
+			}
+			#qnaTable th{
+				margin-top : 20px;
+				padding: 0 40px;
+			}
 		</style>
 </head>
 
 <body>
 <jsp:include page="mainFrame.jsp" />
 <input type="hidden" id="prj_no" readonly/>
-		<table>
+		<table id="prjDetail">
 		<tr>
 			<td><input type="text" id="prj_cat" readonly/></td>
 			<td><input type="text" id="prj_title" readonly/></td>
@@ -84,10 +102,40 @@ textarea { resize: none; }
 		<tr>
 			<td colspan="2"><input type="text" value="금액범위 : " size="10" readonly/>${rwd.rw_min}  ~ ${rwd.rw_max}<input type="text" value="원" size="2" readonly/></td>
 		</tr>
-
 	</table>
 	
+	<button id="pick">찜하기</button>
+	
+	
+	
+	
+	
+	<!--윤영 -QnA -->
+	<button id="qnaBtn">QnA</button><p>
+	<div class="qnaPlace">
+		<hr>QnA<hr>
+		<table id="qnaTable">
+			<tr>
+				<th>문의유형</th>
+				<th>문의/답변</th>
+				<th>상태</th>
+				<th>작성자</th>
+				<th>작성일</th>
+			</tr>
+			<c:forEach items="${qnaList}" var="board">
+			<tr>
+				<th>${board.qus_cat}</th>
+				<td>${board.qus_title}</td>
+				<td>${board.qus_state}</td>
+				<td>${board.id}</td>
+				<td>${board.qus_date}</td>
+			</tr>
+			</c:forEach>
+		</table>	
+	</div>
 </body>
+
+
 	<script>
 	var obj = {};
 	var idx;
@@ -151,7 +199,15 @@ if(data.chk==0){
 }
 	};
 	ajaxCall(obj);
-});	
+});
+	
+	/*윤영 -QnA 게시판*/
+	$("#qnaBtn").click(function(){
+		$(".qnaPlace").css("display", "inline")
+	});
+
+
+
 	</script>
 </html>
 

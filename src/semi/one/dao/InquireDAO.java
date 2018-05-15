@@ -146,4 +146,22 @@ public class InquireDAO {
 		return success;
 	}
 
+	public int staUpadte(int inq_no) {
+		int success = 0;
+		
+		String sql = "update inquire set inq_state='답변완료' where inq_no=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, inq_no);//문의를 하는 현재로그인한 ID
+			success = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+		
+	}
+
 }

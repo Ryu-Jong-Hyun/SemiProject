@@ -77,12 +77,11 @@ public class ReviewDAO {
 		String sql = "INSERT INTO review (rev_no, prj_no, pd_id, id, rev_title, rev_content, rev_date) VALUES(rev_seq.NEXTVAL,?,?,?,?,?,SYSDATE)";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, dto.getPrj_no());
+			ps.setInt(1,dto.getPrj_no());//프로젝트번호
 			ps.setString(2, dto.getPd_id());//프로젝트 기획자 아이디
 			ps.setString(3, loginId);//현재로그인한 아이디
 			ps.setString(4, dto.getRev_title());
 			ps.setString(5, dto.getRev_content());
-			System.out.println(dto.getPd_id());
 			
 			success = ps.executeUpdate();
 		} catch (SQLException e) {

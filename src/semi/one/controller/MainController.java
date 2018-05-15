@@ -176,10 +176,15 @@ public class MainController extends HttpServlet {
 				board.inquireDetail(request, response);
 				break;
 			case "/reply":
-				System.out.println("관리자-문의 답변 등록 요청");
+				System.out.println("관리자-문의 답변등록 요청");
 				board = new BoardService();
 				board.reply(request, response);
 				break;
+			case "/qnaList":
+				System.out.println("상세페이지 - QnA리스트 요청");
+				board = new BoardService();
+				board.qnaList(request, response);
+				break;	
 			
 				/**응주 */
 			

@@ -17,9 +17,14 @@
 				margin-top : 10px;
 	 		 	margin-left: 170px;
 			}
+			
+			#ta2{
+				background-color: lime;
+			}
 		</style>
 	</head>
 	<body>
+	<jsp:include page="adminMpFrame.jsp" />
 	  <form action="reply" method="post">
 		<table>
 			<tr>

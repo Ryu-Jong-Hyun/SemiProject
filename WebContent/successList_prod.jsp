@@ -31,11 +31,17 @@
 			display: inline-block;
 			float : left;
 		}
+		#ta2{
+				background-color: lime;
+			}
+		
 		</style>
 	</head>
 	<body>
+	<jsp:include page="myPageTab2.jsp" />
 	<!-- successList -->
 		<div class="out">
+		
 		 <c:forEach items="${successList2}" var="board">
 		  <div class="in">
 		  <table>

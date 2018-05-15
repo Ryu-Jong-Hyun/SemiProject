@@ -46,9 +46,9 @@
 				<a href="./memberUpdateForm?id=${sessionScope.loginId}">${loginId}</a>
 			</div>
 			<div id="me">
-				<div class="cat"><a href="myAdmin">프로젝트 승인</a></div>
-				<div class="cat"><a href="#">문의 답변</a></div>
-				<div class="cat"><a href="#">성공기획</a></div>
+				<div class="cat" id="ta1"><a href="myAdmin">프로젝트 승인</a></div>
+				<div class="cat" id="ta2"><a href="inquireList">문의 답변</a></div>
+				<div class="cat" id="ta3"><a href="#">성공기획</a></div>
 			</div>
 		</div>
 	</body>

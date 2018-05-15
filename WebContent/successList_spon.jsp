@@ -31,6 +31,7 @@
 		}
 		.out{
 			width : 500px;
+			height: 1000px;
 			margin : 5px 5px;
 		}
 		.in{
@@ -41,7 +42,7 @@
 		}
 		
 		#popupOut{
-			position:absolute;
+			/* position:relative; */
 			display: none;
 			opacity : 0.5;
 			background-color: black;
@@ -55,16 +56,22 @@
 			background-color : white;
 			width: 500px;
 			height: 300px;														
-			position: absolute;
+			/* position: absolute; */
 			left: 500px;
 			top : 300px;
 			z-index: 2;
 			text-align: center;
 		}
+		#ta4{
+				background-color: lime;
+			}
+		
 		</style>
 	</head>
 	<body>
+	<jsp:include page="myPageTab.jsp" />
 	<!-- successList -->
+		<h3>디폴트 화면 추가 바람</h3>
 		<div id="popupOut">
 		</div>
 	 	<div class="out">
@@ -89,7 +96,10 @@
 			<form action="review" method="post">
 			  <table id="popupTable">
 			  	<tr> 
-					<td colspan="2"><input id="popTitle" type="text" readonly></td>
+					<td colspan="2"><input id="popTitle" type="text" readonly>
+									<%-- <input name="prjNo" type="hidden" value="<%=request.getParameter("prj_no")%>">	
+									<input name="pdId" type="hidden" value="<%=request.getParameter("pd_id")%>">	 --%>	
+					</td>
 				</tr>
 				<tr>
 					<th>후기제목 :</th> 
@@ -104,12 +114,15 @@
 			</table>
 		</form>
 		</div>
+	
 	</body>
 	<script>
 		$(".reviewForm").click(function(){
 			$("#popupOut").css("display", "inline");
 			$(".popup").css("display", "inline");
 			var title = $(this).val();
+			var prjNo = $(this).val();
+			var prjId = $(this).val();
 			$("#popTitle").val(title);
 		});
 			

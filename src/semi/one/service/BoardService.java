@@ -11,16 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.one.dao.InquireDAO;
 import semi.one.dao.ProjectDAO;
+import semi.one.dao.QuestionDAO;
 import semi.one.dao.ReplyDAO;
 import semi.one.dao.ReviewDAO;
 import semi.one.dto.InquireDTO;
 import semi.one.dto.ProjectDTO;
+import semi.one.dto.QuestionDTO;
 import semi.one.dto.ReplyDTO;
 import semi.one.dto.ReviewDTO;
 
 
 public class BoardService {
 
+	/*****************************************************************************/
 	/*윤영 - 후기등록 요청*/
 	public void review(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8"); //한글깨짐방지
@@ -33,9 +36,8 @@ public class BoardService {
 		ReviewDTO dto = new ReviewDTO();
 		
 		//prj_no, pd_id 가져오기
-		/*dto.setPrj_no();
-		  dto.setPd_id(pd_id);*/
-
+		dto.setPrj_no(Integer.parseInt(request.getParameter("prjNo")));	
+		dto.setPd_id(request.getParameter("pdId"));
 		dto.setRev_title(request.getParameter("revTitle"));
 		dto.setRev_title(request.getParameter("revContent"));
 		
@@ -50,7 +52,10 @@ public class BoardService {
 		RequestDispatcher dis = request.getRequestDispatcher(page);
 		dis.forward(request, response);
 	}
-
+	/*****************************************************************************/
+	
+	
+	
 	/*윤영 - 후기리스트 요청*/
 	public void reviewList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8"); //한글깨짐방지
@@ -67,6 +72,7 @@ public class BoardService {
 	}
 	
 	
+	/*****************************************************************************/
 	/*윤영 - 후기 상세보기 요청*/
 	public void reviewDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*String rev_no = request.getParameter("rev_no");
@@ -80,7 +86,11 @@ public class BoardService {
 		dis.forward(request, response);*/
 		
 	}
-
+	/*****************************************************************************/
+	
+	
+	
+	
 	/*윤영 - 나의 문의 리스트 요청*/
 	public void myInquireList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8"); //한글깨짐방지
@@ -163,14 +173,16 @@ public class BoardService {
 		
 		ReplyDAO dao = new ReplyDAO();
 		ReplyDTO dto = new ReplyDTO();
-		
-		dto.setInq_no(Integer.parseInt(request.getParameter("inqNo")));
+		int inq_no = Integer.parseInt(request.getParameter("inqNo"));
+		dto.setInq_no(inq_no);
 		dto.setRep_title(request.getParameter("inqTitle"));
 		dto.setRep_content(request.getParameter("replyContent"));
 		
 		String page="inquireDetail.jsp";//실패시 문의 상세페이지
 		
 		if(dao.reply(dto)>0) {
+			InquireDAO dao1 = new InquireDAO();
+			dao1.staUpadte(inq_no);
 			page ="inquireList";
 		}
 		RequestDispatcher dis = request.getRequestDispatcher(page);
@@ -178,6 +190,18 @@ public class BoardService {
 		
 	}
 
-	
+	/*윤영 - (프로젝트 상세페이지)QnA 리스트 요청*/
+	public void qnaList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		request.setCharacterEncoding("UTF-8"); //한글깨짐방지
+		
+		QuestionDAO dao = new QuestionDAO();
+		
+		ArrayList<QuestionDTO> qnaList = dao.qnaList();
+		request.setAttribute("qnaList", qnaList);
+		//특정한 페이지로 이동
+		/*RequestDispatcher dis = request.getRequestDispatcher("./projectDetail");
+		dis.forward(request, response);*/
+		
+	}
 
 }

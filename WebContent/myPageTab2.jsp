@@ -61,9 +61,9 @@
 				<span class="ty" id="ty2"><a href="myProject">기획자</a></span>
 			</div>
 			<div id="pd">
-				<div class="cat" id="ta1"><a href="#">내 프로젝트</a></div>
-				<div class="cat" id="ta2"><a href="#">후기 모아 보기</a></div>
-				<div class="cat" id="ta3"><a href="#">문의 게시판</a></div>
+				<div class="cat" id="ta1"><a href="myProject">내 프로젝트</a></div>
+				<div class="cat" id="ta2"><a href="successList2">후기 모아 보기</a></div>
+				<div class="cat" id="ta3"><a href="myInquireList">문의 게시판</a></div>
 			</div>
 		</div>	
 	</body>
