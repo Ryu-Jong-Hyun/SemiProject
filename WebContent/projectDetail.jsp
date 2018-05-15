@@ -8,15 +8,36 @@
 		<title>Insert title here</title>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
-	table,th,td{
-		border: 1px solid black;
-		border-collapse: collapse;
-		padding : 5px 10px;
-	}
+			#prjDetail th, td{
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding : 5px 10px;
+			}
+			
+			
+			
+			
+			
+			
+			.qnaPlace{
+				position : absolute;
+				display : none;
+				width : 100%;
+				height: 700px;
+			}
+			#qnaTable{
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+				padding: 0 10px;
+			}
+			#qnaTable th{
+				margin-top : 20px;
+				padding: 0 40px;
+			}
 		</style>
 </head>
 <body>
-	<table>
+	<table id="prjDetail">
 		<tr>
 			<th>프로젝트번호</th>
 			<td><input type="text" id="prj_no" readonly/></td>
@@ -77,7 +98,35 @@
 	</table>
 	
 	<button id="pick">찜하기</button>
+	
+	
+	
+	<!--윤영 -QnA -->
+	<button id="qnaBtn">QnA</button><p>
+	<div class="qnaPlace">
+		<hr>QnA<hr>
+		<table id="qnaTable">
+			<tr>
+				<th>문의유형</th>
+				<th>문의/답변</th>
+				<th>상태</th>
+				<th>작성자</th>
+				<th>작성일</th>
+			</tr>
+			<c:forEach items="${qnaList}" var="board">
+			<tr>
+				<th>${board.qus_cat}</th>
+				<td>${board.qus_title}</td>
+				<td>${board.qus_state}</td>
+				<td>${board.id}</td>
+				<td>${board.qus_date}</td>
+			</tr>
+			</c:forEach>
+		</table>	
+	</div>
 </body>
+
+
 	<script>
 	var obj = {};
 	var idx;
@@ -143,6 +192,10 @@ if(data.chk==0){
 
 	
 	
+		/*윤영 -QnA 게시판*/
+		$("#qnaBtn").click(function(){
+			$(".qnaPlace").css("display", "inline")
+		});
 	</script>
 </html>
 

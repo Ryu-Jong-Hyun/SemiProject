@@ -60,7 +60,7 @@
 				<div class="cat"><a href="coinListForm?id=${loginId}">화폐 내역</a></div>
 				<div class="cat"><a href="#">찜한 프로젝트</a></div>
 				<div class="cat"><a href="#">투자한 프로젝트</a></div>
-				<div class="cat"><a href="#">후기 작성</a></div>
+				<div class="cat"><a href="successList1">후기 작성</a></div>
 			</div>
 		</div>
 		

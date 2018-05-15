@@ -65,9 +65,11 @@
 	</head>
 	<body>
 	<!-- successList -->
+	
 		<div id="popupOut">
 		</div>
 	 	<div class="out">
+	 	<jsp:include page="myPageTab.jsp" />
 		  <c:forEach items="${successList1}" var="board">
 		  	<div class="in">
 		  	 <table>
@@ -89,7 +91,10 @@
 			<form action="review" method="post">
 			  <table id="popupTable">
 			  	<tr> 
-					<td colspan="2"><input id="popTitle" type="text" readonly></td>
+					<td colspan="2"><input id="popTitle" type="text" readonly>
+									<%-- <input name="prjNo" type="hidden" value="<%=request.getParameter("prj_no")%>">	
+									<input name="pdId" type="hidden" value="<%=request.getParameter("pd_id")%>">	 --%>	
+					</td>
 				</tr>
 				<tr>
 					<th>후기제목 :</th> 
@@ -104,12 +109,15 @@
 			</table>
 		</form>
 		</div>
+	
 	</body>
 	<script>
 		$(".reviewForm").click(function(){
 			$("#popupOut").css("display", "inline");
 			$(".popup").css("display", "inline");
 			var title = $(this).val();
+			var prjNo = $(this).val();
+			var prjId = $(this).val();
 			$("#popTitle").val(title);
 		});
 			
