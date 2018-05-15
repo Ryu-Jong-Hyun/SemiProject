@@ -111,6 +111,8 @@ public class MainController extends HttpServlet {
 				coin = new CoinService(request, response);
 				coin.coinListForm();
 				break;
+	
+				
 		}
 	}
 }
