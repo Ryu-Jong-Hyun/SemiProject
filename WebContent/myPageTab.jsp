@@ -31,12 +31,15 @@
 				background-color: aqua;
 				padding: 10px;
 			}
-			#me{
+			#sp,#pd{
 				position:relative;
 				top: 200px;
 				background-color: aqua;
 			}
-			#me .cat{
+			#pd{
+				display: none;
+			}
+			.cat{
 				padding: 20px 0;
 				text-align: center;
 				font-size: large;
@@ -56,15 +59,30 @@
 				<span class="ty" id="ty1">투자자</span>
 				<span class="ty" id="ty2">기획자</span>
 			</div>
-			<div id="me">
+			<div id="sp">
 				<div class="cat"><a href="coinListForm?id=${loginId}">화폐 내역</a></div>
 				<div class="cat"><a href="#">찜한 프로젝트</a></div>
 				<div class="cat"><a href="#">투자한 프로젝트</a></div>
 				<div class="cat"><a href="#">후기 작성</a></div>
 			</div>
-		</div>
-		
+			
+			<div id="pd">
+				<div class="cat"><a href="myProject">내 프로젝트</a></div>
+				<div class="cat"><a href="#">후기 모아 보기</a></div>
+				<div class="cat"><a href="#">문의 게시판</a></div>
+			</div>
+		</div>	
 	</body>
 	<script>
+	
+		$("#ty1").click(function () {
+			pd.style.display = "none";
+			sp.style.display = "block";
+		});
+		
+		$("#ty2").click(function () {
+			sp.style.display = "none";
+			pd.style.display = "block";
+		});
 	</script>
 </html>

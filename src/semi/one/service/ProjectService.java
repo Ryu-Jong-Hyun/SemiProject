@@ -90,8 +90,9 @@ public class ProjectService {
 		}
 	}
 
-	/**김응주 - 찜하기*/
-	public void pick() throws IOException {
+	/**김응주 - 찜하기
+	 * @throws ServletException */
+	public void pick() throws IOException, ServletException {
 		int success = 0;
 		int pick=0;
 		int pickup=0;
@@ -128,6 +129,7 @@ public class ProjectService {
 		String obj = json.toJson(map);
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
+		
 	}
 	
 	/**김응주 - 마이페이지(기획자,투자자,관리자)*/
