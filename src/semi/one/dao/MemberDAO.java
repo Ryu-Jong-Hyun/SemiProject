@@ -81,7 +81,6 @@ public class MemberDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			ps.setString(2, pw);
-			System.out.println(id+"/"+pw);
 			rs = ps.executeQuery();
 			success = rs.next();
 			

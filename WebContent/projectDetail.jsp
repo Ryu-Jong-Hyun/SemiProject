@@ -8,18 +8,32 @@
 		<title>Insert title here</title>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
+
 			#prjDetail th, td{
 				border: 1px solid black;
 				border-collapse: collapse;
 				padding : 5px 10px;
 			}
 			
-			
-			
-			
-			
-			
-			.qnaPlace{
+input[type=text]{
+  font-size: 12pt;
+  font-family:"돋움";
+  border:3px; 
+  text-align:center;
+
+}
+
+textarea { resize: none; }
+
+	table{
+	position:absolute;
+	top:100px;
+	left:350px;
+	}
+
+
+
+.qnaPlace{
 				position : absolute;
 				display : none;
 				width : 100%;
@@ -36,68 +50,63 @@
 			}
 		</style>
 </head>
-<body>
-	<table id="prjDetail">
-		<tr>
-			<th>프로젝트번호</th>
-			<td><input type="text" id="prj_no" readonly/></td>
-		</tr>
-		<tr>
-			<th>카테고리</th>
-			<td><input type="text" id="prj_cat" readonly/></td>
-		</tr>
-		<tr>
-			<th>프로젝트제목</th>
-			<td><input type="text" id="prj_title" readonly/></td>
-		</tr>
-		<tr>
-			<th>프로젝트내용</th>
-			<td><textarea rows="15" id="prj_content" readonly></textarea></td>
-		</tr>
-		<tr>
-			<th>투자자목록</th>
-			<td><a href="sponsorListCheck?prj_no=${info.prj_no}">투자자목록</a></td>
-		</tr>	
-		<tr>
-			<th>기획자아이디</th>
-			<td><input type="text" id="pd_id" readonly/></td>
-		</tr>
-		<tr>
-			<th>기간(시작)</th>
-			<td><input type="text" id="prj_date" readonly/></td>
-		</tr>
-		<tr>
-			<th>기간(끝)</th>
-			<td><input type="text" id="prj_due" readonly/></td>
-		</tr>
-		<tr>
-			<th>목표금액</th>
-			<td><input type="text" id="prj_goal" readonly/></td>
-		</tr>
-		<tr>
-			<th>모인금액</th>
-			<td><input type="text" id="prj_curr" readonly/></td>
-		</tr>
-		<tr>
-			<th>현재상태</th>
-			<td><input type="text" id="prj_state" readonly/></td>
-		</tr>
-		<tr>
-			<th>찜갯수</th>
-			<td><input type="text" id="prj_picks" readonly/></td>
-		</tr>
-		
-		
-		<c:if test="${info.prj_photo != null}">
-		<tr>
-			<th>이미지</th>
-			<td><img width="500" src="./upload/${info.prj_photo}"/></td>
-		</tr>
-		</c:if>
 
+<body>
+<jsp:include page="mainFrame.jsp" />
+<input type="hidden" id="prj_no" readonly/>
+		<table id="prjDetail">
+		<tr>
+			<td><input type="text" id="prj_cat" readonly/></td>
+			<td><input type="text" id="prj_title" readonly/></td>
+			<td><input type="text" id="prj_state" readonly/></td>
+			<td><input type="text" id="pd_id" readonly/></td>
+			<td><a href="sponsorListCheck?prj_no=${info.prj_no}">투자자목록</a></td>
+		</tr>
+		
+		<tr>
+		<c:if test="${info.prj_photo != null}">
+			<td  rowspan="7" colspan="3"><img width="500" src="./upload/${info.prj_photo}"/></td>
+		</c:if>
+		</tr>
+		
+		<tr>
+			<td colspan="2">목표금액까지 : <input type="text" id="prj_gc" size="3"  readonly/>%</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="text" id="prj_date" size="15" readonly/>~<input type="text" id="prj_due" size="15"  readonly/></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="text" id="prj_dday" size="10" readonly/>D-Day</td>
+		</tr>
+		<tr>
+			<td colspan="2">모인금액 : <input type="text" id="prj_curr"  size="10" readonly/>원</td>
+		</tr>
+		<tr>
+			<td colspan="2">PICK :<input type="text" id="prj_picks" size="5"  readonly/></td>
+		</tr>
+		<tr>
+			<td colspan="2">목표금액 : <input type="text" id="prj_goal" size="10"  readonly/>원</td>
+		</tr>
+		<tr>
+			<td rowspan="4" colspan="3"><textarea rows="20" cols="80" id="prj_content" readonly></textarea></td>
+			<td><input type=button value="투자하기"/></td>
+			<td><button id="pick">PICK</button></td>
+		</tr>
+		<tr>
+			<td><input type = text placeholder="투자금액"></td>
+			<td><button>확인</button></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="text" value="리워드 : " size="8" readonly/>${rwd.rw_item}</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="text" value="금액범위 : " size="10" readonly/>${rwd.rw_min}  ~ ${rwd.rw_max}<input type="text" value="원" size="2" readonly/></td>
+		</tr>
 	</table>
 	
 	<button id="pick">찜하기</button>
+	
+	
 	
 	
 	
@@ -155,7 +164,6 @@
 		$("#pd_id").val(info.pd_id);
 		$("#prj_content").val(info.prj_content);
 		$("#prj_title").val(info.prj_title);
-		$("#prj_title").val(info.prj_title);
 		$("#prj_goal").val(info.prj_goal);
 		$("#prj_curr").val(info.prj_curr);
 		$("#prj_due").val(info.prj_due);
@@ -163,6 +171,8 @@
 		$("#prj_picks").val(info.prj_picks);
 		$("#prj_state").val(info.prj_state);
 		$("#prj_no").val(info.prj_no);
+		$("#prj_gc").val(info.prj_gc);
+		$("#prj_dday").val(info.prj_dday);
 	}
 	
 	var msg = "${msg}";
@@ -189,13 +199,14 @@ if(data.chk==0){
 	};
 	ajaxCall(obj);
 });
+	
+	/*윤영 -QnA 게시판*/
+	$("#qnaBtn").click(function(){
+		$(".qnaPlace").css("display", "inline")
+	});
 
-	
-	
-		/*윤영 -QnA 게시판*/
-		$("#qnaBtn").click(function(){
-			$(".qnaPlace").css("display", "inline")
-		});
+
+
 	</script>
 </html>
 
