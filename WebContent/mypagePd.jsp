@@ -54,10 +54,14 @@
 			top : 300px;
 			z-index: 2;ll
 		}
+		
+		#ta1{
+				background-color: lime;
+			}
 	</style>
 </head>
 <body>
-		<jsp:include page="myPageTab.jsp" />
+		<jsp:include page="myPageTab2.jsp" />
 		<div id="popupOut">
 		</div>
 	 	<div class="out">

@@ -204,26 +204,6 @@ public class ProjectDAO {
 		return dto;
 	}
 	
-	/**김응주 - 테스트용 로그인*/
-	public boolean login(String id, String pw) {
-		String sql = "SELECT id FROM member WHERE id=? AND pw=?";
-		System.out.println("로그인 DAO진입");
-		boolean success = false;
-		try {			
-			ps = conn.prepareStatement(sql);//prepareStatement 준비
-			//? 대응
-			ps.setString(1, id);
-			ps.setString(2, pw);			
-			rs = ps.executeQuery();//쿼리 실행			
-			success = rs.next();//resultSet 으로 부터 결과 확인
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}finally {
-			resClose();
-		}
-		return success;
-	}
 	/**김응주 - 투자자 목록확인전 권한확인*/
 	public boolean sponCheck(String prj_no, String loginId) {
 		String sql = "SELECT * FROM project WHERE pd_id=? AND prj_no=?";
@@ -306,6 +286,26 @@ public class ProjectDAO {
 			resClose();
 		}
 		return success;
+	}
+	
+	public int pickShow(String prj_no) {
+		String sql = "SELECT prj_picks FROM project WHERE prj_no=?";
+		int showP = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, prj_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+			showP = rs.getInt("prj_picks");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}finally {
+			resClose();
+		}
+		return showP;
+		
 	}
 
 
@@ -614,4 +614,7 @@ public class ProjectDAO {
 				e.printStackTrace();
 			}
 		}
+
+
+
 }

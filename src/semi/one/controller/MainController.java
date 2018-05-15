@@ -182,11 +182,6 @@ public class MainController extends HttpServlet {
 				break;
 			
 				/**응주 */
-			case "/list": 
-				System.out.println("프로젝트 리스트 진입");
-				service = new ProjectService(request,response);
-				service.list();
-				break;
 			
 			case "/projectDetail": //함
 				System.out.println("AJAX 상세보기값 받아오기");

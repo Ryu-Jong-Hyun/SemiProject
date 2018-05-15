@@ -145,6 +145,7 @@ if(data.chk==0){
 		}else{
 			alert("찜 취소");	
 		}
+		$("#prj_picks").val(data.showP);
 }else{
 	alert("로그인 후에 가능 합니다.");	
 }

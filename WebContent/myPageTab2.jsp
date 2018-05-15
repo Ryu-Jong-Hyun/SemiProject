@@ -31,7 +31,7 @@
 				background-color: aqua;
 				padding: 10px;
 			}
-			#ty1{
+			#ty2{
 				background-color: lime;
 			}
 			#sp,#pd{
@@ -46,7 +46,6 @@
 				font-size: large;
 				border: 1px solid yellow;
 			}
-			
 		</style>
 	</head>
 	<body>
@@ -61,11 +60,10 @@
 				<span class="ty" id="ty1"><a href="coinListForm?id=${loginId}">투자자</a></span>
 				<span class="ty" id="ty2"><a href="myProject">기획자</a></span>
 			</div>
-			<div id="sp">
-				<div class="cat" id="ta1"><a href="coinListForm?id=${loginId}">화폐 내역</a></div>
-				<div class="cat" id="ta2"><a href="#">찜한 프로젝트</a></div>
-				<div class="cat" id="ta3"><a href="#">투자한 프로젝트</a></div>
-				<div class="cat" id="ta4"><a href="#">후기 작성</a></div>
+			<div id="pd">
+				<div class="cat" id="ta1"><a href="#">내 프로젝트</a></div>
+				<div class="cat" id="ta2"><a href="#">후기 모아 보기</a></div>
+				<div class="cat" id="ta3"><a href="#">문의 게시판</a></div>
 			</div>
 		</div>	
 	</body>

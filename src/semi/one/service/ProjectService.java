@@ -39,16 +39,6 @@ public class ProjectService {
 		dis.forward(request, response);
 		
 	}
-	
-	/**김응주 - 테스트용 프로젝트 리스트*/
-	public void list() throws ServletException, IOException {
-		System.out.println("프로젝트리스트메서드(서비스)");
-		ProjectDAO dao = new ProjectDAO();
-		ArrayList<ProjectDTO> list = dao.list();
-		request.setAttribute("list", list);
-		RequestDispatcher dis = request.getRequestDispatcher("list.jsp");
-		dis.forward(request, response);
-	}
 
 	/**김응주 - 투자자목록 읽어오기*/
 	public void sponList() throws ServletException, IOException {
@@ -99,6 +89,7 @@ public class ProjectService {
 		int pickCancel=0;
 		int pickDown=0;
 		int chk = 0; // 0 = 로그인 ON
+		int showP=0;
 		String prj_no = request.getParameter("prj_no");
 		String loginId = (String) request.getSession().getAttribute("loginId");
 		ProjectDAO dao = new ProjectDAO();
@@ -109,6 +100,8 @@ public class ProjectService {
 			pickup = dao.pickUp(prj_no);
 			if(pickup>0) {
 				pick = 1;
+			}else {
+				pick = 0;
 			}
 		}else {
 		pickCancel	= dao.pickCancel(prj_no, loginId);
@@ -116,16 +109,22 @@ public class ProjectService {
 				pickDown = dao.pickDown(prj_no);
 				if(pickDown>0) {
 					pick=0;	
+				}else {
+					pick = 1;
 				}
 			}		
 		}
 	}else {
 		chk = 1; 
 	}
+		ProjectDAO dao1 = new ProjectDAO();
+		showP = dao1.pickShow(prj_no);
+		
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("pick", pick);
 		map.put("chk", chk);
+		map.put("showP", showP);
 		String obj = json.toJson(map);
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
