@@ -58,7 +58,7 @@
 		<div id="list1">
 			<ul class="listT">
 					<li><a href="./project">프로젝트</a></li>
-					<li><a href="#">기획하기</a></li>
+					<li><a href="prj_write.jsp" id="prjWrite" onclick="loginChk()">기획하기</a></li>
 			</ul>
 		</div>
 		<div  id="logo">
@@ -86,5 +86,13 @@
 	</div>
 	</body>
 	<script>
+	function loginChk(){
+		var loginId = "${sessionScope.loginId}";
+		
+		if(loginId==""){
+			alert("로그인이 필요한 서비스 입니다.");
+			$("#prjWrite").prop('href', "#");
+		}
+	}
 	</script>
 </html>
