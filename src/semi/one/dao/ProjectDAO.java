@@ -615,6 +615,31 @@ public class ProjectDAO {
 			}
 		}
 
+	/*류종현 찜한 프로젝트 목록 출력*/
+	public ArrayList<ProjectDTO> picklist(String loginId) {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();		
+		String sql="SELECT * FROM project WHERE prj_no IN(SELECT prj_no FROM pick WHERE id = ?)";
+
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();			
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				list.add(dto);
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		}finally {
+			resClose();
+		}		
+		return list;
+	}
+
 
 
 }

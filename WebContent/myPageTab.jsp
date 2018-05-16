@@ -63,7 +63,7 @@
 			</div>
 			<div id="sp">
 				<div class="cat" id="ta1"><a href="coinListForm?id=${loginId}">화폐 내역</a></div>
-				<div class="cat" id="ta2"><a href="#">찜한 프로젝트</a></div>
+				<div class="cat" id="ta2"><a href="pickList?id=${loginId}">찜한 프로젝트</a></div>
 				<div class="cat" id="ta3"><a href="#">투자한 프로젝트</a></div>
 				<div class="cat" id="ta4"><a href="successList1">후기 작성</a></div>
 			</div>

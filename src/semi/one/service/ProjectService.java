@@ -259,4 +259,26 @@ public class ProjectService {
 		dis.forward(request, response);
 		
 	}
+	public void pickList() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		
+		HttpSession session = request.getSession();
+		String loginId = (String) session.getAttribute("loginId");
+		
+		ArrayList<ProjectDTO> picklist = dao.picklist(loginId);
+		
+		request.setAttribute("picklist", picklist);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("searchPick.jsp");
+		dis.forward(request, response);
+	}
+	
+	public void investList() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void searchList() {
+		// TODO Auto-generated method stub
+		
+	}
 }
