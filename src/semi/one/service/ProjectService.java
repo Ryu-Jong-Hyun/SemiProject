@@ -19,9 +19,9 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import semi.one.dao.ProjectDAO;
-import semi.one.dao.SponsorDTO;
 import semi.one.dto.ProjectDTO;
 import semi.one.dto.RewardDTO;
+import semi.one.dto.SponsorDTO;
 
 public class ProjectService {
 	HttpServletRequest request = null;
@@ -446,12 +446,52 @@ public class ProjectService {
 		dis.forward(request, response);
 	}
 	
-	public void investList() {
-		// TODO Auto-generated method stub
+	public void investList() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		
+		HttpSession session = request.getSession();
+		String loginId = (String) session.getAttribute("loginId");
+		
+		ArrayList<ProjectDTO> investlist = dao.investlist(loginId);
+		
+		request.setAttribute("investlist", investlist);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("searchInvest.jsp");
+		dis.forward(request, response);
 		
 	}
-	public void searchList() {
-		// TODO Auto-generated method stub
+	
+	public void searchList() throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
+		String cg = request.getParameter("category");
+		String search = request.getParameter("search");
+		
+		boolean searchSuccess = false;
+		
+		ProjectDAO dao = new ProjectDAO();
+		
+		ArrayList<String> success = dao.searchName();
+		for(int i=0; i<success.size(); i++) {
+			
+			if(success.get(i).contains(search) && !search.isEmpty() && !success.get(i).equals(null)) {
+				searchSuccess = true;
+				System.out.println(search);
+			}
+		}
+
+		if(searchSuccess) {
+			ArrayList<ProjectDTO> categorylist = dao.searchlist(cg, search);
+			
+			request.setAttribute("categorylist", categorylist);
+			
+			RequestDispatcher dis = request.getRequestDispatcher("searchList.jsp");
+			dis.forward(request, response);
+		} else {
+			ArrayList<ProjectDTO> dto = dao.projectList();
+			request.setAttribute("dto", dto);
+			RequestDispatcher dis = request.getRequestDispatcher("projectList.jsp");
+			dis.forward(request, response);
+		}
 	}
 }

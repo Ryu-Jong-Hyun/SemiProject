@@ -1,4 +1,4 @@
-package semi.one.dao;
+package semi.one.dto;
 
 import java.sql.Date;
 

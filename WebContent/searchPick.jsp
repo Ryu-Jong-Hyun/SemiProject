@@ -35,7 +35,7 @@
 					<tr>
 						<td>${project.prj_no}</td>
 						<td>${project.prj_title}</td>
-						<td>${project.prj_photo}</td>
+						<td><img width="50" src=""/></td>
 					</tr>
 				</table>
 				</div>

@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import semi.one.dto.ProjectDTO;
 import semi.one.dto.RewardDTO;
+import semi.one.dto.SponsorDTO;
 
 public class ProjectDAO {
 	
@@ -736,4 +737,79 @@ public class ProjectDAO {
 
 
 
+	public ArrayList<ProjectDTO> investlist(String loginId) {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();		
+		String sql="SELECT * FROM project WHERE prj_no IN(SELECT prj_no FROM sponsor WHERE id = ?)";
+
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();					
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				list.add(dto);
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		}finally {
+			resClose();
+		}		
+		return list;
+	}
+
+	public ArrayList<String> searchName() {
+		ArrayList<String> slist = new ArrayList<String>();
+		
+		String sql = "SELECT * FROM project";
+		boolean success = false;
+		try {			
+			
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				slist.add(rs.getString("prj_title"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return slist;
+	}
+
+
+	public ArrayList<ProjectDTO> searchlist(String cg, String search) {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();		
+		String sql="SELECT * FROM project WHERE prj_cat = ? AND prj_title LIKE '%'||?||'%'";
+
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, cg);
+			ps.setString(2, search);
+			rs = ps.executeQuery();					
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_cat(rs.getString("prj_cat"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				dto.setPrj_picks(rs.getInt("prj_picks"));
+				dto.setPrj_date(rs.getDate("prj_date"));
+				dto.setPrj_due(rs.getDate("prj_due"));
+				dto.setPrj_goal(rs.getLong("prj_goal"));
+				dto.setPrj_curr(rs.getLong("prj_curr"));
+				dto.setPrj_no(rs.getInt("prj_no"));
+				list.add(dto);
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		}finally {
+			resClose();
+		}		
+		return list;
+	}
 }

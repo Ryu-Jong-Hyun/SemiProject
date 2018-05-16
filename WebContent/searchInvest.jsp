@@ -24,7 +24,7 @@
 	<body>
 		<jsp:include page="myPageTab.jsp" />
 		<form action ="" method ="post">
-			<c:forEach items="${picklist}" var="project">
+			<c:forEach items="${investlist}" var="project">
 				<div class="test" onclick="test()">
 				<table>
 					<tr>
@@ -35,7 +35,7 @@
 					<tr>
 						<td>${project.prj_no}</td>
 						<td>${project.prj_title}</td>
-						<td>${project.prj_photo}</td>
+						<td><img width="50" src=""/></td>
 					</tr>
 				</table>
 				</div>
