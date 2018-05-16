@@ -1,6 +1,7 @@
 package semi.one.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +32,99 @@ public class ProjectDAO {
 			e.printStackTrace();
 		}	
 	}
+	
+	
+	
+	//보네 - 프로젝트 작성
+
+	   public int prj_write(ProjectDTO prjDTO) {
+	      //1. INSERT 첫번째
+	      int success = 0;
+	      String sql = "INSERT INTO project (prj_no, pd_id, prj_cat, prj_title, prj_photo, prj_content, prj_goal, prj_curr, prj_bank,"
+	            + "prj_account, prj_due, prj_date, prj_picks, prj_state, prj_comment)"
+	            + "VALUES (prj_no_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, SYSDATE, 0, '승인대기', null)";
+	      
+	      
+	      try {
+	         //1.
+	         System.out.println("쿼리문 대입중");
+	         ps=conn.prepareStatement(sql);
+	         ps.setString(1, prjDTO.getPd_id());
+	         ps.setString(2, prjDTO.getPrj_cat());
+	         ps.setString(3, prjDTO.getPrj_title());
+	         ps.setString(4, prjDTO.getPrj_photo());
+	         ps.setString(5, prjDTO.getPrj_content());
+	         ps.setLong(6, prjDTO.getPrj_goal());
+	         ps.setString(7, prjDTO.getPrj_bank());
+	         ps.setString(8, prjDTO.getPrj_account());
+	         ps.setDate(9, prjDTO.getPrj_due()); 
+	         success = ps.executeUpdate();
+	         
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return 0;
+	      }//자원반납 나중에
+	      return success;
+	   }
+	   //2.
+	   public String prj_no(String id) {
+	      String rsStr = "";
+	      //쿼리 및 ps 준비
+	      String sql = "SELECT A.* FROM (SELECT prj_no FROM project WHERE pd_id=? ORDER BY prj_date DESC)A WHERE ROWNUM =1";
+	      try {
+	         
+	         ps=conn.prepareStatement(sql);
+	/*         RewardDTO rwDTO = new RewardDTO();*/
+	         //System.out.println("아이디 받아올수있는지 확인 : "+(String)request.getSession().getAttribute(id));
+	         ps.setString(1, id);
+	         
+
+	         rs = ps.executeQuery();
+	         //rs에서 값 추출
+	         if(rs.next()) {
+	            //dto에 담기
+	            rsStr = rs.getString("prj_no");
+	            
+	            
+	         }
+	         
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return rsStr;
+	      }//자원반납 나중에
+	      return rsStr;
+	   }
+	   
+	   
+	   
+	   //3.
+	   public void rw_write(RewardDTO rwDTO) {//rwsuccess int로 반환하던거 지웠음
+	      //INSERT
+	      String sql = "INSERT INTO reward (rw_no, prj_no, rw_item, rw_min, rw_max) "
+	            + "VALUES (rw_no_seq.NEXTVAL, ?, ?, ?, ?)";
+	      
+	      
+	      try {
+	         
+	         System.out.println("리워드 쿼리문 만드는중");
+	         ps=conn.prepareStatement(sql);
+	         ps.setInt(1, rwDTO.getPrj_no());
+	         ps.setString(2, rwDTO.getRw_item());//리워드이름
+	         ps.setInt(3, rwDTO.getRw_min());//최소금액
+	         ps.setInt(4, rwDTO.getRw_max());//최대금액
+	         ps.executeUpdate();
+	         
+
+	         
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }//여러번 돌거라서 자원반납은 나중에.
+	   }
+
+	
 
 	
 	/**김응주 - 테스트용 리스트메서드 */
@@ -599,7 +693,7 @@ public class ProjectDAO {
 	}
 	
 	/*자원반납*/
-	private void resClose() {
+	public void resClose() {
 		try {
 			if(rs != null) {
 				rs.close();

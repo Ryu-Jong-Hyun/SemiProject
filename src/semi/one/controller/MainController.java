@@ -268,6 +268,15 @@ public class MainController extends HttpServlet {
 				 service = new ProjectService(request,response);
 				 service.projectArr();
 				 break;
+				 
+				 
+				 /*보네*/
+				 
+			case "/prj_write":
+				System.out.println("프로젝트 작성 시작");
+				service = new ProjectService(request,response);
+				service.prj_write();
+				break;
 		}
 	}
 }
