@@ -138,7 +138,7 @@ public class ProjectService {
 		if(dao.mypageAdmin(loginId)) {
 			response.sendRedirect("myAdmin");	//관리자 마이페이지
 		}else {
-			response.sendRedirect("coinListForm"); //일반회원 마이페이지
+			response.sendRedirect("coinListForm?no=1"); //일반회원 마이페이지
 		}
 	}
 		
