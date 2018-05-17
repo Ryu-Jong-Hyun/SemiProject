@@ -54,22 +54,21 @@
     	<jsp:include page="mainFrame.jsp" />
 		<div id="mpTab">
 			<div id="loginId">
-				<a href="./memberUpdateForm?id=${sessionScope.loginId}">${loginId}</a>
+				<a href="memberUpdateForm">${loginId}</a>
 				<a href="cashCharge.jsp">충전</a>
 			</div>
 			<div>
-				<span class="ty" id="ty1"><a href="coinListForm?id=${loginId}">투자자</a></span>
+				<span class="ty" id="ty1"><a href="coinListForm?no=1">투자자</a></span><!-- 병합 할때 이걸로 -->
 				<span class="ty" id="ty2"><a href="myProject">기획자</a></span>
 			</div>
 			<div id="sp">
-				<div class="cat" id="ta1"><a href="coinListForm?id=${loginId}">화폐 내역</a></div>
-				<div class="cat" id="ta2"><a href="pickList?id=${loginId}">찜한 프로젝트</a></div>
-				<div class="cat" id="ta3"><a href="investList?id=${loginId}">투자한 프로젝트</a></div>
+				<div class="cat" id="ta1"><a href="coinListForm?no=1">화폐 내역</a></div><!-- 병합 할때 이걸로 -->
+				<div class="cat" id="ta2"><a href="pickList">찜한 프로젝트</a></div>
+				<div class="cat" id="ta3"><a href="investList">투자한 프로젝트</a></div>
 				<div class="cat" id="ta4"><a href="successList1">후기 작성</a></div>
 			</div>
 		</div>	
 	</body>
 	<script>
-
 	</script>
 </html>

@@ -217,7 +217,7 @@ public class MemberDAO {
 	}
 	
 	//충전
-	public int charge(String id, int money) {
+	public int charge(String id, String money) {
 		int success = 0; //결과 받아올 변수
 		//1.sql 생성
 		String sql = "INSERT INTO coin (id, coin_list, coin_don, coin_date)VALUES(?,?,?,SYSDATE)";
@@ -227,8 +227,8 @@ public class MemberDAO {
 			//회원가입시 입력한 값을 한번에 저장한 클래스(DTO)에서 입력받은 값을 가져와서 대응
 			ps.setString(1, id);
 			ps.setString(2, "충전");
-			ps.setInt(3, money);
-		
+			ps.setString(3, money);
+			
 			//4.sql실행
 			success = ps.executeUpdate();
 			//5.자원반납

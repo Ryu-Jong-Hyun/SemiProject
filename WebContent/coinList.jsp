@@ -22,7 +22,7 @@
 	<jsp:include page="myPageTab.jsp" />
 		<table>
 		<tr>
-			<th colspan="3">잔액 : ${total} 코인</th>
+			<th colspan="3">잔액 : ${balance} 코인</th>
 		</tr>
 		<tr>
 			
@@ -45,6 +45,29 @@
 			<td><input type="text" name="coin_list" value="${info.coin_list}" readonly="readonly"/></td>
 		</tr>
 		</c:forEach>
+		<tr>
+			<td colspan="3">
+				<div>	
+					<c:set var="no">${newLo.no}</c:set>
+					<c:set var="firstPage">${newLo.firstPage}</c:set>
+					<c:set var="lastPage">${newLo.lastPage}</c:set>
+					<c:set var="idx">${newLo.idx}</c:set>
+					<c:set var="dataCnt">${newLo.dataCnt}</c:set>
+					<c:set var="pageCnt">${newLo.pageCnt}</c:set>
+					<c:if test="${firstPage!=1}">
+						<a href="coinListForm?no=1"><<</a>
+						<a href="coinListForm?no=${firstPage-1}"><</a>
+					</c:if>
+					<c:forEach var="i" begin="1" end="${lastPage-firstPage+1}" step="1">
+						<a href="coinListForm?no=${firstPage+i-1}">${firstPage+i-1}</a>
+					</c:forEach>
+					<c:if test="${dataCnt>(3*lastPage)}">
+						<a href="coinListForm?no=${lastPage+1}">></a>
+						<a href="coinListForm?no=${pageCnt}">>></a>
+					</c:if>
+				</div>
+			</td>
+		</tr>
 	</table>
 	</body>
 	<script>

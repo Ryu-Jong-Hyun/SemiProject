@@ -773,4 +773,33 @@ public class ProjectDAO {
 		}		
 		return list;
 	}
+
+
+
+	public void updatePrjState_s() {
+		String sql="UPDATE project SET prj_state='성공' WHERE prj_no IN(SELECT prj_no FROM project WHERE prj_state='진행' AND prj_due<SYSDATE AND prj_goal<=prj_curr)";
+		int cnt=0;
+		try {			
+			ps = conn.prepareStatement(sql);
+			cnt = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+	}
+	
+	public void updatePrjState_f() {
+		String sql="UPDATE project SET prj_state='실패' WHERE prj_no IN(SELECT prj_no FROM project WHERE prj_state='진행' AND prj_due<SYSDATE AND prj_goal>prj_curr)";
+		int cnt=0;
+		try {			
+			ps = conn.prepareStatement(sql);
+			cnt = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+	}
+	
 }

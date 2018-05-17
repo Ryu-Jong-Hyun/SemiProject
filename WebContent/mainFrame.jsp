@@ -1,3 +1,4 @@
+<%@page import="semi.one.service.ProjectService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,8 +13,10 @@
 			height: 75px;
 			background-color: aqua;
 			position: relative;
-			min-width: 1500px;
-			max-width: 1500px;
+			min-width: 1600px;
+			max-width: 1600px;
+			right: 8px;
+			bottom: 8px;
 		}
 		
 		#list1{
@@ -54,11 +57,12 @@
 		</style>
 	</head>
 	<body>
+
 	<div class="frame">
 		<div id="list1">
 			<ul class="listT">
 					<li><a href="./project">프로젝트</a></li>
-					<li><a href="prj_write.jsp" id="prjWrite" onclick="loginChk()">기획하기</a></li>
+					<li><a href="prj_write.jsp">기획하기</a></li>
 			</ul>
 		</div>
 		<div  id="logo">
@@ -76,23 +80,21 @@
 						<li><a href="join.jsp">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="./memberUpdateForm?id=${sessionScope.loginId}">${loginId}</a></li>
+						<li><a href="./memberUpdateForm">${loginId}</a></li>
 						<li><a href="./logout">로그아웃</a></li>
 			    		<li><a href="./mypage">마이페이지</a></li>
 			    	</c:otherwise>
 				</c:choose>
 			</ul>
+			<span>&nbsp &nbsp &nbsp &nbsp</span>
+			<a href="updatePrjState">업데이트</a>
 		</div>
 	</div>
 	</body>
 	<script>
-	function loginChk(){
-		var loginId = "${sessionScope.loginId}";
-		
-		if(loginId==""){
-			alert("로그인이 필요한 서비스 입니다.");
-			$("#prjWrite").prop('href', "#");
-		}
-	}
+	<%
+	ProjectService service = new ProjectService(request,response);
+	service.updatePrjState();
+	 %>
 	</script>
 </html>

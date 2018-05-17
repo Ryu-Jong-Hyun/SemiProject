@@ -19,6 +19,10 @@
         		 display: inline-block;
          		float : left;
       		}
+      		
+      		#ta2{
+				background-color: lime;
+			}
 		</style>
 	</head>
 	<body>

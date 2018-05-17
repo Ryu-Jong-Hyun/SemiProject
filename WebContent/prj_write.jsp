@@ -10,7 +10,7 @@
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
       <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
       <style>
-         div{
+         .wr{
             border: 1px solid black;
          }
          #testphoto{
@@ -19,13 +19,15 @@
       </style>
    </head>
    <body>
+   <jsp:include page="loginBox.jsp" />
+    <jsp:include page="mainFrame.jsp" />
       <form name ="prj_write" action="prj_write" method="post" enctype="multipart/form-data">
          <input type="button" onclick="click1()" value="1단계">
          <input type="button" onclick="click2()" value="2단계">
          <input type="button" onclick="click3()" value="3단계">
          
          <!-- 1단계 -->
-         <div id="page1">
+         <div class="wr" id="page1">
          카테고리 : <select name="prj_cat"> 
             <option value="카테고리 선택">카테고리 선택</option>
             <option value="문화·예술">문화·예술</option>
@@ -44,10 +46,10 @@
          </div>
          
          <!-- 2단계 -->
-         <div id="page2">
+         <div class="wr" id="page2">
          목표금액 : <input type="text" name="prj_goal"/>원<br/>
          마감일 : <input type="text" id="prj_due" name="prj_due" readOnly/><br/>
-         <div id="one"><!-- 리워드 -->
+         <div class="wr" id="one"><!-- 리워드 -->
             <table>
                <tr>
                   <td>리워드 아이템<br/><input type="text" name="rw_name"/></td><!-- 리워드 아이템 -->
@@ -61,7 +63,7 @@
          </div>
          
          <!-- 3단계 -->
-         <div id="page3">
+         <div class="wr" id="page3">
          은행 : <select name="prj_bank">
                <option value="은행 선택">은행 선택</option>
                <option value="국민은행">국민은행</option>
