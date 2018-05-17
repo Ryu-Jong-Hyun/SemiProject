@@ -10,6 +10,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.30/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.30/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="D:/apache-tomcat-8.5.30/lib"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

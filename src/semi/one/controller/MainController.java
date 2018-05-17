@@ -286,7 +286,18 @@ public class MainController extends HttpServlet {
 				 service = new ProjectService(request,response);
 				 service.searchList();
 				 break;
-				 
+		
+			 case "/listNext":
+					System.out.println("next");
+					service = new ProjectService(request, response);
+					service.listNext();
+					break;
+					
+			case "/listBack":
+					System.out.println("back");
+					service = new ProjectService(request, response);
+					service.listBack();
+					break; 
 				 /*보네*/
 				 
 			case "/prj_write":
