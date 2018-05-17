@@ -268,6 +268,32 @@ public class MainController extends HttpServlet {
 				 service = new ProjectService(request,response);
 				 service.projectArr();
 				 break;
+				 
+			 case "/pickList":
+				 System.out.println("찜한 목록 불러오기");
+				 service = new ProjectService(request,response);
+				 service.pickList();
+				 break;
+				 
+			 case "/investList":
+				 System.out.println("투자한 목록 불러오기");
+				 service = new ProjectService(request,response);
+				 service.investList();
+				 break;
+				 
+			 case "/searchList":
+				 System.out.println("검색 기능 불러오기");
+				 service = new ProjectService(request,response);
+				 service.searchList();
+				 break;
+				 
+				 /*보네*/
+				 
+			case "/prj_write":
+				System.out.println("프로젝트 작성 시작");
+				service = new ProjectService(request,response);
+				service.prj_write();
+				break;
 		}
 	}
 }

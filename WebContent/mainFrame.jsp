@@ -12,8 +12,10 @@
 			height: 75px;
 			background-color: aqua;
 			position: relative;
-			min-width: 1500px;
-			max-width: 1500px;
+			min-width: 1600px;
+			max-width: 1600px;
+			right: 8px;
+			bottom: 8px;
 		}
 		
 		#list1{
@@ -58,7 +60,7 @@
 		<div id="list1">
 			<ul class="listT">
 					<li><a href="./project">프로젝트</a></li>
-					<li><a href="#">기획하기</a></li>
+					<li><a href="prj_write.jsp">기획하기</a></li>
 			</ul>
 		</div>
 		<div  id="logo">
@@ -76,12 +78,13 @@
 						<li><a href="join.jsp">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="./memberUpdateForm?id=${sessionScope.loginId}">${loginId}</a></li>
+						<li><a href="./memberUpdateForm">${loginId}</a></li>
 						<li><a href="./logout">로그아웃</a></li>
 			    		<li><a href="./mypage">마이페이지</a></li>
 			    	</c:otherwise>
 				</c:choose>
 			</ul>
+			<span>&nbsp &nbsp &nbsp &nbsp</span>
 		</div>
 	</div>
 	</body>

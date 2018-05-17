@@ -85,16 +85,16 @@
 				<td>목표금액</td>
 				<td>모인금액</td>
 			<tr>
-		<c:forEach items="${dto}" var="spon">
+		<c:forEach items="${categorylist}" var="search">
 			<tr>
-				<td>${spon.prj_cat}</td>
-				<td><a href="detail?prj_no=${spon.prj_no}">${spon.prj_title}</a></td>
-				<td>${spon.prj_photo}</td>
-				<td>${spon.prj_picks}</td>
-				<td>${spon.prj_date}</td>
-				<td>${spon.prj_due}</td>
-				<td>${spon.prj_goal}</td>
-				<td>${spon.prj_curr}</td>
+				<td>${search.prj_cat}</td>
+				<td><a href="detail?prj_no=${search.prj_no}">${search.prj_title}</a></td>
+				<td>${search.prj_photo}</td>
+				<td>${search.prj_picks}</td>
+				<td>${search.prj_date}</td>
+				<td>${search.prj_due}</td>
+				<td>${search.prj_goal}</td>
+				<td>${search.prj_curr}</td>
 			</tr>
 		</c:forEach>
 	</table>

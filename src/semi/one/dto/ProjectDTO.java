@@ -134,5 +134,4 @@ public int getPrj_no() {
    public void setPrj_bank(String prj_bank) {
       this.prj_bank = prj_bank;
    }
-
 }

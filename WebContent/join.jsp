@@ -42,7 +42,7 @@
     			</tr>
     			<tr>
     				<td>이메일</td>
-    				<td><input class="inputTxt" type="text" name="email"/></td>
+    				<td><input class="inputTxt" type="text" name="emailHead"/>@<input class="inputTxt" type="text" name="emailTail"/></td>
     			</tr>
     			<tr>
     				<td>폰 번호</td>
