@@ -1,3 +1,4 @@
+<%@page import="semi.one.service.ProjectService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -56,6 +57,7 @@
 		</style>
 	</head>
 	<body>
+
 	<div class="frame">
 		<div id="list1">
 			<ul class="listT">
@@ -85,9 +87,14 @@
 				</c:choose>
 			</ul>
 			<span>&nbsp &nbsp &nbsp &nbsp</span>
+			<a href="updatePrjState">업데이트</a>
 		</div>
 	</div>
 	</body>
 	<script>
+	<%
+	ProjectService service = new ProjectService(request,response);
+	service.updatePrjState();
+	 %>
 	</script>
 </html>

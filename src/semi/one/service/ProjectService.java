@@ -494,4 +494,12 @@ public class ProjectService {
 			dis.forward(request, response);
 		}
 	}
+
+	public void updatePrjState() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		dao.updatePrjState_s();
+		dao = new ProjectDAO();
+		dao.updatePrjState_f();
+	}
+	
 }

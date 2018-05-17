@@ -290,7 +290,7 @@ public class MainController extends HttpServlet {
 				 /*보네*/
 				 
 			case "/prj_write":
-				System.out.println("프로젝트 작성 시작");
+				System.out.println("프로젝트 작성 완료");
 				service = new ProjectService(request,response);
 				service.prj_write();
 				break;
