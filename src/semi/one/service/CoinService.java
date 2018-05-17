@@ -16,6 +16,8 @@ import semi.one.dao.CoinDAO;
 import semi.one.dao.MemberDAO;
 import semi.one.dto.CoinDTO;
 import semi.one.dto.MemberDTO;
+import semi.one.paging.ListObject;
+import semi.one.paging.PagingService;
 
 public class CoinService {
 	
@@ -32,7 +34,7 @@ public class CoinService {
 	//충전
 	public void charge() throws IOException {
 		String id = request.getParameter("id");
-		int money = Integer.parseInt(request.getParameter("money"));
+		String money = request.getParameter("money");
 		
 		MemberDAO dao = new MemberDAO();
 		int success = dao.charge(id, money);
@@ -48,14 +50,31 @@ public class CoinService {
 	public void coinListForm() throws ServletException, IOException {
 		
 		String id = (String) request.getSession().getAttribute("loginId");
-		CoinDAO dao = new CoinDAO();
-		ArrayList<CoinDTO> list = dao.CoinDetail(id);
+		int no = Integer.parseInt(request.getParameter("no"));//현재 페이지
+	
+		CoinDAO dao1 = new CoinDAO();
 		CoinDAO dao2 = new CoinDAO();
-		int total = dao2.coinTotal(id);
+		CoinDAO dao3 = new CoinDAO();
+		PagingService ls = new PagingService();
+		ListObject oldLo = new ListObject();
+		ListObject newLo = new ListObject();
+		
+		int balance = dao1.coinBalance(id);//잔액
+		int dataCnt = dao2.DataCnt(id);//데이터 전체 수
+		
+		oldLo.setNo(no);
+		oldLo.setDataCnt(dataCnt);
+		
+		newLo = ls.listPaging(oldLo);//페이징 파라미터
+		int idx = newLo.getIdx();//현페이지의 첫 데이터 컬럼번호(start)
+		
+		ArrayList<CoinDTO> list = dao3.CoinDetail(id, idx);//페이징
+		
 		if(list != null) {
 			//request에 담기
 			request.setAttribute("list", list);
-			request.setAttribute("total",total);
+			request.setAttribute("balance",balance);
+			request.setAttribute("newLo",newLo);
 		}else {
 			request.setAttribute("msg", "코인 내역 불러오는 중에 오류발생.");
 		}
