@@ -34,9 +34,6 @@
 		obj.error=function(e){console.log(e)};
 		
 		$("#charge").click(function(){
-				if($("input[name='money']").val()<1000){
-					alert("최소금액:1000원");
-				}else{
 					console.log("서버 전송");
 					obj.url="./charge";
 					obj.data={
@@ -46,14 +43,14 @@
 					obj.success = function(data){
 						if(data.success == 1){
 							alert("충전되었습니다.");
-							location.href="coinListForm?no=1";
+							location.href="myPageTab.jsp";
 						}else{
 							alert("충전에 실패했습니다");
 						}
 					}
 					console.log(obj);
-					ajaxCall(obj);
-				}
+					ajaxCall(obj);			
+			
 		});
 		
 		//전달 받은 오브젝트로 ajax 통신 실행

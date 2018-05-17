@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 
 import semi.one.dto.CoinDTO;
 import semi.one.dto.MemberDTO;
-import semi.one.paging.ListObject;
 
 public class CoinDAO {
 	
@@ -35,20 +34,16 @@ public class CoinDAO {
 	}
 
 	//코인 내역
-	public ArrayList<CoinDTO> CoinDetail(String id, int idx) {
+	public ArrayList<CoinDTO> CoinDetail(String id) {
 		
 		ArrayList<CoinDTO> list = new ArrayList<CoinDTO>();
 		CoinDTO dto = null;
 		
 		//쿼리 및 ps 준비
-		String sql ="SELECT * "+
-		"FROM (SELECT ROW_NUMBER() OVER(ORDER BY coin_date DESC) AS rnum, id, coin_list, coin_don, coin_date FROM coin where id = ? ) "+
-    	"WHERE rnum between ? and ?";
+		String sql = "SELECT * FROM coin WHERE id=? ORDER BY coin_date DESC";
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, id);
-			ps.setInt(2, idx);
-			ps.setInt(3, idx+2);
 			rs = ps.executeQuery();
 
 			while(rs.next()){
@@ -71,34 +66,10 @@ public class CoinDAO {
 		return list;
 	}
 	
-	//리스트 총갯수 구하기
-	public int DataCnt(String id) {
-		int tCnt = 0;
-		
-		//쿼리 및 ps 준비
-		String sql ="SELECT count(*) FROM coin WHERE id=?";
-		try {
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, id);
-			rs = ps.executeQuery();
-
-			if(rs.next()){
-				tCnt = rs.getInt("count(*)");
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return 0;//실패시 값 안받기
-		}finally {
-			resClose();
-		}
-		return tCnt;
-	}
-	
 	//코인 잔액
-	public int coinBalance(String id) {
+	public int coinTotal(String id) {
 		//쿼리 및 ps 준비
-		int balancel=0;
+		int total=0;
 		String sql = "SELECT coin_don, coin_list FROM coin WHERE id=?";
 		try {
 			ps=conn.prepareStatement(sql);
@@ -107,9 +78,9 @@ public class CoinDAO {
 
 			while(rs.next()){
 				if(rs.getString("coin_list").equals("투자")) {
-					balancel -= rs.getInt("coin_don");
+					total -= rs.getInt("coin_don");
 				}else{
-					balancel += rs.getInt("coin_don");
+					total += rs.getInt("coin_don");
 				}
 			}
 					
@@ -118,7 +89,7 @@ public class CoinDAO {
 		}finally {
 			resClose();
 		}
-		return balancel;
+		return total;
 	}
 	
 	//자원반납
@@ -139,4 +110,5 @@ public class CoinDAO {
 				}
 			}
 
+		
 }
