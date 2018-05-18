@@ -35,7 +35,7 @@ public class CoinDAO {
 	}
 
 	//코인 내역
-	public ArrayList<CoinDTO> CoinDetail(String id, int idx) {
+	public ArrayList<CoinDTO> CoinDetail(String id, int idx, int x) {
 		
 		ArrayList<CoinDTO> list = new ArrayList<CoinDTO>();
 		CoinDTO dto = null;
@@ -48,7 +48,7 @@ public class CoinDAO {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, id);
 			ps.setInt(2, idx);
-			ps.setInt(3, idx+2);
+			ps.setInt(3, idx+x-1);
 			rs = ps.executeQuery();
 
 			while(rs.next()){

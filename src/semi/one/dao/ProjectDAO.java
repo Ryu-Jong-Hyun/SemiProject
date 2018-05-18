@@ -788,12 +788,33 @@ public class ProjectDAO {
 		}
 	}
 	
-	public void updatePrjState_f() {
-		String sql="UPDATE project SET prj_state='실패' WHERE prj_no IN(SELECT prj_no FROM project WHERE prj_state='진행' AND prj_due<SYSDATE AND prj_goal>prj_curr)";
+	public ArrayList<Integer> failPrjList() {
+		String sql="SELECT prj_no FROM project WHERE prj_state='진행' AND prj_due<SYSDATE AND prj_goal>prj_curr";
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		try {			
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				list.add(rs.getInt("prj_no"));
+			}
+			System.out.println(list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+	}
+	
+	
+	public void updatePrjState_f(ArrayList<Integer> list) {
+		String sql="UPDATE project SET prj_state='실패' WHERE prj_no IN(?)";
 		int cnt=0;
 		try {			
 			ps = conn.prepareStatement(sql);
+			ps.setObject(1, list);
 			cnt = ps.executeUpdate();
+			System.out.println(cnt+"개 실패 업데이트");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

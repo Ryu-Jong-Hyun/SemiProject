@@ -539,8 +539,10 @@ public class ProjectService {
 	public void updatePrjState() throws ServletException, IOException {
 		ProjectDAO dao = new ProjectDAO();
 		dao.updatePrjState_s();
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		dao = new ProjectDAO();
-		dao.updatePrjState_f();
+		list = dao.failPrjList();
+		dao.updatePrjState_f(list);
 	}
 
 	public void adminSuccessList() throws ServletException, IOException {

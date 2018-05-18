@@ -61,14 +61,18 @@ public class CoinService {
 		
 		int balance = dao1.coinBalance(id);//잔액
 		int dataCnt = dao2.DataCnt(id);//데이터 전체 수
+		int x = 5;
+		int y = 5;
 		
 		oldLo.setNo(no);
 		oldLo.setDataCnt(dataCnt);
+		oldLo.setX(x);
+		oldLo.setY(y);
 		
 		newLo = ls.listPaging(oldLo);//페이징 파라미터
 		int idx = newLo.getIdx();//현페이지의 첫 데이터 컬럼번호(start)
 		
-		ArrayList<CoinDTO> list = dao3.CoinDetail(id, idx);//페이징
+		ArrayList<CoinDTO> list = dao3.CoinDetail(id, idx, x);//페이징
 		
 		if(list != null) {
 			//request에 담기
