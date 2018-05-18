@@ -54,14 +54,17 @@
 					<c:set var="idx">${newLo.idx}</c:set>
 					<c:set var="dataCnt">${newLo.dataCnt}</c:set>
 					<c:set var="pageCnt">${newLo.pageCnt}</c:set>
+					<c:set var="x">${newLo.x}</c:set>
 					<c:if test="${firstPage!=1}">
 						<a href="coinListForm?no=1"><<</a>
 						<a href="coinListForm?no=${firstPage-1}"><</a>
 					</c:if>
-					<c:forEach var="i" begin="1" end="${lastPage-firstPage+1}" step="1">
-						<a href="coinListForm?no=${firstPage+i-1}">${firstPage+i-1}</a>
-					</c:forEach>
-					<c:if test="${dataCnt>(3*lastPage)}">
+					<c:if test="${dataCnt!=0}">
+						<c:forEach var="i" begin="1" end="${lastPage-firstPage+1}" step="1">
+							<a href="coinListForm?no=${firstPage+i-1}">${firstPage+i-1}</a>
+						</c:forEach>
+					</c:if>
+					<c:if test="${dataCnt>(x*lastPage)}">
 						<a href="coinListForm?no=${lastPage+1}">></a>
 						<a href="coinListForm?no=${pageCnt}">>></a>
 					</c:if>
