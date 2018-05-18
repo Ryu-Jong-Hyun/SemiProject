@@ -542,5 +542,16 @@ public class ProjectService {
 		dao = new ProjectDAO();
 		dao.updatePrjState_f();
 	}
+
+	public void adminSuccessList() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		
+		ArrayList<ProjectDTO> adminSuccessList = dao.adminSuccessList();
+		
+		request.setAttribute("adminSuccessList", adminSuccessList);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("adminSuccessList.jsp");
+		dis.forward(request, response);
+	}
 	
 }

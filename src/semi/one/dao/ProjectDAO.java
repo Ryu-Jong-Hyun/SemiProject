@@ -274,7 +274,6 @@ public class ProjectDAO {
 				dto.setPrj_date(rs.getDate("prj_date"));
 				dto.setPrj_picks(rs.getInt("prj_picks"));
 				dto.setPrj_state(rs.getString("prj_state"));
-				dto.setPrj_url(rs.getString("prj_url"));
 				dto.setPrj_bank(rs.getString("prj_bank"));
 				dto.setPrj_comment(rs.getString("prj_comment"));
 				/*목표금액까지 진행률*/
@@ -801,5 +800,31 @@ public class ProjectDAO {
 			resClose();
 		}
 	}
-	
+
+
+
+	public ArrayList<ProjectDTO> adminSuccessList() {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();		
+		String sql="SELECT * FROM project WHERE prj_state ='성공'";
+
+		try {
+			ps = conn.prepareStatement(sql);	
+			rs = ps.executeQuery();					
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPd_id(rs.getString("pd_id"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_account(rs.getString("prj_account"));
+				dto.setPrj_bank(rs.getString("prj_bank"));
+				dto.setPrj_curr(rs.getInt("prj_curr"));
+				list.add(dto);
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		}finally {
+			resClose();
+		}		
+		return list;
+	}
 }
