@@ -552,5 +552,16 @@ public class ProjectService {
 		CoinDAO cDao = new CoinDAO();
 		cDao.refund(map);
 	}
+
+	public void adminSuccessList() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		
+		ArrayList<ProjectDTO> adminSuccessList = dao.adminSuccessList();
+		
+		request.setAttribute("adminSuccessList", adminSuccessList);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("adminSuccessList.jsp");
+		dis.forward(request, response);
+	}
 	
 }
