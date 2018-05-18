@@ -178,10 +178,10 @@ public class ProjectDAO {
 				dto.setPrj_no(rs.getInt("prj_no"));
 				dto.setPrj_photo(rs.getString("prj_photo"));
 			}
-			String newFileName = fileNameCall(dto.getPrj_no()); 
+/*			String newFileName = fileNameCall(dto.getPrj_no()); 
 			if(newFileName != null) {	
 				dto.setPrj_photo(newFileName);		
-			}
+			}*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -204,27 +204,28 @@ public class ProjectDAO {
 	}
 	
 	/**김응주 - 프로젝트 상세보기 mvc(리워드)*/
-	public RewardDTO rewardDetail(String prj_no) {
-		RewardDTO dto = null;
+	public ArrayList<RewardDTO> rewardDetail(String prj_no) {
+		ArrayList<RewardDTO> list = new ArrayList<RewardDTO>();
 		String sql = "SELECT * FROM reward WHERE prj_no =?";
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, Integer.parseInt(prj_no));
 			rs = ps.executeQuery();
-			if(rs.next()) {
-				dto = new RewardDTO();
+			while(rs.next()) {
+				RewardDTO dto = new RewardDTO();
 				dto.setRw_no(rs.getInt("rw_no"));
 				dto.setPrj_no(rs.getInt("prj_no"));
 				dto.setRw_item(rs.getString("rw_item"));
 				dto.setRw_min(rs.getInt("rw_min"));
 				dto.setRw_max(rs.getInt("rw_max"));
+				list.add(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
-		return dto;
+		return list;
 	}
 	
 		
@@ -382,7 +383,7 @@ public class ProjectDAO {
 		}
 		return success;
 	}
-	
+	/**김응주 - 진휘형이만들어준거*/
 	public int pickShow(String prj_no) {
 		String sql = "SELECT prj_picks FROM project WHERE prj_no=?";
 		int showP = 0;
@@ -422,67 +423,28 @@ public class ProjectDAO {
 		return success;
 	}
 
-	/**김응주 - 마이페이지(기획자-내project)*/
-	public ArrayList<ProjectDTO> myProject(String loginId) {
+	/**김응주 - 마이페이지(기획자-내project)+페이징*/
+	public ArrayList<ProjectDTO> myProject(String loginId, int start, int end ) {
 		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
-		String sql = "SELECT * FROM project WHERE pd_id=? AND prj_state='진행'";
+		String sql = "SELECT rnum, prj_no, prj_title, prj_photo FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_no DESC) AS rnum, prj_no, prj_title, prj_photo FROM project WHERE pd_id=?) WHERE rnum BETWEEN ? AND ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
 			rs = ps.executeQuery();
+		
+			ProjectDTO dto = null;
 			while(rs.next()) {
-				ProjectDTO dto = new ProjectDTO();
+				dto = new ProjectDTO();
 				dto.setPrj_title(rs.getString("prj_title"));
 				dto.setPrj_no(rs.getInt("prj_no"));
 				dto.setPrj_photo(rs.getString("prj_photo"));
+/*				String newFileName = fileNameCall(dto.getPrj_no()); 
+				if(newFileName != null) {	
+					dto.setPrj_photo(newFileName);
+				}*/
 				list.add(dto);
-				System.out.println(list+"진행");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			
-		}
-		return list;
-	}
-	/**김응주 - 마이페이지(기획자-내project)*/
-	public ArrayList<ProjectDTO> myProject2(String loginId) {
-		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
-		String sql = "SELECT * FROM project WHERE pd_id=? AND prj_state='대기'";
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, loginId);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				ProjectDTO dto = new ProjectDTO();
-				dto.setPrj_title(rs.getString("prj_title"));
-				dto.setPrj_no(rs.getInt("prj_no"));
-				dto.setPrj_photo(rs.getString("prj_photo"));
-				list.add(dto);
-				System.out.println(list+"대기");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			
-		}
-		return list;
-	}
-	/**김응주 - 마이페이지(기획자-내project)*/
-	public ArrayList<ProjectDTO> myProject3(String loginId) {
-		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
-		String sql = "SELECT * FROM project WHERE pd_id=? AND prj_state='완료'";
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, loginId);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				ProjectDTO dto = new ProjectDTO();
-				dto.setPrj_title(rs.getString("prj_title"));
-				dto.setPrj_no(rs.getInt("prj_no"));
-				dto.setPrj_photo(rs.getString("prj_photo"));
-				list.add(dto);
-				System.out.println(list+"완료");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -491,7 +453,6 @@ public class ProjectDAO {
 		}
 		return list;
 	}
-
 	
 	/**김응주 - 마이페이지(관리자-프로젝트승인)*/
 	public ArrayList<ProjectDTO> AdminPd() {

@@ -205,8 +205,9 @@ public class ProjectService {
 		String prj_no = request.getParameter("prj_no");
 		ProjectDAO dao = new ProjectDAO();
 		ProjectDTO dto = dao.photoDetail(prj_no);
-		RewardDTO rdto = dao.rewardDetail(prj_no); //리워드
+		ArrayList<RewardDTO> rdto = dao.rewardDetail(prj_no);
 		request.setAttribute("info", dto);
+		System.out.println(rdto);
 		request.setAttribute("rwd", rdto);
 		RequestDispatcher dis = request.getRequestDispatcher("projectDetail.jsp");
 		dis.forward(request, response);
@@ -253,8 +254,7 @@ public class ProjectService {
 		}
 	}
 
-	/**김응주 - 찜하기
-	 * @throws ServletException */
+	/**김응주 - 찜하기*/
 	public void pick() throws IOException, ServletException {
 		int success = 0;
 		int pick=0;
@@ -320,15 +320,55 @@ public class ProjectService {
 	public void myProject() throws IOException, ServletException {
 		String loginId = (String) request.getSession().getAttribute("loginId");
 		ProjectDAO dao = new ProjectDAO();
-		ArrayList<ProjectDTO> dto = dao.myProject(loginId);
+		ArrayList<ProjectDTO> dto = dao.myProject(loginId,1,9);
 		request.setAttribute("dto", dto);
-		ArrayList<ProjectDTO> dto2 = dao.myProject2(loginId);
-		request.setAttribute("dto2", dto2);
-		ArrayList<ProjectDTO> dto3 = dao.myProject3(loginId);
-		request.setAttribute("dto3", dto3);
+		request.setAttribute("start", 1);
+		request.setAttribute("end", 9);
 		
 		RequestDispatcher dis = request.getRequestDispatcher("mypagePd.jsp");
 		dis.forward(request, response);
+	}
+	/**김응주 - 페이징(다음)*/
+	public void listNext() throws ServletException, IOException {
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		int start = Integer.parseInt(request.getParameter("start"));
+		int end = Integer.parseInt(request.getParameter("end"));
+		
+		start=start+9;
+		end=end+9;
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<ProjectDTO> dto = dao.myProject(loginId,start,end);
+
+		if(dto.size()!=0){
+			request.setAttribute("dto", dto);
+			request.setAttribute("start", start);
+			request.setAttribute("end", end);
+			RequestDispatcher dis = request.getRequestDispatcher("mypagePd.jsp");
+			dis.forward(request, response);
+		}else {
+			response.sendRedirect("myProject");
+			}
+	}
+	/**김응주 - 페이징(이전)*/
+	public void listBack() throws ServletException, IOException {
+		String loginId = (String) request.getSession().getAttribute("loginId");
+		int start = Integer.parseInt(request.getParameter("start"));
+		int end = Integer.parseInt(request.getParameter("end"));
+	
+		start=start-9;
+		end=end-9;
+		ProjectDAO dao = new ProjectDAO();
+		ArrayList<ProjectDTO> dto = dao.myProject(loginId,start,end);
+		
+		if(end!=0){
+			request.setAttribute("dto", dto);
+			request.setAttribute("start", start);
+			request.setAttribute("end", end);
+			RequestDispatcher dis = request.getRequestDispatcher("mypagePd.jsp");
+			dis.forward(request, response);
+		}else {
+			response.sendRedirect("myProject");
+		}
 	}
 
 	/**김응주 - 마이페이지(관리자-프로젝트-승인)*/
@@ -368,6 +408,7 @@ public class ProjectService {
 		dto.setPrj_comment(request.getParameter("msg"));
 		ProjectDAO dao = new ProjectDAO();
 		if(success == dao.projectNo(dto)) {
+			System.out.println("승인거절완료!!");
 			RequestDispatcher dis = request.getRequestDispatcher("myAdmin");
 			dis.forward(request, response);
 		}

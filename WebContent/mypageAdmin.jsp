@@ -35,14 +35,18 @@
 			<tr>	
 				<td>${board.prj_photo}</td> 
 				<td>${board.prj_content}</td>
-				<td><a href="projectOk?prj_no=${board.prj_no}">승인</a></td>
+				<td><a id = "btn" href="projectOk?prj_no=${board.prj_no}">승인</a></td>
 				<td><a href="projectNoMsg?prj_no=${board.prj_no}">거절</a></td>
 			</tr>
 				</c:forEach>
 	</table>
 	</form>
 </body>
-
+<script>
+$("#btn").click(function(){
+	alert("승인완료");
+	});
+</script>
 </html>
 
 

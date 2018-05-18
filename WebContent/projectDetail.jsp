@@ -31,7 +31,9 @@ textarea { resize: none; }
 	left:350px;
 	}
 
-
+.aa{
+	border: none;          
+}
 
 .qnaPlace{
 				position : absolute;
@@ -79,35 +81,42 @@ textarea { resize: none; }
 			<td colspan="2"><input type="text" id="prj_dday" size="10" readonly/>D-Day</td>
 		</tr>
 		<tr>
-			<td colspan="2">모인금액 : <input type="text" id="prj_curr"  size="10" readonly/>원</td>
+			<td colspan="2">모인금액 : <input type="text" id="prj_curr"  size="10" readonly/>밥</td>
 		</tr>
 		<tr>
 			<td colspan="2">PICK :<input type="text" id="prj_picks" size="5"  readonly/></td>
 		</tr>
 		<tr>
-			<td colspan="2">목표금액 : <input type="text" id="prj_goal" size="10"  readonly/>원</td>
+			<td colspan="2">목표금액 : <input type="text" id="prj_goal" size="10"  readonly/>밥</td>
 		</tr>
 		<tr>
-			<td rowspan="4" colspan="3"><textarea rows="20" cols="80" id="prj_content" readonly></textarea></td>
+			<td rowspan="12" colspan="3"><textarea rows="30" cols="80" id="prj_content" readonly></textarea></td>
 			<td><input type=button value="투자하기"/></td>
 			<td><button id="pick">PICK</button></td>
 		</tr>
 		<tr>
-			<td><input type = text placeholder="투자금액"></td>
-			<td><button>확인</button></td>
+			<td><input id="bob" type = text placeholder="투자금액" onkeyPress="onlyNum()"/></td>                    
+			<td><button id="reward">해당되는 리워드 확인</button></td>
 		</tr>
+		
+		<c:set var="i">1</c:set>
+		<c:forEach items="${rwd}" var="spon">
 		<tr>
-			<td colspan="2"><input type="text" value="리워드 : " size="8" readonly/>${rwd.rw_item}</td>
+			<td colspan="2"><input id="item${i}" type="text" value="${spon.rw_item}" size="30" readonly/></td>                
 		</tr>
-		<tr>
-			<td colspan="2"><input type="text" value="금액범위 : " size="10" readonly/>${rwd.rw_min}  ~ ${rwd.rw_max}<input type="text" value="원" size="2" readonly/></td>
-		</tr>
+		<tr class="ss">
+			<td class="aa"><input id="min${i}" type="text" value="${spon.rw_min}밥" size="8" readonly/><input type="text" value="       ~" size="8" readonly/></td>                 
+			<td class="aa"><input id="max${i}" type="text" value="${spon.rw_max}밥" size="8" readonly/></td>      
+			<c:set var="i">${i+1}</c:set>
+		</tr>           
+		</c:forEach>
+		
+		
 	</table>
 	
 	<button id="pick">찜하기</button>
-	
-	
-	
+
+	      
 	
 	
 	<!--윤영 -QnA -->
@@ -200,6 +209,75 @@ if(data.chk==0){
 	};
 	ajaxCall(obj);
 });
+	
+	$("#reward").click(function(){
+/* 		 var item = $("#item1").val();      
+		 var min = $("#min1").val();
+		 $("#min1").val() = parseInt($("#min1").val());
+		 $("#max1").val() = parseInt($("#max1").val()); */
+		 var bob = $("#bob").val();
+		 bob = parseInt(bob);
+		 var item1 = document.getElementById("item1");
+		 var item2 = document.getElementById("item2");
+		 var item3 = document.getElementById("item3");
+		 var item4 = document.getElementById("item4");
+		 var item5 = document.getElementById("item5");
+		 
+			if(parseInt($("#min1").val())<=bob && parseInt($("#max1").val())>=bob){
+				 item1.style.color = "blue"; 
+				 item2.style.color = "black";
+				 item3.style.color = "black";
+				 item4.style.color = "black";
+				 item5.style.color = "black";
+			}else if(parseInt($("#min2").val())<=bob && parseInt($("#max2").val())>=bob){
+				 item1.style.color = "black"; 
+				 item2.style.color = "blue";
+				 item3.style.color = "black";
+				 item4.style.color = "black";
+				 item5.style.color = "black"; 
+			}else if(parseInt($("#min3").val())<=bob && parseInt($("#max3").val())>=bob){
+				 item1.style.color = "black"; 
+				 item2.style.color = "black";
+				 item3.style.color = "blue";
+				 item4.style.color = "black";
+				 item5.style.color = "black"; 
+			}else if(parseInt($("#min4").val())<=bob && parseInt($("#max4").val())>=bob){
+				 item1.style.color = "black"; 
+				 item2.style.color = "black";
+				 item3.style.color = "black";
+				 item4.style.color = "blue";
+				 item5.style.color = "black"; 
+			}else if(parseInt($("#min5").val())<=bob && parseInt($("#max5").val())>=bob){
+				 item1.style.color = "black"; 
+				 item2.style.color = "black";
+				 item3.style.color = "black";
+				 item4.style.color = "black";
+				 item5.style.color = "blue"; 
+			}
+	});
+
+    /*숫자만 넣기*/
+    function onlyNum(obj){
+       console.log("onlyNum",obj);
+        console.log("onlyNum시작");
+       if (event.keyCode >= 48 && event.keyCode <= 57) { //숫자키만 입력
+          return true;
+       } else {
+          event.preventDefault(); 
+       } 
+    }
+
+ 	
+
+
+ 	
+/* if($(min).val() < $(max).val()){
+		console.log("성공");
+	}else{
+		console.log("실패")
+	}
+      */
+	
 	
 	/*윤영 -QnA 게시판*/
 	$("#qnaBtn").click(function(){
