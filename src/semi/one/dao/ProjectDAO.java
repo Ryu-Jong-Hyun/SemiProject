@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,8 +34,6 @@ public class ProjectDAO {
 			e.printStackTrace();
 		}	
 	}
-	
-	
 	
 	//보네 - 프로젝트 작성
 
@@ -186,21 +185,6 @@ public class ProjectDAO {
 			e.printStackTrace();
 		}
 		return dto;
-	}
-	
-	/**김응주 - 프로젝트 상세보기 mvc(사진) 추출*/
-	private String fileNameCall(int prj_no) {
-		String sql = "SELECT newFileName FROM photo WHERE prj_no = ?";
-		String fileName = null;
-		try {
-			ps=conn.prepareStatement(sql);
-			ps.setInt(1, prj_no);
-			rs=ps.executeQuery();
-			fileName = rs.next() ? rs.getString("newFileName") : null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return fileName;
 	}
 	
 	/**김응주 - 프로젝트 상세보기 mvc(리워드)*/
@@ -406,22 +390,7 @@ public class ProjectDAO {
 
 
 	
-	/**김응주 - 마이페이지(관리자)*/
-	public boolean mypageAdmin(String loginId) {
-		boolean success = false;
-		String sql = "SELECT * FROM member WHERE id=? AND power='1'";
-		try {
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, loginId);
-			rs=ps.executeQuery();
-			success = rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
-		return success;
-	}
+
 
 	/**김응주 - 마이페이지(기획자-내project)+페이징*/
 	public ArrayList<ProjectDTO> myProject(String loginId, int start, int end ) {
@@ -798,7 +767,6 @@ public class ProjectDAO {
 			while(rs.next()){
 				list.add(rs.getInt("prj_no"));
 			}
-			System.out.println(list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -807,20 +775,49 @@ public class ProjectDAO {
 		return list;
 	}
 	
-	
 	public void updatePrjState_f(ArrayList<Integer> list) {
-		String sql="UPDATE project SET prj_state='실패' WHERE prj_no IN(?)";
+		String sql="UPDATE project SET prj_state='실패' WHERE prj_no = ?";
 		int cnt=0;
-		try {			
-			ps = conn.prepareStatement(sql);
-			ps.setObject(1, list);
-			cnt = ps.executeUpdate();
-			System.out.println(cnt+"개 실패 업데이트");
+		try {
+			for(int l:list) {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, l);
+				cnt += ps.executeUpdate();
+			}
+			System.out.println(cnt+"개 프로젝트 실패 업데이트");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
+	}
+
+	public HashMap<String, Integer> refundList(ArrayList<Integer> list) {
+		String sql="SELECT id, spon_don FROM sponsor WHERE prj_no = ?";
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		int cnt=0;
+		String id = "";
+		int don = 0;
+		try {
+			for(int l:list) {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, l);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					id = rs.getString("id");
+					don = rs.getInt("spon_don");
+					map.put(id, don);
+					cnt++;
+				}
+			}
+			System.out.println(cnt+"명의 투자자 정보 추출");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return map;
+		
 	}
 	
 }

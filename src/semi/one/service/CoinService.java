@@ -36,7 +36,7 @@ public class CoinService {
 		String id = request.getParameter("id");
 		String money = request.getParameter("money");
 		
-		MemberDAO dao = new MemberDAO();
+		CoinDAO dao = new CoinDAO();
 		int success = dao.charge(id, money);
 		
 		Gson json = new Gson();//Gson 객체 생성		

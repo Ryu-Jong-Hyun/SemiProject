@@ -70,6 +70,7 @@
 					</c:if>
 				</div>
 			</td>
+			
 		</tr>
 	</table>
 	</body>

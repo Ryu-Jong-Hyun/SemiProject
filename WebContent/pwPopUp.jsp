@@ -10,7 +10,6 @@
 		<style></style>
 	</head>
 	<body>
-	<jsp:include page="loginBox.jsp" />
 		<h3>비밀번호 재설정</h3>
 		<table>
 			<tr>

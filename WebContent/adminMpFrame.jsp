@@ -1,3 +1,4 @@
+<%@page import="semi.one.dao.MemberDAO"%>
 <%@page import="semi.one.dao.ProjectDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -55,7 +56,7 @@
 	<script>
 		<%
 		String loginId = (String) request.getSession().getAttribute("loginId");
-		ProjectDAO dao = new ProjectDAO();
+		MemberDAO dao = new MemberDAO();
 		Boolean chk = dao.mypageAdmin(loginId);
 		if(!chk){
 			%>

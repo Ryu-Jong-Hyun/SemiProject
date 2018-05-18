@@ -87,6 +87,7 @@
 				</c:choose>
 			</ul>
 			<span>&nbsp &nbsp &nbsp &nbsp</span>
+			<a href="updatePrjState">업데이트</a>
 		</div>
 	</div>
 	</body>
