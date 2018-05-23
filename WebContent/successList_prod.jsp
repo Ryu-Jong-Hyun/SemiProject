@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 	<head>
@@ -22,7 +23,7 @@
 			width : 20px;
 		}
 		.out{
-			width : 500px;
+			width : 800px;
 			margin : 5px 5px;
 		}
 		.in{
@@ -41,23 +42,22 @@
 	<jsp:include page="myPageTab2.jsp" />
 	<!-- successList -->
 		<div class="out">
-		
 		 <c:forEach items="${successList2}" var="board">
 		  <div class="in">
 		  <table>
 			<tr>
 				<td id="prj_no">${board.prj_no}</td> 
-				<td id="prj_title">${board.prj_title}</td>	
+				<td id="prj_title"><a href="reviewList?prj_no=${board.prj_no}&prj_title=${board.prj_title}">${board.prj_title}</a></td>	
 			</tr>
 			<tr>
-				<td colspan="2"><a href="reviewList?prj_no=${board.prj_no}&prj_title=${board.prj_title}">${board.prj_photo}</a></td>
+				<td colspan="2"><a href="detail?prj_no=${board.prj_no}">${board.prj_photo}</a></td>
 			</tr>
 			</table>
 		   </div>
 		  </c:forEach>
+		  <c:if test="${fn:length(successList2)==0}">
+				<span>후기가 등록된 프로젝트가 없습니다.</span>
+			</c:if>
 		</div>
 	</body>
-	<script>
-
-	</script>
 </html>

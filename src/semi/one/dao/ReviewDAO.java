@@ -91,8 +91,8 @@ public class ReviewDAO {
 		}
 		return success;
 	}
-
-	/*윤영 - 후기 상세보기 요청
+	
+	/*윤영 - 후기 상세보기 요청*/
 	public ReviewDTO reviewDetail(int rev_no) {
 		ReviewDTO dto = new ReviewDTO();
 		String sql = "SELECT * FROM review WHERE rev_no=?";
@@ -100,13 +100,14 @@ public class ReviewDAO {
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, rev_no);
 			rs = ps.executeQuery();
-			
 			if(rs.next()) {
-				
+				dto.setRev_title(rs.getString("rev_title"));
+				dto.setId(rs.getString("id"));
+				dto.setRev_content(rs.getString("rev_content"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
-	}*/
+		return dto;
+	}
 }

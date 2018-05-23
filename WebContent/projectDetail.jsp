@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Insert title here</title>
+		<title>Insert title here</title> .
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
 
@@ -15,27 +15,27 @@
 				padding : 5px 10px;
 			}
 			
-input[type=text]{
-  font-size: 12pt;
-  font-family:"돋움";
-  border:3px; 
-  text-align:center;
+			input[type=text]{
+			  font-size: 12pt;
+			  font-family:"돋움";
+			  border:3px; 
+			  text-align:center;
+			
+			}
+			
+			textarea { resize: none; }
+			
+				table{
+				position:absolute;
+				top:100px;
+				left:350px;
+				}
+			
+			.aa{
+				border: none;          
+			}
 
-}
-
-textarea { resize: none; }
-
-	table{
-	position:absolute;
-	top:100px;
-	left:350px;
-	}
-
-.aa{
-	border: none;          
-}
-
-.qnaPlace{
+			.qnaPlace{
 				position : absolute;
 				display : none;
 				width : 100%;
@@ -118,35 +118,24 @@ textarea { resize: none; }
 	      
 	
 	
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
 	<!--윤영 -QnA -->
-	<button id="qnaBtn">QnA</button><p>
+	<!-- 문의하기 팝업(div) -->
 	<div class="qnaPlace">
-		<hr>QnA<hr>
-		<table id="qnaTable">
-			<tr>
-				<th>문의유형</th>
-				<th>문의/답변</th>
-				<th>상태</th>
-				<th>작성자</th>
-				<th>작성일</th>
-			</tr>
-			<c:forEach items="${qnaList}" var="board">
-			<tr>
-				<th>${board.qus_cat}</th>
-				<td>${board.qus_title}</td>
-				<td>${board.qus_state}</td>
-				<td>${board.id}</td>
-				<td>${board.qus_date}</td>
-			</tr>
-			</c:forEach>
-		</table>	
+		<hr><strong>Q&A</strong><hr>
+		<jsp:include page="qnaBoard.jsp" /> <!-- 리스트&등록하기 -->
 	</div>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 </body>
 
 
 	<script>
 	var obj = {};
 	var idx;
+	var qus_no;
 	obj.type="POST";
 	obj.dataType="JSON";
 	obj.error=function(e){console.log(e)};
@@ -162,6 +151,7 @@ textarea { resize: none; }
 		obj.success = function(data){
 			console.log(data)
 				printInfo(data.dto);
+				qnaList(data.qdto);
 		};
 		ajaxCall(obj);
 });
@@ -210,10 +200,6 @@ if(data.chk==0){
 });
 	
 	$("#reward").click(function(){
-/* 		 var item = $("#item1").val();      
-		 var min = $("#min1").val();
-		 $("#min1").val() = parseInt($("#min1").val());
-		 $("#max1").val() = parseInt($("#max1").val()); */
 		 var bob = $("#bob").val();
 		 bob = parseInt(bob);
 		 var item1 = document.getElementById("item1");
@@ -265,24 +251,6 @@ if(data.chk==0){
           event.preventDefault(); 
        } 
     }
-
- 	
-
-
- 	
-/* if($(min).val() < $(max).val()){
-		console.log("성공");
-	}else{
-		console.log("실패")
-	}
-      */
-	
-	
-	/*윤영 -QnA 게시판*/
-	$("#qnaBtn").click(function(){
-		$(".qnaPlace").css("display", "inline")
-	});
-
 
 
 	</script>
