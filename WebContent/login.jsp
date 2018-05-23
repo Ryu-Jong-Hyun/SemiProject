@@ -7,41 +7,58 @@
 		<title>로그인 페이지</title>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
+			#loginbox{
+			position: absolute;
+			left: 38%;
+			top: 200px;
+			}
+			.inputbox{
+				width: 300px;
+				height: 50px;
+				font-size: 25px;
+			}
+			.js{
+				width: 150px;
+				height: 50px;
+				font-size: 15px;
+			}
 			 table, td, th{
-	            	border: 1px solid black;
 	            	border-collapse: collapse;
 	            	padding: 5px 10px;
 	            	text-align: center;
-	            	}   
+	      	}
+	        #loginBtn{
+	        	font-size: 15px;
+	        }
 		</style>
 	</head>
 	<body>
 	<jsp:include page="mainFrame.jsp" />
+	<div id="loginbox">
 		<table>
             <tr>
-                <th>ID</th>
                 <td>
-                	<input type="text" id="userId" placeholder="아이디"/>
+                	<input type="text" class="inputbox" id="userId" placeholder="아이디"/>
                 </td>
             </tr>
             <tr>
-                <th>PW</th>
                 <td>
-                	<input type="password" id="userPw" placeholder="비밀번호"/>
+                	<input type="password" class="inputbox" id="userPw" placeholder="비밀번호"/>
                 </td>
             </tr>
-            	<td colspan="2">
-                    <input id="loginBtn" type="button" value="로그인"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input onclick="join()" type="button" value="회원가입"/>
-                    <input onclick="search()" type="button" value="아이디 /비번 찾기"/>
+            	<td>
+                    <input id="loginBtn" class="inputbox" type="button" value="로그인"/>
                 </td>
             </tr>
             <tr>
-        </table>		
+                <td>
+                    <input onclick="join()" class="js"  type="button" value="회원가입"/>
+                    <input onclick="search()" class="js" type="button" value="아이디 /비번 찾기"/>
+                </td>
+            </tr>
+            <tr>
+        </table>
+     </div>		
 	</body>
 	<script>
 		function search(){
@@ -53,10 +70,6 @@
 		}
 		
 		$("#loginBtn").click(function(){
-			//키와 값으로 복수개가 들어간다.
-			//type: [post|get], url: 어디로 보낼 것인가? 
-			//data: 어떤 파라메터와 값?, dataType: [json|xml|text|html|jsonp]
-			//success: 성공시 할 일, error: 실패시 할 일
 			$.ajax({
 				type:"post",
 				url:"./login",
@@ -65,17 +78,15 @@
 					pw:$("#userPw").val()
 				},
 				dataType:"json",
-				success:function(data){//인자 값은 서버에서 주는 메시지
+				success:function(data){
 					console.log(data);
-					if(data.success){
-						
-						alert("로그인에 성공 했습니다.");	
+					if(data.success){	
 						location.href="main.jsp";
 					}else{
 						alert("로그인에 실패 했습니다.");
 					}
 				},
-				error:function(err){//인자 값은 서버에서 주는 에러 메시지
+				error:function(err){
 					console.log(err)
 				}
 			});

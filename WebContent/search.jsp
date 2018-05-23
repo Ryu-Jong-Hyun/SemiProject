@@ -8,7 +8,7 @@
 		<title>아이디 / 비밀번호 찾기</title>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
-			div{
+			.search{
 				display: none;
 			}
 		</style>
@@ -17,7 +17,7 @@
 	<jsp:include page="mainFrame.jsp" />
 		<button onclick="showId()">아이디 찾기</button>
 		<button onclick="showPw()">비밀번호 찾기</button>
-		<div id="sId">
+		<div class="search" id="sId">
 			<h3>아이디 찾기</h3>
 			<table>
             	<tr>
@@ -49,7 +49,7 @@
 		</table>		
 		</div>
 		
-		<div id="sPw">
+		<div class="search" id="sPw">
 		<h3>비밀번호 찾기</h3>
 		<table>
             <tr>
