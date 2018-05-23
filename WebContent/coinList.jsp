@@ -64,6 +64,7 @@
 							<a href="coinListForm?no=${firstPage+i-1}">${firstPage+i-1}</a>
 						</c:forEach>
 					</c:if>
+
 					<c:if test="${dataCnt>(x*lastPage)}">
 						<a href="coinListForm?no=${lastPage+1}">></a>
 						<a href="coinListForm?no=${pageCnt}">>></a>

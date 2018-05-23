@@ -24,6 +24,8 @@ import semi.one.dao.ProjectDAO;
 import semi.one.dto.ProjectDTO;
 import semi.one.dto.RewardDTO;
 import semi.one.dto.SponsorDTO;
+import semi.one.paging.ListObject;
+import semi.one.paging.PagingService;
 
 public class ProjectService {
 	HttpServletRequest request = null;
@@ -246,14 +248,15 @@ public class ProjectService {
 		String prj_no = request.getParameter("prj_no");
 		String loginId = (String) request.getSession().getAttribute("loginId");
 		ProjectDAO dao = new ProjectDAO();
+		String page = "";
 		if(dao.sponCheck(prj_no, loginId)) {
-			 RequestDispatcher dis = request.getRequestDispatcher("sponsorList");
-			 dis.forward(request, response);
+			 page = "sponsorList";
 		}else {
 		     request.setAttribute("msg", "본인의 프로젝트만 확인 가능");
-			 RequestDispatcher dis = request.getRequestDispatcher("detail");
-			 dis.forward(request, response);
+			 page = "detail";
 		}
+		RequestDispatcher dis = request.getRequestDispatcher(page);
+		 dis.forward(request, response);
 	}
 
 	/**김응주 - 찜하기*/
@@ -330,6 +333,7 @@ public class ProjectService {
 		RequestDispatcher dis = request.getRequestDispatcher("mypagePd.jsp");
 		dis.forward(request, response);
 	}
+
 	/**김응주 - 페이징(다음)*/
 	public void listNext() throws ServletException, IOException {
 		String loginId = (String) request.getSession().getAttribute("loginId");
@@ -418,28 +422,77 @@ public class ProjectService {
 
 	/**김응주 - 메인화면 -> 프로젝트*/
 	public void projectList() throws ServletException, IOException {
+		String id = (String) request.getSession().getAttribute("loginId");
+		int no = Integer.parseInt(request.getParameter("no"));
+		
 		ProjectDAO dao = new ProjectDAO();
-		ArrayList<ProjectDTO> dto = dao.projectList();
+		ProjectDAO dao2 = new ProjectDAO();
+		PagingService ls = new PagingService();
+		ListObject oldLo = new ListObject();
+		ListObject newLo = new ListObject();
+		
+		int dataCnt = dao2.DataCnt();//데이터 전체 수
+		int x = 5;
+		int y = 5;
+		
+		oldLo.setNo(no);
+		oldLo.setDataCnt(dataCnt); //데이터 전체수
+		oldLo.setX(x);	//한페이지에 몇개
+		oldLo.setY(y); //이전과 다음 사이에 몇개의 페이지가 들어있는지
+		
+		newLo = ls.listPaging(oldLo);//페이징 파라미터
+		
+		ArrayList<ProjectDTO> dto = dao.projectList2(newLo.getIdx(), x);
+		request.setAttribute("select", "좋아요순");
 		request.setAttribute("dto", dto);
+		request.setAttribute("newLo",newLo);
 		RequestDispatcher dis = request.getRequestDispatcher("projectList.jsp");
 		dis.forward(request, response);
 	}
 
 	/**김응주 - 메인화면 -> 프로젝트 -> 검색필터*/
 	public void projectArr() throws ServletException, IOException {
-		ArrayList<ProjectDTO> dto = new ArrayList<ProjectDTO>();
+		String id = (String) request.getSession().getAttribute("loginId");
+		int no = Integer.parseInt(request.getParameter("no"));
 		String choice = request.getParameter("choice");
+		ArrayList<ProjectDTO> dto = new ArrayList<ProjectDTO>();
+		System.out.println(choice+"초이스값은?");
+		
 		ProjectDAO dao = new ProjectDAO();
-		if(choice.equals("date")) {
-			dto = dao.projectArrChoice(choice);
+		ProjectDAO dao2 = new ProjectDAO();
+		PagingService ls = new PagingService();
+		ListObject oldLo = new ListObject();
+		ListObject newLo = new ListObject();
+		
+		int dataCnt = dao2.DataCnt();//데이터 전체 수
+		int x = 5;
+		int y = 5;
+		
+		oldLo.setNo(no);
+		oldLo.setX(x);	//한페이지에 몇개
+		oldLo.setY(y); //이전과 다음 사이에 몇개의 페이지가 들어있는지
+		oldLo.setDataCnt(dataCnt); //데이터 전체수
+		newLo = ls.listPaging(oldLo);//페이징 파라미터
+		if(choice.equals("pick")) {
+			dto = dao.projectArrChoice(choice,newLo.getIdx(), x);
+			request.setAttribute("choice", "pick");
+			request.setAttribute("select", "좋아요순");
+		}else if(choice.equals("date")) {
+			dto = dao.projectArrChoice(choice,newLo.getIdx(), x);
+			request.setAttribute("choice", "date");
+			request.setAttribute("select", "최근순");
 		}else if(choice.equals("goal")) {
-			dto = dao.projectArrChoice(choice);
+			dto = dao.projectArrChoice(choice,newLo.getIdx(), x);
+			request.setAttribute("choice", "goal");
+			request.setAttribute("select", "목표금액 달성률순");
 		}else if(choice.equals("due")) {
-			dto = dao.projectArrChoice(choice);
-		}else if(choice.equals("pick")) {
-			dto = dao.projectArrChoice(choice);
+			dto = dao.projectArrChoice(choice,newLo.getIdx(), x);
+			request.setAttribute("choice", "due");
+			request.setAttribute("select", "마감일순");
 		}
+		request.setAttribute("addr", "./projectArr");
 		request.setAttribute("dto", dto);
+		request.setAttribute("newLo",newLo);
 		RequestDispatcher dis = request.getRequestDispatcher("projectList.jsp");
 		dis.forward(request, response);
 	}
@@ -564,4 +617,66 @@ public class ProjectService {
 		dis.forward(request, response);
 	}
 	
-}
+	/**김응주-메인페이지 사진뽑아오기*/
+	public void mainbefore(HttpServletRequest request2, HttpServletResponse response2) throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		ProjectDAO dao1 = new ProjectDAO();
+		ProjectDAO dao2 = new ProjectDAO();
+		ArrayList<ProjectDTO> dto = dao.mainpick();  
+		ArrayList<ProjectDTO> dto1 = dao1.maindate(); 
+		ArrayList<ProjectDTO> dto2 = dao2.maindue();   
+		request.setAttribute("dto", dto);
+		request.setAttribute("size", dto.size());
+		request.setAttribute("dto1", dto1);
+		request.setAttribute("size1", dto1.size());
+		request.setAttribute("dto2", dto2);
+		request.setAttribute("size2", dto2.size());
+		RequestDispatcher dis = request.getRequestDispatcher("main.jsp");
+		dis.forward(request, response);
+	}
+	
+	
+/*		*//**김응주 - 페이징(다음)*//*
+		public void mainNext() throws ServletException, IOException {
+			int start = Integer.parseInt(request.getParameter("start"));
+			int end = Integer.parseInt(request.getParameter("end"));
+			
+			start=start+1;
+			end=end+1;
+			ProjectDAO dao = new ProjectDAO();
+			ArrayList<ProjectDTO> dto = dao.mainbefore(start,end);
+
+			if(dto.size()!=0){
+				request.setAttribute("dto", dto);
+				request.setAttribute("start", start);
+				request.setAttribute("end", end);
+				RequestDispatcher dis = request.getRequestDispatcher("main.jsp");
+				dis.forward(request, response);
+			}else {
+				response.sendRedirect("main");
+				}
+		}
+		
+		*//**김응주 - 페이징(이전)*//*
+		public void mainBack() throws ServletException, IOException {
+			int start = Integer.parseInt(request.getParameter("start"));
+			int end = Integer.parseInt(request.getParameter("end"));
+		
+			start=start-1;
+			end=end-1;
+			ProjectDAO dao = new ProjectDAO();
+			ArrayList<ProjectDTO> dto = dao.mainbefore(start,end);
+			
+			if(end!=0){
+				request.setAttribute("dto", dto);
+				request.setAttribute("start", start);
+				request.setAttribute("end", end);
+				RequestDispatcher dis = request.getRequestDispatcher("main.jsp");
+				dis.forward(request, response);
+			}else {
+				response.sendRedirect("main");
+			}
+		}*/
+	}
+	
+

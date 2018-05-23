@@ -31,9 +31,6 @@ public class CoinDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		
-		
-		
 	}
 	
 	//충전
@@ -72,6 +69,7 @@ public class CoinDAO {
 		String sql ="SELECT * "+
 		"FROM (SELECT ROW_NUMBER() OVER(ORDER BY coin_date DESC) AS rnum, id, coin_list, coin_don, coin_date FROM coin where id = ? ) "+
     	"WHERE rnum between ? and ?";
+		
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, id);

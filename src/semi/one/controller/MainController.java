@@ -15,7 +15,9 @@ import semi.one.service.ProjectService;
 import semi.one.service.CoinService;
 import semi.one.service.MemberService;
 
-@WebServlet("/")
+@WebServlet({"/main","/login","/logout","/join","/overlay","/searchId","/searchPw","/pwChange","/memberUpdateForm","/memberUpdate","/updatePw", "/charge","/coinListForm","/successList1","/review","/successList2"
+	,"/reviewList","/reviewDetail","/myInquireList","/inquire","/inquireList","/inquireDetail","/reply","/qnaList","/projectDetail","/detail","/sponsorList","/sponsorListCheck"
+	,"/pick","/myProject","/mypage","/myAdmin","/projectOk","/projectNoMsg","/projectNo","/project","/projectArr","/pickList","/searchList","/listNext","/listBack","/prj_write","/mainbefore","/mainNext","/mainBack"})
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +48,8 @@ public class MainController extends HttpServlet {
 		switch(subAddr) {
 			case "/main":
 				System.out.println("메인페이지 요청");
-				
+				service =  new ProjectService(request, response);
+				service.mainbefore(request, response);
 				break;
 				
 			case "/login":
@@ -298,6 +301,7 @@ public class MainController extends HttpServlet {
 					service = new ProjectService(request, response);
 					service.listBack();
 					break; 
+  
 				 /*보네*/
 				 
 			case "/prj_write":

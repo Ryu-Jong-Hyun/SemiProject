@@ -96,7 +96,7 @@ public class MemberService {
 		//loginId 속성값 삭제
 		session.removeAttribute("loginId");
 		//main페이지 요청
-		response.sendRedirect("main.jsp");
+		response.sendRedirect("main");
 		
 	}
 

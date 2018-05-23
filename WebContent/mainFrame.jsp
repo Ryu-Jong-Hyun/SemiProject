@@ -6,7 +6,6 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>sponG</title>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
 		.frame{
 			width: 1550px;
@@ -61,12 +60,12 @@
 	<div class="frame">
 		<div id="list1">
 			<ul class="listT">
-					<li><a href="./project">프로젝트</a></li>
+					<li><a href="./project?no=1">프로젝트</a></li>
 					<li><a href="prj_write.jsp">기획하기</a></li>
 			</ul>
 		</div>
 		<div  id="logo">
-			<a href="main.jsp">
+			<a href="main">                
 				<img alt="로고" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMmAzvGrpAuwfEOwCrx4g-idg6yRz50lhVOUjrua3sMmya4uNy"
 				width="50px">
 		    </a>

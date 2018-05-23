@@ -27,14 +27,12 @@
 	<jsp:include page="adminMpFrame.jsp" />
 	<form method="post">
 	<table>
-			<tr>
-				<td>사진</td>
-				<td>내용</td>
-			</tr>
+	<h1><승인 대기중인 프로젝트></h1>    
+
 				<c:forEach items="${dto}" var="board">
 			<tr>	
-				<td>${board.prj_photo}</td> 
-				<td>${board.prj_content}</td>
+				<td colspan= "1"><img width="200" height="140" src="./upload/${board.prj_photo}"/></td>        
+				<td><a href="detail?prj_no=${board.prj_no}">${board.prj_content}</a></td>     
 				<td><a id = "btn" href="projectOk?prj_no=${board.prj_no}">승인</a></td>
 				<td><a href="projectNoMsg?prj_no=${board.prj_no}">거절</a></td>
 			</tr>

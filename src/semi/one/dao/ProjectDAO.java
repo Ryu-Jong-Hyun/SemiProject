@@ -187,6 +187,7 @@ public class ProjectDAO {
 		return dto;
 	}
 	
+
 	/**김응주 - 프로젝트 상세보기 mvc(리워드)*/
 	public ArrayList<RewardDTO> rewardDetail(String prj_no) {
 		ArrayList<RewardDTO> list = new ArrayList<RewardDTO>();
@@ -394,7 +395,7 @@ public class ProjectDAO {
 	/**김응주 - 마이페이지(기획자-내project)+페이징*/
 	public ArrayList<ProjectDTO> myProject(String loginId, int start, int end ) {
 		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
-		String sql = "SELECT rnum, prj_no, prj_title, prj_photo FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_no DESC) AS rnum, prj_no, prj_title, prj_photo FROM project WHERE pd_id=?) WHERE rnum BETWEEN ? AND ?";
+		String sql = "SELECT rnum, prj_no, prj_title, prj_photo, prj_state FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_no DESC) AS rnum, prj_no, prj_title, prj_photo, prj_state FROM project WHERE pd_id=?) WHERE rnum BETWEEN ? AND ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
@@ -408,10 +409,7 @@ public class ProjectDAO {
 				dto.setPrj_title(rs.getString("prj_title"));
 				dto.setPrj_no(rs.getInt("prj_no"));
 				dto.setPrj_photo(rs.getString("prj_photo"));
-/*				String newFileName = fileNameCall(dto.getPrj_no()); 
-				if(newFileName != null) {	
-					dto.setPrj_photo(newFileName);
-				}*/
+				dto.setPrj_state(rs.getString("prj_state"));       
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -480,11 +478,41 @@ public class ProjectDAO {
 		return success;
 	}
 	
+	/**김응주 - 프로젝트 리스트 처음화면(좋아요 순) */
+	public ArrayList<ProjectDTO> projectList2(int idx, int x) {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
+		String sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_picks DESC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			ps.setInt(2, idx+x-1);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_cat(rs.getString("prj_cat"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				dto.setPrj_picks(rs.getInt("prj_picks"));
+				dto.setPrj_date(rs.getDate("prj_date"));
+				dto.setPrj_due(rs.getDate("prj_due"));
+				dto.setPrj_goal(rs.getLong("prj_goal"));
+				dto.setPrj_curr(rs.getLong("prj_curr"));
+				dto.setPrj_no(rs.getInt("prj_no"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+	}
+		
 	
 	/**김응주 - 프로젝트 리스트 처음화면(좋아요 순)*/
 	public ArrayList<ProjectDTO> projectList() {
 		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
-		String sql = "SELECT * FROM project ORDER BY prj_picks DESC";
+		String sql = "SELECT * FROM project WHERE prj_state='진행' ORDER BY prj_picks DESC";
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -509,22 +537,24 @@ public class ProjectDAO {
 		return list;
 	}
 
-
+/*	"SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY (prj_due-sysdate) ASC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";*/
 	/**김응주 - 프로젝트 검색필터*/
-	public ArrayList<ProjectDTO> projectArrChoice(String choice) {
+	public ArrayList<ProjectDTO> projectArrChoice(String choice, int idx, int x) {
 		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		String sql = "";
 		if(choice.equals("goal")) {
-			sql = "SELECT * FROM project ORDER BY (prj_curr/prj_goal*100) DESC";
+			sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY (prj_curr/prj_goal*100) DESC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";
 		}else if(choice.equals("date")){
-			sql = "SELECT * FROM project ORDER BY prj_date ASC";
+			sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_date DESC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";
 		}else if(choice.equals("pick")){
-			sql = "SELECT * FROM project ORDER BY prj_picks DESC";
+			sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_picks DESC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";
 		}else if(choice.equals("due")){
-			sql = "SELECT * FROM project ORDER BY (prj_due-sysdate) ASC";
+			sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY (prj_due-sysdate) ASC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";
 		}
 		try {
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			ps.setInt(2, idx+x-1);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				ProjectDTO dto = new ProjectDTO();
@@ -773,6 +803,104 @@ public class ProjectDAO {
 		}
 		return list;
 	}
+	/**김응주 - 프로젝트 리스트 처음화면(좋아요 순)*/
+	public int DataCnt() {
+		int tCnt = 0;
+		String sql = "SELECT count(*) FROM project where prj_state='진행'";
+		try {
+			ps=conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				tCnt = rs.getInt("count(*)");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return tCnt;
+	}
+
+
+
+	public ArrayList<ProjectDTO> mainpick() {
+		ArrayList<ProjectDTO> list = new ArrayList<>();
+		String sql = "SELECT * FROM project WHERE prj_state='진행' ORDER BY prj_picks DESC";/*"SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY prj_picks DESC) AS rnum, prj_cat, prj_title, prj_photo, prj_picks, prj_date, prj_due, prj_goal, prj_curr, prj_no FROM project WHERE prj_state='진행' ) WHERE rnum between ? and ?";*/
+		try {
+			ps=conn.prepareStatement(sql);     
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
+				dto.setPrj_goal(rs.getLong("prj_goal"));
+				dto.setPrj_curr(rs.getLong("prj_curr"));
+				dto.setPrj_picks(rs.getInt("prj_picks"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				float a = dto.getPrj_curr();
+				float b = dto.getPrj_goal();
+				float c = (a/b)*100;
+				dto.setPrj_gc(c);
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+	}
+
+
+
+	public ArrayList<ProjectDTO> maindate() {
+		ArrayList<ProjectDTO> list = new ArrayList<>();
+		String sql = "SELECT * FROM project WHERE prj_state='진행' ORDER BY prj_date DESC";
+		try {
+			ps=conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}     
+
+		return list;
+	}
+
+
+
+	public ArrayList<ProjectDTO> maindue() {
+		ArrayList<ProjectDTO> list = new ArrayList<>();
+		String sql ="SELECT * FROM project WHERE prj_state='진행' ORDER BY (prj_due-sysdate) ASC";
+		try {
+			ps=conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
+				dto.setPrj_photo(rs.getString("prj_photo"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return list;
+	}
+
+
+
+
+
 	
 	public void updatePrjState_f(ArrayList<Integer> list) {
 		String sql="UPDATE project SET prj_state='실패' WHERE prj_no = ?";

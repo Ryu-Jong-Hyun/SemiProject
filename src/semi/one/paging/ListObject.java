@@ -8,10 +8,10 @@ public class ListObject {
 	private int no;//현재 페이지넘버
 	private int firstPage;//현재 첫페이지
 	private int lastPage;//현재 마지막 페이지
-	private int idx;//현재페이지의 첫 데이터 컬럼넘버
-	private int x;//한페이지에 보여질 데이터수
-	
-	private int y;//이전다음 사이에 몇개의 페이지
+	private int idx; //현재페이지의 첫 데이터 컬럼넘버
+	private int x; //한페이지에 몇개
+	private int y; //이전과 다음사이에 몇개의 페이지가 들어있는지
+
 	
 	public int getNo() {
 		return no;
@@ -61,6 +61,5 @@ public class ListObject {
 	public void setY(int y) {
 		this.y = y;
 	}
-
-	
 }
+

@@ -47,11 +47,13 @@ public class CoinService {
 		response.getWriter().println(obj);
 	}
 
+	
+	
 	public void coinListForm() throws ServletException, IOException {
 		
 		String id = (String) request.getSession().getAttribute("loginId");
 		int no = Integer.parseInt(request.getParameter("no"));//현재 페이지
-	
+		
 		CoinDAO dao1 = new CoinDAO();
 		CoinDAO dao2 = new CoinDAO();
 		CoinDAO dao3 = new CoinDAO();
@@ -61,18 +63,19 @@ public class CoinService {
 		
 		int balance = dao1.coinBalance(id);//잔액
 		int dataCnt = dao2.DataCnt(id);//데이터 전체 수
-		int x = 5;
+
+		int x = 10;
 		int y = 5;
 		
 		oldLo.setNo(no);
-		oldLo.setDataCnt(dataCnt);
-		oldLo.setX(x);
-		oldLo.setY(y);
-		
+		oldLo.setDataCnt(dataCnt); //데이터 전체수
+		oldLo.setX(x);	//한페이지에 몇개
+		oldLo.setY(y); //이전과 다음 사이에 몇개의 페이지가 들어있는지
+
 		newLo = ls.listPaging(oldLo);//페이징 파라미터
-		int idx = newLo.getIdx();//현페이지의 첫 데이터 컬럼번호(start)
-		
+		int idx = newLo.getIdx();
 		ArrayList<CoinDTO> list = dao3.CoinDetail(id, idx, x);//페이징
+
 		
 		if(list != null) {
 			//request에 담기

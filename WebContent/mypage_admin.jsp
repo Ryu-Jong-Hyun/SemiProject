@@ -25,7 +25,7 @@
 				<c:forEach items="${dto}" var="board">
 			<tr>	
 				<td>${board.prj_photo}</td> 
-				<td>${board.prj_content}</td>
+				<td><a href="detail?prj_no=${board.prj_no}">${board.prj_content}</a></td>
 				<td><a href="projectOk?prj_no=${board.prj_no}">승인</a></td>
 				<td><a href="projectNo?prj_no=${board.prj_no}">거절</a></td>
 			</tr>
