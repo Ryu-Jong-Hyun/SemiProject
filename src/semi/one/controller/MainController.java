@@ -40,7 +40,6 @@ public class MainController extends HttpServlet {
 		//Service 생성
 		ProjectService project = null;
 		BoardService board = null;
-
 		MemberService member = null;
 		CoinService coin = null;
 		ProjectService service = null;
@@ -183,12 +182,34 @@ public class MainController extends HttpServlet {
 				board = new BoardService();
 				board.reply(request, response);
 				break;
-			case "/qnaList":
-				System.out.println("상세페이지 - QnA리스트 요청");
+				
+			/*윤영 - 상세페이지 QnA*/
+			case "/question":
+				System.out.println("상세페이지-문의작성 등록 요청");
 				board = new BoardService();
-				board.qnaList(request, response);
+				board.question(request, response);
 				break;	
-			
+			case "/qnaDetail":
+				System.out.println("상세페이지-문의 상세보기 요청");
+				board = new BoardService();
+				board.qnaDetail(request, response);
+				break;
+			case "/qnaUpdate":
+				System.out.println("상세페이지-문의 수정하기");
+				board = new BoardService();
+				board.qnaUpdate(request, response);
+				break;
+			case "/qnaDelete":
+				System.out.println("상세페이지-문의 삭제");
+				board = new BoardService();
+				board.qnaDelete(request, response);
+				break;
+			case "/qnaAnswer":
+				System.out.println("상세페이지-문의 답변 요청");
+				board = new BoardService();
+				board.qnaAnswer(request, response);
+				break;
+		
 				/**응주 */
 			
 			case "/projectDetail": //함

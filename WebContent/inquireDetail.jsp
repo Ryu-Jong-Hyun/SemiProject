@@ -15,7 +15,7 @@
 			}
 			button {
 				margin-top : 10px;
-	 		 	margin-left: 170px;
+	 		 	margin-left: 300px;
 			}
 			
 			#ta2{

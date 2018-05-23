@@ -8,15 +8,17 @@
 		<title>Insert title here</title>
 		<style>
 		Table, th, tr, td{
-			width : 200;
+			width : 600;
 			border: 1px solid black;
         	border-collapse: collapse;
         	padding: 5px 10px;
         	text-align: center;
 		}
+			
 		#ta2{
-				background-color: lime;
-			}
+			background-color: lime;
+		}
+			
 
 		</style>
 	</head>
@@ -34,16 +36,15 @@
 					<th>제목</th>
 					<th>날짜</th>
 				</tr>
+				
 			<c:forEach items="${reviewList}" var="board">
 				<tr>
 					<td>${board.rev_no}</td>
 					<td>${board.id}</td>
-					<td>${board.rev_title}</td>
+					<td><a href="reviewDetail?rev_no=${board.rev_no}">${board.rev_title}</a></td>
 					<td>${board.rev_date}</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</body>
-	<script>
-	</script>
 </html>

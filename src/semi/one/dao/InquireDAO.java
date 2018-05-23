@@ -30,10 +30,6 @@ public class InquireDAO {
 		}	
 	}
 
-	public InquireDAO(String loginId) {
-		// TODO Auto-generated constructor stub
-	}
-
 	/*자원반납*/
 	private void resClose() {
 		try {
@@ -81,7 +77,7 @@ public class InquireDAO {
 	/*윤영 - (관리자)문의 리스트 요청*/
 	public ArrayList<InquireDTO> inquireList() {
 		ArrayList<InquireDTO> inquireList = new ArrayList<>();
-		String sql = "SELECT * FROM inquire ORDER BY inq_date ASC";
+		String sql = "SELECT * FROM inquire WHERE inq_state='답변대기'ORDER BY inq_date ASC";
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -130,12 +126,13 @@ public class InquireDAO {
 	public int inquire(InquireDTO dto, String loginId) {
 		int success = 0;
 		
-		String sql = "INSERT INTO inquire(inq_no, id, inq_cat, inq_title, inq_content, inq_state, inq_date) VALUES(inq_seq.NEXTVAL,?,'카테고리1',?,?,'답변대기',SYSDATE)";
+		String sql = "INSERT INTO inquire(inq_no, id, inq_cat, inq_title, inq_content, inq_state, inq_date) VALUES(inq_seq.NEXTVAL,?,?,?,?,'답변대기',SYSDATE)";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);//문의를 하는 현재로그인한 ID
-			ps.setString(2, dto.getInq_title());
-			ps.setString(3, dto.getInq_content());
+			ps.setString(2, dto.getInq_cat());
+			ps.setString(3, dto.getInq_title());
+			ps.setString(4, dto.getInq_content());
 			
 			success = ps.executeUpdate();
 		} catch (SQLException e) {
@@ -145,7 +142,8 @@ public class InquireDAO {
 		}
 		return success;
 	}
-
+	
+	/*윤영 - 답변 상태 업데이트*/
 	public int staUpadte(int inq_no) {
 		int success = 0;
 		
@@ -163,5 +161,4 @@ public class InquireDAO {
 		return success;
 		
 	}
-
 }

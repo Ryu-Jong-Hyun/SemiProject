@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 	<head>
@@ -8,11 +9,12 @@
 		<title>Insert title here</title>
 		<style>
 			table, th, tr, td{
-				width : 200;
+				width : 800px;
 				border: 1px solid black;
         		border-collapse: collapse;
         		padding: 5px 10px;
         		text-align: center;
+        		margin-top: 50px;
 			}
 			button{
 				margin : 5px 400px;
@@ -41,12 +43,24 @@
 				<td>${board.inq_date}</td>
 			</tr>
 		</c:forEach>
+		<c:if test="${fn:length(myInquireList)==0}">
+				<span>문의내용이 없습니다.</span>
+		</c:if>
 	</table>
-	<button onclick="inqureForm()">문의하기</button>
+	<button onclick="inquireForm()">문의하기</button>
 </body>
 	<script>
-		function inqureForm(){
-			window.open("inqureForm.jsp", "inquireForm", "width=450, height=300, left=500, top=100"); 
+		/* function inquireForm(){
+			window.open("inquireForm.jsp", "inquireForm", "width=450, height=300, left=500, top=100");
+		} */
+		
+		function inquireForm(){
+			location.href="inquireForm.jsp";
+		}
+		
+		var msg = "${msg}";
+		if(msg != ""){
+			alert(msg);
 		}
 	</script>
 </html>
