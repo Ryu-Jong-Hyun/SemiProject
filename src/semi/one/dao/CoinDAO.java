@@ -29,13 +29,10 @@ public class CoinDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		
-		
-		
 	}
 
 	//코인 내역
-	public ArrayList<CoinDTO> CoinDetail(String id, int idx) {
+	public ArrayList<CoinDTO> CoinDetail(String id, int idx, int x) {
 		
 		ArrayList<CoinDTO> list = new ArrayList<CoinDTO>();
 		CoinDTO dto = null;
@@ -44,11 +41,12 @@ public class CoinDAO {
 		String sql ="SELECT * "+
 		"FROM (SELECT ROW_NUMBER() OVER(ORDER BY coin_date DESC) AS rnum, id, coin_list, coin_don, coin_date FROM coin where id = ? ) "+
     	"WHERE rnum between ? and ?";
+		
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, id);
 			ps.setInt(2, idx);
-			ps.setInt(3, idx+2);
+			ps.setInt(3, idx+x-1);
 			rs = ps.executeQuery();
 
 			while(rs.next()){

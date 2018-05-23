@@ -122,7 +122,8 @@
 					obj.success = function(data){
 						if(data.success == 1){
 							alert("회원 가입이 정상 처리 되었습니다.");
-							location.href="main.jsp";
+							location.href="main.js
+							p";
 						}else{
 							alert("회원 가입에 실패 했습니다.");
 						}

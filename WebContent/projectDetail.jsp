@@ -67,12 +67,11 @@ textarea { resize: none; }
 		
 		<tr>
 		<c:if test="${info.prj_photo != null}">
-			<td  rowspan="7" colspan="3"><img width="500" src="./upload/${info.prj_photo}"/></td>
+			<td  rowspan="7" colspan="3"><img width="500" src="./upload/${info.prj_photo}"/></td>             
 		</c:if>
 		</tr>
-		
 		<tr>
-			<td colspan="2">목표금액까지 : <input type="text" id="prj_gc" size="3"  readonly/>%</td>
+			<td colspan="2">목표금액까지 : <input type="text" id="prj_gc" size="3"  readonly/>%</td>    
 		</tr>
 		<tr>
 			<td colspan="2"><input type="text" id="prj_date" size="15" readonly/>~<input type="text" id="prj_due" size="15"  readonly/></td>
@@ -95,7 +94,7 @@ textarea { resize: none; }
 			<td><button id="pick">PICK</button></td>
 		</tr>
 		<tr>
-			<td><input id="bob" type = text placeholder="투자금액" onkeyPress="onlyNum()"/></td>                    
+			<td><input id="bob" type ="text" placeholder="투자금액" onkeyPress="onlyNum()"/></td>                    
 			<td><button id="reward">해당되는 리워드 확인</button></td>
 		</tr>
 		

@@ -51,17 +51,17 @@
 		
 		#ta1{
 				background-color: lime;
-			}
+			}          
 	</style>
 </head>
 <body>
 		<jsp:include page="myPageTab2.jsp" />
-		 	<div class="out">
-		<c:forEach items="${dto}" var="board">
+		 	<div class="out">     
+		<c:forEach items="${dto}" var="board">            
 			<div class="in">
 		  	 	<table>
 		  	 	<tr>
-					<td>${board.prj_no}</td> 
+					<td>${board.prj_state}</td> 
 					<td><a href="detail?prj_no=${board.prj_no}">${board.prj_title}</a></td>
 				</tr>
 					<tr>

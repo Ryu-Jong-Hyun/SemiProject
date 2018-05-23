@@ -70,7 +70,7 @@
 					if(data.success){
 						
 						alert("로그인에 성공 했습니다.");	
-						location.href="main.jsp";
+						location.href="main";      
 					}else{
 						alert("로그인에 실패 했습니다.");
 					}

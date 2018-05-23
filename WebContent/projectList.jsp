@@ -48,28 +48,34 @@
 	left:1150px;
 	}
 	
+	#Paging{
+	text-align:center;
+	}
+	
 	</style>
 </head>
 <body>
 <jsp:include page="mainFrame.jsp" />
-
-<form action="projectArr" method="post">
+    
+<form action="projectArr?no=1" method="post">
 <select name="choice" id="select">
-<option value="-"selected> 정렬방식을 선택해 주세요 </option>
-<option value="pick"> 좋아요순 </option>
-<option value="date"> 최근순 </option>
-<option value="goal"> 목표금액 달성률순 </option>
-<option value="due"> 마감일순 </option>
+	<option value="-"selected> ${select} </option>        
+	<option value="pick"> 좋아요순 </option>
+	<option value="date"> 최근순 </option>
+	<option value="goal"> 목표금액 달성률순 </option>
+	<option value="due"> 마감일순 </option>
 </select>
 <input type="submit" name="검색" value="검색" id="sub">
 </form>
+
+
 <form action="searchList" method="post">
 <select name="category" id="category">
-<option value="NOT"> 카테고리 선택 </option>
-<option value="생활"> 생활 </option>
-<option value="@@"> @@ </option>
-<option value="AA"> AA </option>
-<option value="BB"> BB </option>
+	<option value="NOT"> 카테고리 선택 </option>
+	<option value="생활"> 생활 </option>
+	<option value="@@"> @@ </option>
+	<option value="AA"> AA </option>
+	<option value="BB"> BB </option>
 </select>
 <input type="text" name="search" plascholder="검색어 입력" id="search"/>
 <input type="submit" name="searchBtn" value="검색시작" id="btn"/>
@@ -89,7 +95,7 @@
 			<tr>
 				<td>${spon.prj_cat}</td>
 				<td><a href="detail?prj_no=${spon.prj_no}">${spon.prj_title}</a></td>
-				<td>${spon.prj_photo}</td>
+				<td colspan= "1"><img width="200" height="140" src="./upload/${spon.prj_photo}"/></td>                 
 				<td>${spon.prj_picks}</td>
 				<td>${spon.prj_date}</td>
 				<td>${spon.prj_due}</td>
@@ -97,13 +103,39 @@
 				<td>${spon.prj_curr}</td>
 			</tr>
 		</c:forEach>
+			<tr>
+			<td id = "Paging" colspan="8">      
+				<div>	
+					<c:set var="no">${newLo.no}</c:set>
+					<c:set var="firstPage">${newLo.firstPage}</c:set>
+					<c:set var="lastPage">${newLo.lastPage}</c:set>
+					<c:set var="idx">${newLo.idx}</c:set>
+					<c:set var="dataCnt">${newLo.dataCnt}</c:set>
+					<c:set var="pageCnt">${newLo.pageCnt}</c:set>
+					<c:set var="x">${newLo.x}</c:set>
+					<c:if test="${firstPage!=1}">
+						<a href=".${addr}?no=1"><<</a>
+						<a href=".${addr}?no=${firstPage-1}&choice=&${choice}"><</a>
+					</c:if>
+					<c:if test="${dataCnt!=0}">
+						<c:forEach var="i" begin="1" end="${lastPage-firstPage+1}" step="1">
+							<a href="${addr}?no=${firstPage+i-1}&choice=${choice}">${firstPage+i-1}</a>
+						</c:forEach>
+					</c:if>
+					<c:if test="${dataCnt>(x*lastPage)}">
+						<a href="${addr}?no=${lastPage+1}&choice=${choice}">></a>       
+						<a href="${addr}?no=${pageCnt}&choice=${choice}">>></a>                                                                                     
+					</c:if>
+				</div>        
+			</td>
+		</tr>
 	</table>
 </body>
 <script>
 </script>
 </html>
 
-
+          
 
 
 
