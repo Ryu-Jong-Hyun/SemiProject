@@ -309,6 +309,12 @@ public class MainController extends HttpServlet {
 				service = new ProjectService(request,response);
 				service.prj_write();
 				break;
+				
+			case "/adminSuccessList":
+				System.out.println("관리자 성공기획");
+				service = new ProjectService(request,response);
+				service.adminSuccessList();
+				break;
 		}
 	}
 }

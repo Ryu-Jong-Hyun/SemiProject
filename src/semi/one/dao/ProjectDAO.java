@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,8 +34,6 @@ public class ProjectDAO {
 			e.printStackTrace();
 		}	
 	}
-	
-	
 	
 	//보네 - 프로젝트 작성
 
@@ -188,7 +187,7 @@ public class ProjectDAO {
 		return dto;
 	}
 	
-	
+
 	/**김응주 - 프로젝트 상세보기 mvc(리워드)*/
 	public ArrayList<RewardDTO> rewardDetail(String prj_no) {
 		ArrayList<RewardDTO> list = new ArrayList<RewardDTO>();
@@ -260,7 +259,6 @@ public class ProjectDAO {
 				dto.setPrj_date(rs.getDate("prj_date"));
 				dto.setPrj_picks(rs.getInt("prj_picks"));
 				dto.setPrj_state(rs.getString("prj_state"));
-				dto.setPrj_url(rs.getString("prj_url"));
 				dto.setPrj_bank(rs.getString("prj_bank"));
 				dto.setPrj_comment(rs.getString("prj_comment"));
 				/*목표금액까지 진행률*/
@@ -392,22 +390,7 @@ public class ProjectDAO {
 
 
 	
-	/**김응주 - 마이페이지(관리자)*/
-	public boolean mypageAdmin(String loginId) {
-		boolean success = false;
-		String sql = "SELECT * FROM member WHERE id=? AND power='1'";
-		try {
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, loginId);
-			rs=ps.executeQuery();
-			success = rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
-		return success;
-	}
+
 
 	/**김응주 - 마이페이지(기획자-내project)+페이징*/
 	public ArrayList<ProjectDTO> myProject(String loginId, int start, int end ) {
@@ -804,17 +787,21 @@ public class ProjectDAO {
 		}
 	}
 	
-	public void updatePrjState_f() {
-		String sql="UPDATE project SET prj_state='실패' WHERE prj_no IN(SELECT prj_no FROM project WHERE prj_state='진행' AND prj_due<SYSDATE AND prj_goal>prj_curr)";
-		int cnt=0;
+	public ArrayList<Integer> failPrjList() {
+		String sql="SELECT prj_no FROM project WHERE prj_state='진행' AND prj_due<SYSDATE AND prj_goal>prj_curr";
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		try {			
 			ps = conn.prepareStatement(sql);
-			cnt = ps.executeUpdate();
+			rs = ps.executeQuery();
+			while(rs.next()){
+				list.add(rs.getInt("prj_no"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
+		return list;
 	}
 	/**김응주 - 프로젝트 리스트 처음화면(좋아요 순)*/
 	public int DataCnt() {
@@ -915,4 +902,76 @@ public class ProjectDAO {
 
 
 	
+	public void updatePrjState_f(ArrayList<Integer> list) {
+		String sql="UPDATE project SET prj_state='실패' WHERE prj_no = ?";
+		int cnt=0;
+		try {
+			for(int l:list) {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, l);
+				cnt += ps.executeUpdate();
+			}
+			System.out.println(cnt+"개 프로젝트 실패 업데이트");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+	}
+
+
+	public HashMap<String, Integer> refundList(ArrayList<Integer> list) {
+		String sql="SELECT id, spon_don FROM sponsor WHERE prj_no = ?";
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		int cnt=0;
+		String id = "";
+		int don = 0;
+		try {
+			for(int l:list) {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, l);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					id = rs.getString("id");
+					don = rs.getInt("spon_don");
+					map.put(id, don);
+					cnt++;
+				}
+			}
+			System.out.println(cnt+"명의 투자자 정보 추출");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return map;
+		
+	}
+	
+
+	public ArrayList<ProjectDTO> adminSuccessList() {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();		
+		String sql="SELECT * FROM project WHERE prj_state ='성공'";
+
+		try {
+			ps = conn.prepareStatement(sql);	
+			rs = ps.executeQuery();					
+			while(rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPd_id(rs.getString("pd_id"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_account(rs.getString("prj_account"));
+				dto.setPrj_bank(rs.getString("prj_bank"));
+				dto.setPrj_curr(rs.getInt("prj_curr"));
+				list.add(dto);
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		}finally {
+			resClose();
+		}		
+		return list;
+	}
+
 }

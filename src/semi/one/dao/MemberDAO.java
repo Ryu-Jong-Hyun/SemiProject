@@ -216,31 +216,23 @@ public class MemberDAO {
 		return success;
 	}
 	
-	//충전
-	public int charge(String id, String money) {
-		int success = 0; //결과 받아올 변수
-		//1.sql 생성
-		String sql = "INSERT INTO coin (id, coin_list, coin_don, coin_date)VALUES(?,?,?,SYSDATE)";
-		try {//2.PreparedStatement 추출
-			ps = conn.prepareStatement(sql);
-			//3.?대응
-			//회원가입시 입력한 값을 한번에 저장한 클래스(DTO)에서 입력받은 값을 가져와서 대응
-			ps.setString(1, id);
-			ps.setString(2, "충전");
-			ps.setString(3, money);
-			
-			//4.sql실행
-			success = ps.executeUpdate();
-			//5.자원반납
+	/**김응주 - 마이페이지(관리자)*/
+	public boolean mypageAdmin(String loginId) {
+		boolean success = false;
+		String sql = "SELECT * FROM member WHERE id=? AND power='1'";
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs=ps.executeQuery();
+			success = rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0; //만약 Exception걸릴 경우에 실행되지않고 멈추기 때문에 return값줌.
 		}finally {
-			//자원반납
 			resClose();
 		}
 		return success;
 	}
+
 
 	//자원반납
 		private void resClose() {

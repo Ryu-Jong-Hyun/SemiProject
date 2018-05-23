@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import semi.one.dao.CoinDAO;
+import semi.one.dao.MemberDAO;
 import semi.one.dao.ProjectDAO;
 import semi.one.dto.ProjectDTO;
 import semi.one.dto.RewardDTO;
@@ -310,7 +312,7 @@ public class ProjectService {
 	/**김응주 - 마이페이지(기획자,투자자,관리자)*/
 	public void mypage() throws ServletException, IOException {
 		String loginId = (String) request.getSession().getAttribute("loginId");
-		ProjectDAO dao = new ProjectDAO();
+		MemberDAO dao = new MemberDAO();
 		if(dao.mypageAdmin(loginId)) {
 			response.sendRedirect("myAdmin");	//관리자 마이페이지
 		}else {
@@ -592,8 +594,27 @@ public class ProjectService {
 	public void updatePrjState() throws ServletException, IOException {
 		ProjectDAO dao = new ProjectDAO();
 		dao.updatePrjState_s();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		dao = new ProjectDAO();
-		dao.updatePrjState_f();
+		list = dao.failPrjList();
+		dao = new ProjectDAO();	
+		dao.updatePrjState_f(list);
+		dao = new ProjectDAO();	
+		map = dao.refundList(list);
+		CoinDAO cDao = new CoinDAO();
+		cDao.refund(map);
+	}
+
+	public void adminSuccessList() throws ServletException, IOException {
+		ProjectDAO dao = new ProjectDAO();
+		
+		ArrayList<ProjectDTO> adminSuccessList = dao.adminSuccessList();
+		
+		request.setAttribute("adminSuccessList", adminSuccessList);
+		
+		RequestDispatcher dis = request.getRequestDispatcher("adminSuccessList.jsp");
+		dis.forward(request, response);
 	}
 	
 	/**김응주-메인페이지 사진뽑아오기*/

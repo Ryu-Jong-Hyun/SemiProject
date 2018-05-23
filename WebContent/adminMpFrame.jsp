@@ -1,3 +1,4 @@
+<%@page import="semi.one.dao.MemberDAO"%>
 <%@page import="semi.one.dao.ProjectDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -48,14 +49,15 @@
 			<div id="me">
 				<div class="cat" id="ta1"><a href="myAdmin">프로젝트 승인</a></div>
 				<div class="cat" id="ta2"><a href="inquireList">문의 답변</a></div>
-				<div class="cat" id="ta3"><a href="#">성공기획</a></div>
+				<div class="cat" id="ta3"><a href="adminSuccessList">성공기획</a></div>
+				<div class="cat" id="ta3"><a href="#">정산내역</a></div>
 			</div>
 		</div>
 	</body>
 	<script>
 		<%
 		String loginId = (String) request.getSession().getAttribute("loginId");
-		ProjectDAO dao = new ProjectDAO();
+		MemberDAO dao = new MemberDAO();
 		Boolean chk = dao.mypageAdmin(loginId);
 		if(!chk){
 			%>
