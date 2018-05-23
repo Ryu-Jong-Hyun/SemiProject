@@ -75,13 +75,20 @@ public class MemberService {
 	public void overlay() throws IOException {
 
 		String id = request.getParameter("id");
-		System.out.println("param : "+id);
+		boolean able = false;
+		boolean overlay = false;
 		MemberDAO dao = new MemberDAO();
-		boolean overlay = dao.overlay(id);
+		System.out.println(id.length());
+		if(id.length()>=4 && id.length()<=10) {
+			able = true;
+			overlay = dao.overlay(id);
+		}
+		
 				
 		Gson json = new Gson();//Gson 객체 생성		
 		HashMap<String, Boolean> map = new HashMap<>();//map 생성		
-		map.put("overlay", overlay);//map 에 값 추가		
+		map.put("overlay", overlay);//map 에 값 추가	
+		map.put("able", able);
 		String obj = json.toJson(map);//json 으로 변경
 		//response 로 반환(옵션1:한글깨짐, 옵션2:크로스 도메인)
 		response.getWriter().println(obj);

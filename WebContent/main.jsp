@@ -8,7 +8,7 @@
       <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
       <style>
          img#img{position: absolute; left: 537px; top: 200px; border: 1px solid black; width: 500px; height: 400px;}              
-         input#pick{position: absolute; left: 537px; top: 210px; border: none; font-size: 20px;} 
+         input#pick{position: absolute; left: 545px; top: 210px; border: none; font-size: 20px;} 
          input#prj_gc{position: absolute; left: 820px; top: 210px;  font-size: 20px; border: none; width: 200px; }     
          #a{position: absolute; left: 490px; top: 370px; font-size: 20px;}             
          #b{position: absolute; left: 1050px; top: 370px; font-size: 20px;}       
@@ -40,9 +40,9 @@
          left: 200px;                 
          top: 930px;                              
       }  
-      #title1{position: absolute; left: 20%; top: 200px;}           
-      #title2{position: absolute; left: 10%; top: 650px;}           
-      #title3{position: absolute; left: 10%; top: 870px;}     
+      #title1{position: absolute; left: 400px; top: 200px;}           
+      #title2{position: absolute; left: 200px; top: 650px;}                 
+      #title3{position: absolute; left: 200px; top: 880px;}                 
         #hr1{position: absolute;  top: 1200px; width: 1600px;}               
         #hr2{position: absolute;  top: 650px; width: 1600px;}           
         #hr3{position: absolute;  top: 870px; width: 1600px;}                                                   
@@ -268,7 +268,7 @@ var e = 5;
           $("#due4").show();     
           $("#due5").show();
           f = 1;          
-          g = 2;         
+          g = 2;
           h = 3;
           k = 4;
           j = 5;      

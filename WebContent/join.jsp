@@ -61,7 +61,7 @@
     				<td><input class="inputTxt" type="text" name="email" placeholder="이메일"/></td>
     			</tr>
     			<tr>
-    				<td><input class="inputTxt" type="text" name="phone" placeholder="폰 번호" onkeyPress="hypNum()"/></td>
+    				<td><input class="inputTxt" type="text" name="phone" placeholder="폰 번호" onkeypress="hypNum()"/></td>
     			</tr>
     			<tr>
     				<td><input class="inputTxt" type="text" name="address" placeholder="주소"/></td>
@@ -86,16 +86,20 @@
 			obj.url="./overlay";
 			obj.data = {id:$("input[name='userId']").val()};			
 			obj.success=function(d){
-				console.log(d.overlay);
-				if(d.overlay){
-					alert("사용중인 아이디 입니다.");
-					$("input[name='userId']").val("");
-					$("input[name='userId']").css("color","");	
-					overChk = false;
+				console.log(d.able);
+				if(d.able){
+					if(d.overlay){
+						alert("사용중인 아이디 입니다.");
+						$("input[name='userId']").val("");
+						$("input[name='userId']").css("color","");	
+						overChk = false;
+					}else{
+						alert("사용 가능한 아이디 입니다.");
+						$("input[name='userId']").css("color","green");	
+						overChk = true;
+					}
 				}else{
-					alert("사용 가능한 아이디 입니다.");
-					$("input[name='userId']").css("color","green");	
-					overChk = true;
+					alert("아이디는 4글자이상 10글자 이하로 설정해주세요.")
 				}
 			};			
 			console.log(obj);
@@ -176,10 +180,18 @@
 	         
          /*숫자와 하이픈 넣기*/
          function hypNum(){
-            if ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 45) { /*숫자키와 하이픈 입력 */
+        	if (window.event) // IE코드
+        		var code = window.event.keyCode;
+        	else // 타브라우저
+        		var code = Ev.which;
+      		console.log(code);
+        	
+            if ((code >= 48 && code <= 57) || code == 45) { /*숫자키와 하이픈 입력 */
                return true;
             } else {
                event.preventDefault();
+               alert("숫자와 '-'만 입력 가능합니다.");
+               return false;
             } 
          }         
          

@@ -36,20 +36,10 @@
 			}
 
 			.qnaPlace{
-				position : absolute;
-				display : none;
-				width : 100%;
-				height: 700px;
-			}
-			#qnaTable{
-				border-top: 1px solid black;
-				border-bottom: 1px solid black;
-				padding: 0 10px;
-			}
-			#qnaTable th{
-				margin-top : 20px;
-				padding: 0 40px;
-			}
+            position : absolute;
+            margin-top  : 800px;
+            width : 100%;
+         }
 		</style>
 </head>
 
