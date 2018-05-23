@@ -44,7 +44,7 @@
     		<table>
     			<tr>
     				<td>
-    					<input id="idtxt" type="text" name="userId" placeholder="아이디" onkeyup="chkword(this, 10)"/>
+    					<input id="idtxt" type="text" name="userId" placeholder="아이디" maxlength="11" onkeyup="chkword(this, 10)"/>
     					<input id="overlay" type="button" value="중복 체크"/>	
     				</td>
     			</tr>
@@ -61,7 +61,7 @@
     				<td><input class="inputTxt" type="text" name="email" placeholder="이메일"/></td>
     			</tr>
     			<tr>
-    				<td><input class="inputTxt" type="text" name="phone" placeholder="폰 번호" onkeyPress="hypNum(this)"/></td>
+    				<td><input class="inputTxt" type="text" name="phone" placeholder="폰 번호" onkeyPress="hypNum()"/></td>
     			</tr>
     			<tr>
     				<td><input class="inputTxt" type="text" name="address" placeholder="주소"/></td>
@@ -137,8 +137,7 @@
 					obj.success = function(data){
 						if(data.success == 1){
 							alert("회원 가입이 정상 처리 되었습니다.");
-							location.href="main.js
-							p";
+							location.href="main"
 						}else{
 							alert("회원 가입에 실패 했습니다.");
 						}
@@ -176,14 +175,14 @@
 	       }
 	         
          /*숫자와 하이픈 넣기*/
-         function hypNum(obj){
+         function hypNum(){
             if ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 45) { /*숫자키와 하이픈 입력 */
                return true;
             } else {
                event.preventDefault();
             } 
-         }
-	         
+         }         
+         
 		//전달 받은 오브젝트로 ajax 통신 실행
 		function ajaxCall(obj){
 			$.ajax(obj);

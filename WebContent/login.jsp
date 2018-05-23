@@ -81,7 +81,7 @@
 				success:function(data){
 					console.log(data);
 					if(data.success){	
-						location.href="main.jsp";
+						location.href="main";
 					}else{
 						alert("로그인에 실패 했습니다.");
 					}
