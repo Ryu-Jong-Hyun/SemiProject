@@ -21,7 +21,9 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import semi.one.dao.CoinDAO;
 import semi.one.dao.MemberDAO;
 import semi.one.dao.ProjectDAO;
+import semi.one.dao.QuestionDAO;
 import semi.one.dto.ProjectDTO;
+import semi.one.dto.QuestionDTO;
 import semi.one.dto.RewardDTO;
 import semi.one.dto.SponsorDTO;
 import semi.one.paging.ListObject;
@@ -235,9 +237,14 @@ public class ProjectService {
       String prj_no = (String) request.getSession().getAttribute("prj_no");
       ProjectDAO dao = new ProjectDAO();
       ProjectDTO dto = dao.detailView(prj_no);
+      
+      QuestionDAO qdao = new QuestionDAO();
+      ArrayList<QuestionDTO> qdto = qdao.qnaList(prj_no);
+      
       Gson json = new Gson();
       HashMap<String, Object> map = new HashMap<>();
       map.put("dto", dto);
+      map.put("qdto", qdto);
       String obj = json.toJson(map);
       response.setContentType("text/html; charset=UTF-8");
       response.getWriter().println(obj);

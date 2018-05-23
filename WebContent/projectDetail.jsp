@@ -40,6 +40,7 @@
             margin-top  : 800px;
             width : 100%;
          }
+
 		</style>
 </head>
 
@@ -99,8 +100,7 @@
 			<c:set var="i">${i+1}</c:set>
 		</tr>           
 		</c:forEach>
-		
-		
+
 	</table>
 	
 	<button id="pick">찜하기</button>
@@ -125,7 +125,6 @@
 	<script>
 	var obj = {};
 	var idx;
-	var qus_no;
 	obj.type="POST";
 	obj.dataType="JSON";
 	obj.error=function(e){console.log(e)};

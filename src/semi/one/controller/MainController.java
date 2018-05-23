@@ -16,9 +16,8 @@ import semi.one.service.CoinService;
 import semi.one.service.MemberService;
 
 @WebServlet({"/main","/login","/logout","/join","/overlay","/searchId","/searchPw","/pwChange","/memberUpdateForm","/memberUpdate","/updatePw", "/charge","/coinListForm","/successList1","/review","/successList2"
-	,"/reviewList","/reviewDetail","/myInquireList","/inquire","/inquireList","/inquireDetail","/reply","/qnaList","/projectDetail","/detail","/sponsorList","/sponsorListCheck"
-	,"/pick","/myProject","/mypage","/myAdmin","/projectOk","/projectNoMsg","/projectNo","/project","/projectArr","/pickList","/searchList","/listNext","/listBack","/prj_write","/mainbefore","/mainNext","/mainBack"})
-
+	   ,"/reviewList","/reviewDetail","/myInquireList","/inquire","/inquireList","/inquireDetail","/reply", "/question","/qnaDetail", "/qnaUpdate", "/qnaDelete" , "/projectDetail","/detail","/qnaAnswer", "/sponsorList","/sponsorListCheck"
+	   ,"/pick","/myProject","/mypage","/myAdmin","/projectOk","/projectNoMsg","/projectNo","/project","/projectArr","/pickList","/searchList","/listNext","/listBack","/prj_write","/mainbefore","/mainNext","/mainBack"})
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
