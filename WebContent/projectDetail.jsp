@@ -262,7 +262,10 @@
             //프로젝트 번호
             var prj_no =$("#prj_no").val();
             console.log("prj_no:", prj_no);
+<<<<<<< HEAD
+=======
             $("#prj_no").val(prj_no);
+>>>>>>> 9b7b5dd0d34e81e42331b256549bbd587c177921
             //로그인아이디
             console.log("loginId:", loginId);
             //해당 리워드
