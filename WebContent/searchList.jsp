@@ -89,7 +89,7 @@
 			<tr>
 				<td>${search.prj_cat}</td>
 				<td><a href="detail?prj_no=${search.prj_no}">${search.prj_title}</a></td>
-				<td>${search.prj_photo}</td>
+				<td><a href="detail?prj_no=${project.prj_no}"><img width = "50" id="img" src="./upload/${project.prj_photo}"/></a></td>
 				<td>${search.prj_picks}</td>
 				<td>${search.prj_date}</td>
 				<td>${search.prj_due}</td>

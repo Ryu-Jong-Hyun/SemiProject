@@ -15,14 +15,14 @@
 	table{
 		position:absolute;
 		top:240px;
-		left:500px;
+		left:500px
 	}
 
 	</style>
 </head>
 	<body>
 		<jsp:include page="adminMpFrame.jsp" />
-			<form action="" method="post">
+			<form action="adminApprovalPlus" method="post">
 				<table>
 					<tr>
 						<th>아이디</th>
@@ -39,23 +39,19 @@
 							<td>${adminSuccessList.prj_bank}</td>
 							<td>${adminSuccessList.prj_account}</td>
 							<td>${adminSuccessList.prj_curr}</td>
-							<td><input type="button" id="smbtn" onclick= "sendMoney()" value="승인"/></td>
+							<td><input type="submit" onclick="ok()" value="승인"/></td>
+							<input type ="hidden" name="prj_no" value="${adminSuccessList.prj_no}"/>
+							<input type ="hidden" name="prj_curr" value="${adminSuccessList.prj_curr}"/>
 						</tr>
 					</c:forEach>
 				</table>
 			</form>
 	</body>
 	<script>
-		function sendMoney(){
-	      	  var check = confirm("승인을 완료하시겠습니까?");
-	      	  var smbtn = document.getElementById('smbtn');
-	      	  
-	      	  if(check){
-	      		  smbtn.disabled = true;
-	      		  smbtn.value = "완료";
-	      	  }
-
-		}
+    var msg = "${msg}";
+    if(msg != ""){
+       alert(msg);
+    }
 	</script>
 </html>
 

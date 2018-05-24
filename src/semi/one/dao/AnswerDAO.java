@@ -84,5 +84,4 @@ public class AnswerDAO {
 		}
 		return dto;
 	}
-
 }
