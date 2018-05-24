@@ -50,10 +50,10 @@
 				<a href="./memberUpdateForm?id=${sessionScope.loginId}">${loginId}</a>
 			</div>
 			<div id="me">
-				<div class="cat" id="ta1"><a href="myAdmin">프로젝트 승인</a></div>
-				<div class="cat" id="ta2"><a href="inquireList">문의 답변</a></div>
-				<div class="cat" id="ta3"><a href="adminSuccessList">성공기획</a></div>
-				<div class="cat" id="ta4"><a href="adminApprovalList">정산내역</a></div>
+				<div class="cat" id="ta1"><a href="myAdmin">승인 대기중인 프로젝트</a></div>
+				<div class="cat" id="ta3"><a href="adminSuccessList">입금 대기중인 프로젝트</a></div>
+				<div class="cat" id="ta2"><a href="inquireList">문의 게시판</a></div>
+				<div class="cat" id="ta4"><a href="adminApprovalList">정산 내역</a></div>
 			</div>
 		</div>
 	</body>

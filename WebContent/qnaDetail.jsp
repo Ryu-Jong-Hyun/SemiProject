@@ -96,7 +96,7 @@
 		obj.success = function(data){
 			if(data.success == 1){
 				alert("문의 수정 완료");
-				location.href="qnaDetail?qus_no="+$("#qno").val();
+				location.href="projectDetail.jsp";
 			}else{
 				alert("문의 수정  실패");
 			}

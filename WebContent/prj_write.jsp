@@ -148,7 +148,7 @@
          
          <!-- 2단계 -->
          <div id="page2">
-            <br/>목표금액 : <input type="text" name="prj_goal" onkeyPress="onlyNum(this)"/>(밥)<br/>
+            <br/>목표금액 : <input type="text" name="prj_goal" onkeyPress="onlyNum(this)"/>코인<br/>
             <br/><div id="one"><!-- 리워드 -->
                <table>
                   <tr>

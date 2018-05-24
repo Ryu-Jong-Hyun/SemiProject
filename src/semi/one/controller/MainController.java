@@ -21,7 +21,7 @@ import semi.one.service.MemberService;
 		"/sponsorList", "/sponsorListCheck", "/pick", "/myProject", "/mypage", "/myAdmin", "/projectOk",
 		"/projectNoMsg", "/projectNo", "/project", "/projectArr", "/pickList", "/searchList", "/listNext", "/listBack",
 		"/prj_write", "/mainbefore", "/mainNext", "/mainBack", "/adminApprovalPlus" ,"/adminApprovalList", 
-		"/adminSuccessList", "/investList","/spon"})
+		"/adminSuccessList", "/investList","/spon", "/overlayRegist"})
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -77,6 +77,12 @@ public class MainController extends HttpServlet {
 			System.out.println("중복확인 요청");
 			member = new MemberService(request, response);
 			member.overlay();
+			break;
+			
+		case "/overlayRegist":
+			System.out.println("번호중복확인 요청");
+			member = new MemberService(request, response);
+			member.overlayResist();
 			break;
 
 		case "/searchId":

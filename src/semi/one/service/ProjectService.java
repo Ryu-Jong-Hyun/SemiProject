@@ -232,7 +232,7 @@ public class ProjectService {
   	//보네 - 투자하기
   	public void spon() throws ServletException, IOException {
   		request.setCharacterEncoding("UTF-8");
-  		
+  		System.out.println("spon()서비스 시작");
   		MemberDAO dao = new MemberDAO();
   		ProjectDAO prjDAO = new ProjectDAO();
   		

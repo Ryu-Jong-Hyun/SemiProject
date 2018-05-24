@@ -94,6 +94,23 @@ public class MemberService {
 		response.getWriter().println(obj);
 		
 	}
+	
+	//폰번호 중복확인 서비스
+		public void overlayResist() throws IOException {
+
+			String phone = request.getParameter("phone");
+			boolean overlay = false;
+			MemberDAO dao = new MemberDAO();
+			overlay = dao.overlayResist(phone);
+					
+			Gson json = new Gson();//Gson 객체 생성		
+			HashMap<String, Boolean> map = new HashMap<>();//map 생성		
+			map.put("overlay", overlay);//map 에 값 추가	
+			String obj = json.toJson(map);//json 으로 변경
+			//response 로 반환(옵션1:한글깨짐, 옵션2:크로스 도메인)
+			response.getWriter().println(obj);
+			
+		}
 
 	//로그아웃 서비스
 	public void logout() throws IOException {

@@ -22,12 +22,12 @@
 			left: 38%;
 			top: 200px;
 			}
-			#idtxt{
+			.idtxt{
 				width: 215px;
 				height: 50px;
 				font-size: 25px;
 			}
-			#overlay{
+			.overlay{
 				height: 40px;
 				font-size: 15px;
             }
@@ -44,8 +44,8 @@
     		<table>
     			<tr>
     				<td>
-    					<input id="idtxt" type="text" name="userId" placeholder="아이디" maxlength="11" onkeyup="chkword(this, 10)"/>
-    					<input id="overlay" type="button" value="중복 체크"/>	
+    					<input class="idtxt" type="text" name="userId" placeholder="아이디" maxlength="11" onkeyup="chkword(this, 10)"/>
+    					<input class="overlay" id="idOverlay" type="button" value="중복 체크"/>	
     				</td>
     			</tr>
     			<tr>
@@ -61,7 +61,10 @@
     				<td><input class="inputTxt" type="text" name="email" placeholder="이메일"/></td>
     			</tr>
     			<tr>
-    				<td><input class="inputTxt" type="text" name="phone" placeholder="폰 번호" onkeypress="hypNum()"/></td>
+    				<td>
+    					<input class="idtxt" type="text" name="phone" placeholder="폰 번호" onkeypress="hypNum()"/>
+    					<input class="overlay" id="phoneOverlay" type="button" value="등록 체크"/>	
+    				</td>
     			</tr>
     			<tr>
     				<td><input class="inputTxt" type="text" name="address" placeholder="주소"/></td>
@@ -82,11 +85,10 @@
 		
 		var overChk = false;//중복체크 값
 		
-		$("#overlay").click(function(){			
+		$("#idOverlay").click(function(){			
 			obj.url="./overlay";
 			obj.data = {id:$("input[name='userId']").val()};			
 			obj.success=function(d){
-				console.log(d.able);
 				if(d.able){
 					if(d.overlay){
 						alert("사용중인 아이디 입니다.");
@@ -102,6 +104,25 @@
 					alert("아이디는 4글자이상 10글자 이하로 설정해주세요.")
 				}
 			};			
+			console.log(obj);
+			ajaxCall(obj);
+		});
+		
+		$("#phoneOverlay").click(function(){			
+			obj.url="./overlayRegist";
+			obj.data = {phone:$("input[name='phone']").val()};			
+			obj.success=function(d){
+					if(d.overlay){
+						alert("이미 등록한 번호입니다.");
+						$("input[name='phone']").val("");
+						$("input[name='phone']").css("color","");	
+						overChk = false;
+					}else{
+						alert("가능한 번호입니다.");
+						$("input[name='phone']").css("color","green");	
+						overChk = true;
+					}
+				};			
 			console.log(obj);
 			ajaxCall(obj);
 		});
