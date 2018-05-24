@@ -61,7 +61,7 @@
 <option value="goal"> 목표금액 달성률순 </option>
 <option value="due"> 마감일순 </option>
 </select>
-<input type="submit" name="검색" value="검색" id="sub">
+<input type="submit" name="검색" value="정렬" id="sub">
 </form>
 <form action="searchList" method="post">
 <select name="category" id="category">
@@ -76,7 +76,7 @@
 	<option value="소셜·캠페인"> 소셜·캠페인 </option>
 </select>
 <input type="text" name="search" placeholder="검색어 입력" id="search"/>
-<input type="submit" name="searchBtn" value="검색시작" id="btn"/>
+<input type="submit" name="searchBtn" value="검색" id="btn"/>
 </form>
 	<table>
 			<tr>

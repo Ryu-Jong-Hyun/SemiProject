@@ -258,6 +258,8 @@
          $("#btn1").css("background-color", "skyblue");
          $("#btn2").css("background-color", "white");
          $("#btn3").css("background-color", "white");
+         prevSpan.style.display = "none";
+         nextSpan.style.display = "block";
       }
       function click2(){
          pageNum=2;
@@ -268,6 +270,8 @@
          $("#btn1").css("background-color", "white");
          $("#btn2").css("background-color", "skyblue");
          $("#btn3").css("background-color", "white");
+         prevSpan.style.display = "block";
+         nextSpan.style.display = "block";
       }
       function click3(){
          pageNum=3;
@@ -278,6 +282,8 @@
          $("#btn1").css("background-color", "white");
          $("#btn2").css("background-color", "white");
          $("#btn3").css("background-color", "skyblue");
+         prevSpan.style.display = "block";
+         nextSpan.style.display = "none";
       }
 
       /*리워드*/
