@@ -65,13 +65,17 @@
 </form>
 <form action="searchList" method="post">
 <select name="category" id="category">
-<option value="NOT"> 카테고리 선택 </option>
-<option value="생활"> 생활 </option>
-<option value="@@"> @@ </option>
-<option value="AA"> AA </option>
-<option value="BB"> BB </option>
+	<option value="NOT"> 카테고리 선택 </option>
+	<option value="문화·예술"> 문화·예술 </option>
+	<option value="푸드"> 푸드 </option>
+	<option value="취미·반려동물"> 취미·반려동물 </option>
+	<option value="패션·잡화"> 패션·잡화 </option>
+	<option value="뷰티"> 뷰티 </option>
+	<option value="여행·레저"> 여행·레저 </option>
+	<option value="생활·리빙"> 패션·잡화 </option>
+	<option value="소셜·캠페인"> 소셜·캠페인 </option>
 </select>
-<input type="text" name="search" plascholder="검색어 입력" id="search"/>
+<input type="text" name="search" placeholder="검색어 입력" id="search"/>
 <input type="submit" name="searchBtn" value="검색시작" id="btn"/>
 </form>
 	<table>
