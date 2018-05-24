@@ -39,7 +39,7 @@
 					<tr>
 						<td>${project.prj_no}</td>
 						<td>${project.prj_title}</td>
-						<td><img width="50" src=""/></td>
+						<td><a href="detail?prj_no=${project.prj_no}"><img width = "50" id="img" src="./upload/${project.prj_photo}"/></a></td>
 					</tr>
 				</table>
 				</div>

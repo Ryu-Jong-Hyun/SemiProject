@@ -5,7 +5,8 @@
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Insert title here</title>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <!-- 제이쿼리 중복으로 주석 처리, 최종 확인 후 삭제 할 것 -->
+      <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
       <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
       <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
@@ -16,19 +17,112 @@
          #testphoto{
             display : none;
          }
+         #infoRw{
+         	display : none;
+         }
+         #page1,#page2,#page3{
+         	border : 1px solid black;
+         	min-width: 700px;
+         	min-height : 570px;
+         	text-align : center;
+			font-size: 14pt;
+			font-family:"굴림";
+			font-weight: 600;
+         }
+         select{
+			width : 200px;
+			height : 25px;
+         }
+         input[type='text']{
+         	width : 300px;
+         	height : 25px;
+         }
+		textarea{
+			width : 500px;
+         	height : 350px;
+         	resize : none;
+
+		}
+		table, th, td{
+			border-collapse: collapse;
+			padding : 1px 3px;
+			text-align : center;
+			width : 30%;
+			margin : auto;
+		}
+		table, th{
+			border: 1px solid grey;
+		}
+		#infoRw{
+			background-color : white;
+			font-size : 12px;
+			font-weight : 100;
+			position : absolute;
+			top : 170px;
+			left : 500px;
+		}
+		.ui-datepicker{
+			font-size: 25px;
+			width: 245px;
+		}
+		#ui-datepicker-div, #prj_due{
+			width : 300px;
+		}
+		.btnClass1, .btnPrev, .btnNext, #btnSave{
+ 			background-color : white;
+			border : 0;
+			outline : 0;
+			font-weight : 400;
+			font-size : 20px;
+		}
+		.btnClass1{
+			width : 33%;
+			height : 50px;
+			border : 1px solid grey;	
+			margin : 0;		
+		}
+		#prevSpan{
+			position : absolute;
+			top : 50%;
+			left : 100px;
+		}
+		#nextSpan{
+			position : absolute;
+			top : 50%;
+			right : 100px;
+		}
+		#btnSave{
+			border : 1px solid grey;
+			padding : 5px;
+			background-color : lightblue;
+		}
       </style>
    </head>
    <body>
-<%--        <jsp:include page="loginBox.jsp" />
-      <jsp:include page="mainFrame.jsp" /> --%>
-      <form name ="prj_write" action="prj_write" method="post" enctype="multipart/form-data">
-         <input type="button" onclick="click1()" value="1단계">
-         <input type="button" onclick="click2()" value="2단계">
-         <input type="button" onclick="click3()" value="3단계">
+   		<jsp:include page="loginBox.jsp" />
+		<jsp:include page="mainFrame.jsp" />
+		<form name ="prj_write" action="prj_write" method="post" enctype="multipart/form-data">
+		
+		
+         <input type="button" class="btnClass1" id="btn1" onclick="click1()" value="1단계">
+         <input type="button" class="btnClass1" id="btn2" onclick="click2()" value="2단계">
+         <input type="button" class="btnClass1" id="btn3" onclick="click3()" value="3단계">
+         
+         <!-- 페이지에 상관없이 버튼을 담은 span을 가장 위로 띄워줌 -->
+         <span id="prevSpan">
+         	<input type="button" class="btnPrev" onclick="prevBtn()" value="◀ 이전단계">
+         </span>
+         <span id="nextSpan">
+         	<input type="button" class="btnNext" onclick="nextBtn()" value="다음단계 ▶">
+         	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+         	&nbsp &nbsp &nbsp &nbsp<input type="button" id="btnSave" onclick="save()" value="저장"/>
+         </span>
+         
+         
          
          <!-- 1단계 -->
-         <div id="page1">
-            카테고리 : <select name="prj_cat"> 
+         <br/><div id="page1">
+            <br/>카테고리 : <select name="prj_cat"> 
                <option value="카테고리 선택">카테고리 선택</option>
                <option value="문화·예술">문화·예술</option>
                <option value="푸드">푸드</option>
@@ -38,25 +132,28 @@
                <option value="여행·레저">여행·레저</option>
                <option value="생활·리빙">생활·리빙</option>
                <option value="소셜·캠페인"> 소셜·캠페인</option>
-            </select><br/>
-            프로젝트 이름 : <input type="text" name="prj_title" onkeyup="chkword(this, 500)" placeholder="30자 이내를 추천합니다."><br/>
-            프로젝트 소개글 : <textarea rows="5" name="prj_content" onkeyup="conChkword(this, 1000)" placeholder="1000자까지 입력 가능합니다."></textarea><br/>
-            사진 : <input type="file" id="prj_photo" name="prj_photo" onchange="imgPhotoChk(this)"/>
+            </select>
+            <br/><br/>프로젝트 이름 : <input type="text" name="prj_title" onkeyup="chkword(this, 500)" placeholder="                        30자 이내를 추천합니다."><br/>
+            <br/>프로젝트 소개글 : <br/><textarea rows="5" name="prj_content" onkeyup="conChkword(this, 1000)"
+            		placeholder="                       1000자까지 입력 가능합니다."></textarea><br/>
+            <br/>사진 : <input type="file" id="prj_photo" name="prj_photo" onchange="imgPhotoChk(this)"/>
             <input type="text" id="testPhoto" readOnly/>
          </div>
          
          <!-- 2단계 -->
          <div id="page2">
-            목표금액 : <input type="text" name="prj_goal" onkeyPress="onlyNum(this)"/>(밥)<br/>
-            마감일 : <input type="text" id="prj_due" name="prj_due" readOnly/><br/>
-            <div id="one"><!-- 리워드 -->
+            <br/>목표금액 : <input type="text" name="prj_goal" onkeyPress="onlyNum(this)"/>(밥)<br/>
+            <br/><div id="one"><!-- 리워드 -->
                <table>
                   <tr>
-                     <td>리워드 아이템<br/><input type="text" id="rw_name" name="rw_name" onkeyup="chkword(this, 200)"/></td>
-                     <td>리워드 최소금액<br/><input type="text" onkeyPress="onlyNum(this)" onkeyup="chkword(this, 10)" /></td>
+                     <td colspan="2">리워드 아이템<br/><input type="text" id="rw_name" name="rw_name" onkeyup="chkword(this, 200)"/></td>
+				</tr>
+				<tr>
+				     <td>리워드 최소금액<br/><input type="text" onkeyPress="onlyNum(this)" onkeyup="chkword(this, 10)" /></td>
                      <td>리워드 최대금액<br/><input type="text" onkeyPress="onlyNum(this)" onkeyup="chkword(this, 10)" /></td>
-                     </tr>
-               </table>
+				</tr>
+               </table>          
+               
             </div>
             <div id="infoRw">
                리워드 안내<br/><br/>
@@ -74,7 +171,8 @@
          
          <!-- 3단계 -->
          <div id="page3">
-            은행 : <select name="prj_bank">
+            
+            <br/>은행 : <select name="prj_bank">
                <option value="은행 선택">은행 선택</option>
                <option value="국민은행">국민은행</option>
                <option value="신한은행">신한은행</option>
@@ -83,14 +181,10 @@
                <option value="우리은행">우리은행</option>
                <option value="씨티은행">씨티은행</option>   
             </select><br/>
-            계좌번호 : <input type="text" name="prj_account" onkeyup="chkword(this, 100)" onkeyPress="hypNum(this)" placeholder="숫자와 '-'만 입력 가능합니다."/><br/>
+           <br/><br/>계좌번호 : <input type="text" name="prj_account" onkeyup="chkword(this, 100)" onkeyPress="hypNum(this)" placeholder="                  숫자와 '-'만 입력 가능합니다."/><br/>
+            <br/><br/>마감일 : <input type="text" id="prj_due" name="prj_due" readOnly/><br/>
             <input type="hidden" name="pd_id" value="${sessionScope.loginId}"/><!-- 로그인 아이디 저장 -->
          </div>
-
-         <input type="button" onclick="prevBtn()" value="이전단계">
-         <input type="button" onclick="nextBtn()" value="다음단계">
-         
-         <input type="button" onclick="save()" value="저장"/>
       </form>
    </body>
    <script>
@@ -146,6 +240,9 @@
          $("#page3").hide();
          $("#page1").show();
          console.log("click1 작동");
+         $("#btn1").css("background-color", "skyblue");
+         $("#btn2").css("background-color", "white");
+         $("#btn3").css("background-color", "white");
       }
       function click2(){
          pageNum=2;
@@ -153,6 +250,9 @@
          $("#page3").hide();
          $("#page2").show();
          console.log("click2 작동");
+         $("#btn1").css("background-color", "white");
+         $("#btn2").css("background-color", "skyblue");
+         $("#btn3").css("background-color", "white");
       }
       function click3(){
          pageNum=3;
@@ -160,20 +260,29 @@
          $("#page2").hide();
          $("#page3").show();
          console.log("click3 작동");
+         $("#btn1").css("background-color", "white");
+         $("#btn2").css("background-color", "white");
+         $("#btn3").css("background-color", "skyblue");
       }
-      
+
       /*리워드*/
       var arrRw=[];//리워드 담을 배열 선언
       var tCnt=1;//리워드 박스 개수
-      var htmlRw = "<table><tr><td><input type='text' name='rw_name' onkeyup='chkword(this, 200)'>"+
-      "</td><td><input type='text' onkeyPress='onlyNum(this)' onkeyup='chkword(this, 10)'>"+
-      "</td><td><input type='text' onkeyPress='onlyNum(this)' onkeyup='chkword(this, 10)'>"+
+      var htmlRw = "<table><tr><td colspan='2'>리워드 아이템<br/><input type='text' name='rw_name' onkeyup='chkword(this, 200)'>"+
+      "</td></tr><tr><td>리워드 최소금액<input type='text' onkeyPress='onlyNum(this)' onkeyup='chkword(this, 10)'>"+
+      "</td><td>리워드 최대금액<input type='text' onkeyPress='onlyNum(this)' onkeyup='chkword(this, 10)'>"+
       "</td></tr></table>";
 
-      
-      $("#rw_name").hover(function(){
+      //리워드 도움말
+      $("#rw_name").hover(function(e){
+          $("#infoRw").show();
+          mouseX = e.pageX;
+          mouseY = e.pageY;
+          $("#infoRw").css("left", mouseX+"px").css("top", mouseY+"px");
+
+          
          console.log("리워드 안내");
-         $("#infoRw").show();   
+  
       },function(){
          $("#infoRw").hide();
       });
@@ -197,25 +306,37 @@
             tCnt=1;
          }
       }
+      
+      
+      
+      
+      
+      function rwChk(){
+          /* 리워드 저장부분 */
+          $('td').find('input').each(function(i, e){
+             console.log("리워드 : "+$(this).val());
+             if($(this).val() == ""){//리워드 null일 경우
+                selRw = $(this);          
+                chkval = "Y";
+                alert("리워드에는 공백이 들어갈 수 없습니다.");
+                click2();
+                selRw.focus();
+                return false;//여러번 중복해서 띄우지 않게
+             }else{//리워드 null 아닐경우
+                arrRw.push($(this).val());//배열에 담기
+                console.log(arrRw);
+                $("#arrRwSave").val(arrRw);//hidden에 담기
+             }
+
+          });
+      }
+
 
       function save(){
          var chkval="";//null인지 체크하고 담는 변수
          var selRw="";//this를 담는 변수. 후에 focus위해 설정
          var fileSize;//사진 크기
          var maxSize = 5 * 1024 * 1024;//5MB 사진 최대 크기
-
-         /* 리워드 저장부분 */
-         $('td').find('input').each(function(i, e){
-            console.log("리워드 : "+$(this).val());
-            if($(this).val() == ""){//리워드 null일 경우
-               selRw = $(this);          
-               chkval = "Y";
-               return false;//여러번 중복해서 띄우지 않게
-            }else{//리워드 null 아닐경우
-               arrRw.push($(this).val());//배열에 담기
-            }
-         }); 
-         $("#arrRwSave").val(arrRw);//hidden에 담기
 
          /*null값 없도록 확인*/                 
          if($("select[name='prj_cat']").val()=="카테고리 선택"){//카테고리
@@ -254,14 +375,11 @@
             $("input[name='prj_goal']").focus();
             click2();
             console.log("photo 값 : "+$("input[name='prj_photo']").val());
-         }else if($("input[name='prj_due']").val()==""){//마감일
-            alert("프로젝트 마감일을 설정해주세요!");
-            $("input[name='prj_due']").focus();
-            click2();
          }else if(chkval == "Y"){
             alert("리워드는 공백이 들어갈 수 없습니다.");
             click2();
-            selRw.focus();           
+            selRw.focus();
+            return false;
          }else if($("select[name='prj_bank']").val()=="은행 선택"){//은행
             alert("입금 받으실 은행명을 설정해주세요!");
             $("input[name='prj_bank']").focus();
@@ -270,9 +388,16 @@
             alert("입금 받으실 은행의 계좌번호를 입력해주세요!");
             $("input[name='prj_account']").focus();
             click3();
+         }else if($("input[name='prj_due']").val()==""){//마감일
+             alert("프로젝트 마감일을 설정해주세요!");
+             $("input[name='prj_due']").focus();
+             click3();
          }else{
+        	 arrRw=[];
+        	 rwChk();
+        	 return false;
             if(confirm("저장하시겠습니까?")){
-            document.prj_write.submit(); //조건에 안걸리면 submit
+                document.prj_write.submit(); //조건에 안걸리면 submit
             }else{
                alert("취소되었습니다.");
             }
@@ -357,14 +482,20 @@
             return true;
          } else {
             event.preventDefault(); 
+			alert("숫자만 입력해주세요!'");
+            return false;
          } 
       }
       /*숫자와 하이픈 넣기*/
-      function hypNum(obj){
+      function hypNum(){
+    	  console.log(event);
+    	  console.log(this.event);
          if ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 45) { /*숫자키와 하이픈 입력 */
             return true;
          } else {
             event.preventDefault();
+			alert("숫자와 '-'만 입력해주세요!'");
+            return false;			 
          } 
       }
       

@@ -13,6 +13,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import semi.one.dto.CoinDTO;
 import semi.one.dto.ProjectDTO;
 import semi.one.dto.RewardDTO;
 import semi.one.dto.SponsorDTO;
@@ -33,99 +34,195 @@ public class ProjectDAO {
          e.printStackTrace();
       }   
    }
-   
-   //보네 - 프로젝트 작성
+	 //보네 - 프로젝트 작성
+	
+   public int prj_write(ProjectDTO prjDTO) {
+      //1. INSERT 첫번째
+      int success = 0;
+      String sql = "INSERT INTO project (prj_no, pd_id, prj_cat, prj_title, prj_photo, prj_content, prj_goal, prj_curr, prj_bank,"
+            + "prj_account, prj_due, prj_date, prj_picks, prj_state, prj_comment)"
+            + "VALUES (prj_no_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, SYSDATE, 0, '대기', null)";
+      
+      
+      try {
+         //1.
+         System.out.println("쿼리문 대입중");
+         ps=conn.prepareStatement(sql);
+         ps.setString(1, prjDTO.getPd_id());
+         ps.setString(2, prjDTO.getPrj_cat());
+         ps.setString(3, prjDTO.getPrj_title());
+         ps.setString(4, prjDTO.getPrj_photo());
+         ps.setString(5, prjDTO.getPrj_content());
+         ps.setLong(6, prjDTO.getPrj_goal());
+         ps.setString(7, prjDTO.getPrj_bank());
+         ps.setString(8, prjDTO.getPrj_account());
+         ps.setDate(9, prjDTO.getPrj_due()); 
+         success = ps.executeUpdate();
+         
 
-      public int prj_write(ProjectDTO prjDTO) {
-         //1. INSERT 첫번째
-         int success = 0;
-         String sql = "INSERT INTO project (prj_no, pd_id, prj_cat, prj_title, prj_photo, prj_content, prj_goal, prj_curr, prj_bank,"
-               + "prj_account, prj_due, prj_date, prj_picks, prj_state, prj_comment)"
-               + "VALUES (prj_no_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, SYSDATE, 0, '승인대기', null)";
+      } catch (SQLException e) {
+         e.printStackTrace();
+         return 0;
+      }//자원반납 나중에
+      return success;
+   }
+   //2.
+   public String prj_no(String id) {
+      String rsStr = "";
+      //쿼리 및 ps 준비
+      String sql = "SELECT A.* FROM (SELECT prj_no FROM project WHERE pd_id=? ORDER BY prj_date DESC)A WHERE ROWNUM =1";
+      try {
+         
+         ps=conn.prepareStatement(sql);
+/*         RewardDTO rwDTO = new RewardDTO();*/
+         //System.out.println("아이디 받아올수있는지 확인 : "+(String)request.getSession().getAttribute(id));
+         ps.setString(1, id);
+         
+
+         rs = ps.executeQuery();
+         //rs에서 값 추출
+         if(rs.next()) {
+            //dto에 담기
+            rsStr = rs.getString("prj_no");
+            
+            
+         }
          
          
-         try {
-            //1.
-            System.out.println("쿼리문 대입중");
-            ps=conn.prepareStatement(sql);
-            ps.setString(1, prjDTO.getPd_id());
-            ps.setString(2, prjDTO.getPrj_cat());
-            ps.setString(3, prjDTO.getPrj_title());
-            ps.setString(4, prjDTO.getPrj_photo());
-            ps.setString(5, prjDTO.getPrj_content());
-            ps.setLong(6, prjDTO.getPrj_goal());
-            ps.setString(7, prjDTO.getPrj_bank());
-            ps.setString(8, prjDTO.getPrj_account());
-            ps.setDate(9, prjDTO.getPrj_due()); 
-            success = ps.executeUpdate();
-            
-
-         } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-         }//자원반납 나중에
-         return success;
-      }
-      //2.
-      public String prj_no(String id) {
-         String rsStr = "";
-         //쿼리 및 ps 준비
-         String sql = "SELECT A.* FROM (SELECT prj_no FROM project WHERE pd_id=? ORDER BY prj_date DESC)A WHERE ROWNUM =1";
-         try {
-            
-            ps=conn.prepareStatement(sql);
-   /*         RewardDTO rwDTO = new RewardDTO();*/
-            //System.out.println("아이디 받아올수있는지 확인 : "+(String)request.getSession().getAttribute(id));
-            ps.setString(1, id);
-            
-
-            rs = ps.executeQuery();
-            //rs에서 값 추출
-            if(rs.next()) {
-               //dto에 담기
-               rsStr = rs.getString("prj_no");
-               
-               
-            }
-            
-            
-         } catch (SQLException e) {
-            e.printStackTrace();
-            return rsStr;
-         }//자원반납 나중에
+      } catch (SQLException e) {
+         e.printStackTrace();
          return rsStr;
-      }
+      }//자원반납 나중에
+      return rsStr;
+   }
+   
+   
+   
+   //3.
+   public void rw_write(RewardDTO rwDTO) {//rwsuccess int로 반환하던거 지웠음
+      //INSERT
+      String sql = "INSERT INTO reward (rw_no, prj_no, rw_item, rw_min, rw_max) "
+            + "VALUES (rw_no_seq.NEXTVAL, ?, ?, ?, ?)";
       
-      
-      
-      //3.
-      public void rw_write(RewardDTO rwDTO) {//rwsuccess int로 반환하던거 지웠음
-         //INSERT
-         String sql = "INSERT INTO reward (rw_no, prj_no, rw_item, rw_min, rw_max) "
-               + "VALUES (rw_no_seq.NEXTVAL, ?, ?, ?, ?)";
+    
+      try {
+         
+         System.out.println("리워드 쿼리문 만드는중");
+         ps=conn.prepareStatement(sql);
+         ps.setInt(1, rwDTO.getPrj_no());
+         ps.setString(2, rwDTO.getRw_item());//리워드이름
+         ps.setInt(3, rwDTO.getRw_min());//최소금액
+         ps.setInt(4, rwDTO.getRw_max());//최대금액
+         ps.executeUpdate();
+         
+
          
          
-         try {
-            
-            System.out.println("리워드 쿼리문 만드는중");
-            ps=conn.prepareStatement(sql);
-            ps.setInt(1, rwDTO.getPrj_no());
-            ps.setString(2, rwDTO.getRw_item());//리워드이름
-            ps.setInt(3, rwDTO.getRw_min());//최소금액
-            ps.setInt(4, rwDTO.getRw_max());//최대금액
-            ps.executeUpdate();
-            
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }//여러번 돌거라서 자원반납은 나중에.
+   }
+	
+	/*보네 - 상세보기 추가 - 투자자 현재 가상화폐 잔액 가져오기*/
+	public int getTotal(String loginId) {
+	
+		int total=0;
+	
+		String sql = "SELECT coin_don, coin_list FROM coin WHERE id=?";
+	      try {
+	         ps=conn.prepareStatement(sql);
+	         ps.setString(1, loginId);
+	         rs = ps.executeQuery();
+			while(rs.next()){
+				if(rs.getString("coin_list").equals("투자")) {
+					total -= rs.getInt("coin_don");
+	
+				}else{
+					total += rs.getInt("coin_don");
+	
+				}
+			}
+	
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         resClose();
+	      }
+	      return total;
+	   }
+	
+	
+	/*보네 - 투자하기1 - 투자자 투자내역 추가하기*/
+	//투자 금액 DTO말고 여기서 변수로 저장해서 빼주겠음
+	int spon_don = 0;
+	public int sponsor(SponsorDTO sponDTO) {
+		spon_don = sponDTO.getSpon_don();
+		System.out.println("spon_don시험중 : "+spon_don);
+	      int success = 0;
+	      String sql = "INSERT INTO sponsor (spon_no, prj_no, id, spon_item, spon_don, spon_date) VALUES(SPON_NO_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE)";
+	
+	      try {
+	         System.out.println("sponsor 메서드 쿼리문 대입중");
+	         ps=conn.prepareStatement(sql);
+	         ps.setInt(1, sponDTO.getPrj_no());
+	         ps.setString(2, sponDTO.getId());
+	         ps.setString(3, sponDTO.getSpon_item());
+	         ps.setInt(4, sponDTO.getSpon_don());
+	         success = ps.executeUpdate();
+	
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return success;
+	      }//자원반납 나중에
+		return success;
+	}
+	
+	/*보네 - 투자하기2 - 가상화폐 투자내역 추가하기*/
+	public int sponCoin(CoinDTO coinDTO) {
+	      int success = 0;
+	      String sql = "INSERT INTO coin (id, coin_list, coin_don, coin_date) VALUES(?, '투자', ?, SYSDATE)";
+	
+	      try {
+	
+	         System.out.println("sponCoin 메서드 쿼리문 대입중");
+	         ps=conn.prepareStatement(sql);
+	         ps.setString(1, coinDTO.getId());
+	         ps.setInt(2, coinDTO.getCoin_don());
+	
+	         success = ps.executeUpdate();
+	
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return 0;
+	      }//자원반납 나중에
+		return success;
+	}
+	
+	
+	/*보네 - 투자하기3 - 가상화폐 투자내역 추가하기*/
+	public int spon_prj(int prj_no) {
+	      int success = 0;
+	      String sql = "UPDATE project SET prj_curr =(prj_curr+?) WHERE prj_no=?";
+	
+	      try {
+	         System.out.println("spon_prj 메서드 쿼리문 대입중");
+	         ps=conn.prepareStatement(sql);
+	         ps.setInt(1, spon_don);
+	         ps.setInt(2, prj_no);
+	
+	         success = ps.executeUpdate();
+	
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	         return 0;
+	      }finally {
+			resClose();
+	      }
+		return success;
+	}
 
-            
-            
-         } catch (SQLException e) {
-            e.printStackTrace();
-         }//여러번 돌거라서 자원반납은 나중에.
-      }
 
-   
-
-   
    /**김응주 - 테스트용 리스트메서드 */
    public ArrayList<ProjectDTO> list() {
       
@@ -658,6 +755,7 @@ public class ProjectDAO {
    
    /*자원반납*/
    public void resClose() {
+	   System.out.println("자원반납 실행");
       try {
          if(rs != null) {
             rs.close();
@@ -951,31 +1049,89 @@ public class ProjectDAO {
       return map;
       
    }
-   
 
-   public ArrayList<ProjectDTO> adminSuccessList() {
-      ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();      
-      String sql="SELECT * FROM project WHERE prj_state ='성공'";
+	public ArrayList<ProjectDTO> adminSuccessList() {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
+		String sql = "SELECT * FROM project WHERE prj_state ='성공'";
 
-      try {
-         ps = conn.prepareStatement(sql);   
-         rs = ps.executeQuery();               
-         while(rs.next()) {
-            ProjectDTO dto = new ProjectDTO();
-            dto.setPd_id(rs.getString("pd_id"));
-            dto.setPrj_title(rs.getString("prj_title"));
-            dto.setPrj_account(rs.getString("prj_account"));
-            dto.setPrj_bank(rs.getString("prj_bank"));
-            dto.setPrj_curr(rs.getInt("prj_curr"));
-            list.add(dto);
-         }         
-      } catch (SQLException e) {
-         System.out.println(e.toString());
-         return null;
-      }finally {
-         resClose();
-      }      
-      return list;
-   }
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPd_id(rs.getString("pd_id"));
+				dto.setPrj_title(rs.getString("prj_title"));
+				dto.setPrj_account(rs.getString("prj_account"));
+				dto.setPrj_bank(rs.getString("prj_bank"));
+				dto.setPrj_curr(rs.getInt("prj_curr"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return null;
+		} finally {
+			resClose();
+		}
+		return list;
+	}
+
+	public int adminApprovalPlus(ProjectDTO prjDTO) {
+		int success = 0;
+		String sql = "INSERT INTO deposit (dpo_no, prj_no, dpo_don, dpo_date) VALUES(DPO_NO_SEQ.NEXTVAL, ?, ?, SYSDATE)";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, prjDTO.getPrj_no());
+			ps.setInt(2, (int) prjDTO.getPrj_curr());
+			success = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return success;
+		} finally {
+			resClose();
+		}
+		return success;
+	}
+
+	public int adminUpdate(int prj_no) {
+		int success = 0;
+		String sql = "UPDATE project SET prj_state='지급완료' WHERE prj_no=?";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, prj_no);
+			success = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return success;
+		} finally {
+			resClose();
+		}
+		return success;
+	}
+
+	public ArrayList<ProjectDTO> adminApprovalList() {
+		ArrayList<ProjectDTO> list = new ArrayList<ProjectDTO>();
+		String sql = "SELECT * FROM deposit";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
+				dto.setDpo_don(rs.getInt("dpo_don"));
+				dto.setDpo_date(rs.getDate("dpo_date"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			return null;
+		} finally {
+			resClose();
+		}
+		return list;
+	}
 
 }
