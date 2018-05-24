@@ -201,7 +201,7 @@ public class BoardService {
 			msg="문의 등록 성공";
 		}
 		request.setAttribute("msg", msg);
-		RequestDispatcher dis= request.getRequestDispatcher("projectDetail.jsp");
+		RequestDispatcher dis= request.getRequestDispatcher("detail?prj_no="+prj_no);
 		dis.forward(request, response);
 	}
 	
