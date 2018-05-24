@@ -91,11 +91,17 @@
          top : 50%;
          right : 100px;
       }
+      #savebtn{
+      	position : absolute;
+         top : 80%;
+         right : 100px;
+      }
       #btnSave{
          border : 1px solid grey;
          padding : 5px;
          background-color : lightblue;
       }
+      
       </style>
    </head>
    <body>
@@ -109,15 +115,15 @@
          <input type="button" class="btnClass1" id="btn3" onclick="click3()" value="3단계">
          
          <!-- 페이지에 상관없이 버튼을 담은 span을 가장 위로 띄워줌 -->
-         <span id="prevSpan">
+         <div id="prevSpan" style="display: none">
             <input type="button" class="btnPrev" onclick="prevBtn()" value="◀ 이전단계">
-         </span>
-         <span id="nextSpan">
+         </div>
+         <div id="nextSpan">
             <input type="button" class="btnNext" onclick="nextBtn()" value="다음단계 ▶">
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            &nbsp &nbsp &nbsp &nbsp<input type="button" id="btnSave" onclick="save()" value="저장"/>
-         </span>
-         
+         </div>
+         <div id="savebtn">
+            <input type="button" id="btnSave" onclick="save()" value="저장"/>
+         </div>
          
          
          <!-- 1단계 -->
@@ -213,11 +219,14 @@
       /* 1단계~3단계  페이지 설정*/
       var pageNum = 1;
       function prevBtn(){
+    	  nextSpan.style.display = "block";
          pageNum --;
          if(pageNum<1){
             pageNum=1;
-         }else if(pageNum == 1){
+         }
+         if(pageNum == 1){
             click1();
+            prevSpan.style.display = "none";
          }else if(pageNum == 2){
             click2();
          }else if(pageNum == 3){
@@ -225,15 +234,19 @@
          }
       }
       function nextBtn(){
+    	 prevSpan.style.display = "block";
          pageNum ++;
          if(pageNum>3){
             pageNum=3;
-         }else if(pageNum == 1){
-            click1();
+         }
+         if(pageNum == 1){
+            click1(); 
          }else if(pageNum == 2){
             click2();
+            
          }else if(pageNum == 3){
             click3();
+            nextSpan.style.display = "none";
          }
       }
       function click1(){
@@ -365,11 +378,9 @@
              click1();
           }else if($("#prj_photo").val()=="" && $("#testPhoto").val()==""){//사진 없으면
              if(confirm("사진을 등록하지 않을 경우 기본 이미지로 저장됩니다. 계속하시겠습니까?")){
-                $("#prj_photo").hide();
-                $("#testPhoto").show();
-                click1();
-                $("#testPhoto").val("테스트 이미지로 저장됩니다.");
-                $("#testPhoto").focus();
+                $("#testPhoto").val("기본 이미지로 저장됩니다.");
+                alert("기본 이미지로 저장되었습니다. 저장 버튼을 다시 클릭해주세요");
+                return false;
              }else{
                 click1();
                 $("input[name='prj_photo']").focus();
