@@ -71,6 +71,23 @@ public class MemberDAO {
       return over;
       
    }
+   
+   public boolean overlayResist(String phone) {
+	   
+	   boolean over = false;
+	      String sql="SELECT id FROM member WHERE phone=?";
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setString(1, phone);
+	         rs = ps.executeQuery();
+	         over = rs.next();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         resClose();
+	      }
+	      return over;
+	}
 
    //로그인
    public boolean login(String id, String pw) {
@@ -251,4 +268,6 @@ public class MemberDAO {
             e.printStackTrace();
          }
       }
+
+	
 }

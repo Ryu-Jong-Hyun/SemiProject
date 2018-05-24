@@ -32,7 +32,7 @@
 			}
 			.qnaPlace{
             position : absolute;
-            margin-top  : 800px;
+            margin-top  : 900px;
             width : 100%;
          }
 		</style>
