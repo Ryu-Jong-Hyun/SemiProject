@@ -8,24 +8,43 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
           	table, td, th{
-            	border: 1px solid black;
             	border-collapse: collapse;
             	padding: 5px 10px;
             	text-align: center;
             }
-            input.inputTxt{
-            	width: 100%;
+            .inputTxt{
+            	width: 300px;
+				height: 50px;
+				font-size: 25px;
+            }
+            #updatePw{
+            	font-size: 15px;
+            }
+            #udbox{
+			position: absolute;
+			left: 38%;
+			top: 200px;
+			}
+			#idtxt{
+				width: 215px;
+				height: 50px;
+				font-size: 25px;
+			}
+            #memberUpdate{
+				height: 40px;
+				font-size: 15px;
             }
         </style>
     	</head>
     	<body>
     	<jsp:include page="loginBox.jsp" />
     	<jsp:include page="mainFrame.jsp" />
+    	<div id="udbox">
     		<table>
     			<tr>
     				<td>아이디</td>
     				<td>
-    					<input type="text" name="userId" value="${info.id}"  readonly="readonly"/>
+    					<input  class="inputTxt" type="text" name="userId" value="${info.id}"  readonly="readonly"/>
     				</td>
     			</tr>
     			<tr>
@@ -34,7 +53,7 @@
     			</tr>
     			<tr>
     				<td>이름</td>
-    				<td><input class="inputTxt" type="text" name="userName" value="${info.name}"/></td>
+    				<td><input class="inputTxt" type="text" name="userName" value="${info.name}" onkeyup="chkword(this, 5)"/></td>
     			</tr>
     			<tr>
     				<td>이메일</td>
@@ -42,7 +61,7 @@
     			</tr>
     			<tr>
     				<td>폰 번호</td>
-    				<td><input class="inputTxt" type="text" name="phone" value="${info.phone}"/></td>
+    				<td><input class="inputTxt" type="text" name="phone" value="${info.phone}" onkeypress="hypNum()"/></td>
     			</tr>
     			<tr>
     				<td>주소</td>
@@ -54,6 +73,7 @@
     				</td>
     			</tr>
     		</table>
+    		</div>
 	</body>
 	<script>
 		var obj={};//초기화	
@@ -108,6 +128,49 @@
 			var w = window.open("about:blank","updatePwPop","width=500, height=500, left=300, top=100");
 			w.location.href = "updatePwPop.jsp?id="+$("input[name='userId']").val();
 		});
+
+		 function chkword(obj, maxByte) {//글자수 조건 제한
+	          var strValue = obj.value;
+	          var strLen = strValue.length;
+	          var totalByte = 0;
+	          var len = 0;
+	          var oneChar = "";
+	          var str2 = "";
+	          for (var i = 0; i < strLen; i++) {
+	             oneChar = strValue.charAt(i);
+	             if (escape(oneChar).length > 0) {
+	                totalByte += 1;
+	             }
+	             // 입력한 문자 길이보다 넘치면 잘라내기 위해 저장
+	             if (totalByte <= maxByte) {
+	                len = i + 1;
+	             }
+	          }
+	          // 넘어가는 글자는 자른다.
+	          if (totalByte > maxByte) {
+	             alert("허용 가능한 글자수를 초과하셨습니다.");
+	             str2 = strValue.substr(0, len);
+	             obj.value = str2;
+	          }
+
+	       }
+	         
+        /*숫자와 하이픈 넣기*/
+        function hypNum(){
+       	if (window.event) // IE코드
+       		var code = window.event.keyCode;
+       	else // 타브라우저
+       		var code = Ev.which;
+     		console.log(code);
+       	
+           if ((code >= 48 && code <= 57) || code == 45) { /*숫자키와 하이픈 입력 */
+              return true;
+           } else {
+              event.preventDefault();
+              alert("숫자와 '-'만 입력 가능합니다.");
+              return false;
+           } 
+        }         
 		
 		function ajaxCall(obj){
 			$.ajax(obj);

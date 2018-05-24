@@ -19,7 +19,7 @@
 	left:500px;
 	}
 	#ta1{
-				background-color: lime;
+				background-color: #2BA5BA;
 			}
 	</style>
 </head>

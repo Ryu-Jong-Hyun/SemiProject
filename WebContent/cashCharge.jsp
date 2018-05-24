@@ -8,24 +8,38 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
 		 table, td, th{
-            	border: 1px solid black;
             	border-collapse: collapse;
             	padding: 5px 10px;
             	text-align: center;
+            	font-size: 25px;
             }
+            #coin {
+				width: 300px;
+				height: 50px;
+				font-size: 25px;
+			}
+			button {
+				font-size: 20px;
+			}
+			#cashbox{
+				position: absolute;
+				left: 45%;
+				top: 300px;
+			}
 		</style>
 	</head>
 	<body>
 		<jsp:include page="myPageTab.jsp" />
+		<div id="cashbox">
 		<table>
 			<tr>
-				<th>충전할 금액</th>
-				<td><input type="text" name="money"/>원</td>
+				<td><input id="coin" type="text" name="money" placeholder="충전 금액"/>원</td>
 			</tr>
 			<tr>
-				<td style="text-align: center;" colspan="2"><button id="charge">충전</button></td>
+				<td style="text-align: center;"><button id="charge">충전</button></td>
 			</tr>
 		</table>
+		</div>
 	</body>
 	<script>
 		var obj={};//초기화	

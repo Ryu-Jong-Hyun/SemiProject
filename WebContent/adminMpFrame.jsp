@@ -16,6 +16,9 @@
 				background-color: yellow;
 				float: left;
 			}
+			#adminMp a{
+				color: white;
+			}
 			#loginId{
 				position: absolute;
 				top: 20px;
@@ -29,7 +32,7 @@
 			#me{
 				position:relative;
 				top: 200px;
-				background-color: aqua;
+				background-color: #000042;
 			}
 			#me .cat{
 				padding: 20px 0;

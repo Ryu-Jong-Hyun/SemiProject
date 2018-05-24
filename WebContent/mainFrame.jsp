@@ -10,14 +10,17 @@
 		.frame{
 			width: 1550px;
 			height: 75px;
-			background-color: aqua;
+			background-color: #000042;
+			color: white;
 			position: relative;
 			min-width: 1600px;
 			max-width: 1600px;
 			right: 8px;
 			bottom: 8px;
 		}
-		
+		a{
+			text-decoration:none;
+		}
 		#list1{
 			position:absolute;
 			left: 10px;
@@ -49,9 +52,8 @@
 			padding: 10px 50px;
 			font-size: large;
 		}
-		a{
-			text-decoration:none;
-			color: black;
+		.frame a{
+			color: white;
 		}
 		</style>
 	</head>
@@ -85,8 +87,6 @@
 			    	</c:otherwise>
 				</c:choose>
 			</ul>
-			<span>&nbsp &nbsp &nbsp &nbsp</span>
-			<a href="updatePrjState">업데이트</a>
 		</div>
 	</div>
 	</body>

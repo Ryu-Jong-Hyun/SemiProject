@@ -18,15 +18,15 @@
 			</tr>
 			<tr>
 				<th>현재 비밀번호</th>
-				<td><input type="password" name="currPw"/></td>
+				<td><input type="password" name="currPw" onkeyup="chkword(this, 20)"/></td>
 			</tr>
 			<tr>
 				<th>변경할 비밀번호</th>
-				<td><input type="password" name="newPw"/></td>
+				<td><input type="password" name="newPw" onkeyup="chkword(this, 20)"/></td>
 			</tr>
 			<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" name="pwChk"/></td>
+				<td><input type="password" name="pwChk" onkeyup="chkword(this, 20)"/></td>
 			</tr>
 			<tr>
     			<td colspan="2">
@@ -76,6 +76,32 @@
 				ajaxCall(obj);
 			}				
 		});
+		
+		 function chkword(obj, maxByte) {//글자수 조건 제한
+	          var strValue = obj.value;
+	          var strLen = strValue.length;
+	          var totalByte = 0;
+	          var len = 0;
+	          var oneChar = "";
+	          var str2 = "";
+	          for (var i = 0; i < strLen; i++) {
+	             oneChar = strValue.charAt(i);
+	             if (escape(oneChar).length > 0) {
+	                totalByte += 1;
+	             }
+	             // 입력한 문자 길이보다 넘치면 잘라내기 위해 저장
+	             if (totalByte <= maxByte) {
+	                len = i + 1;
+	             }
+	          }
+	          // 넘어가는 글자는 자른다.
+	          if (totalByte > maxByte) {
+	             alert("허용 가능한 글자수를 초과하셨습니다.");
+	             str2 = strValue.substr(0, len);
+	             obj.value = str2;
+	          }
+
+	       }
 		
 		function ajaxCall(obj){
 			$.ajax(obj);

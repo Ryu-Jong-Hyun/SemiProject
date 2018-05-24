@@ -9,23 +9,40 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
 			table, td, th, input{
+				border: 1px solid gray;
 			 	text-align: center;
 			 	border: none;
 			}
-			
+			th{
+			font-size: 25px;
+			}
+			.cList{
+				font-size: 20px;
+			}
 			#ta1{
-				background-color: lime;
+				background-color: #2BA5BA;
+			}
+			input{
+			font-size: 20px;
+			}
+			#coinbox{
+				position: absolute;
+				top: 200px;
+				left: 30%;
 			}
 		</style>
 	</head>
 	<body>
 	<jsp:include page="myPageTab.jsp" />
+	<div id="coinbox">
 		<table>
 		<tr>
 			<th colspan="3">잔액 : ${balance} 코인</th>
 		</tr>
+		</tr>
+			<td colspan="3"></td>
 		<tr>
-			
+		<tr>
 			<th>금액</th>
 			<th>날짜</th>
 			<th>유형</th>
@@ -46,6 +63,9 @@
 		</tr>
 		</c:forEach>
 		<tr>
+		</tr>
+			<td colspan="3"></td>
+		<tr>
 			<td colspan="3">
 				<div>	
 					<c:set var="no">${newLo.no}</c:set>
@@ -56,24 +76,25 @@
 					<c:set var="pageCnt">${newLo.pageCnt}</c:set>
 					<c:set var="x">${newLo.x}</c:set>
 					<c:if test="${firstPage!=1}">
-						<a href="coinListForm?no=1"><<</a>
-						<a href="coinListForm?no=${firstPage-1}"><</a>
+						<a class="cList" href="coinListForm?no=1"><<</a>
+						<a class="cList" href="coinListForm?no=${firstPage-1}"><</a>
 					</c:if>
 					<c:if test="${dataCnt!=0}">
 						<c:forEach var="i" begin="1" end="${lastPage-firstPage+1}" step="1">
-							<a href="coinListForm?no=${firstPage+i-1}">${firstPage+i-1}</a>
+							<a class="cList" href="coinListForm?no=${firstPage+i-1}">${firstPage+i-1}</a>
 						</c:forEach>
 					</c:if>
 
 					<c:if test="${dataCnt>(x*lastPage)}">
-						<a href="coinListForm?no=${lastPage+1}">></a>
-						<a href="coinListForm?no=${pageCnt}">>></a>
+						<a class="cList" href="coinListForm?no=${lastPage+1}">></a>
+						<a class="cList" href="coinListForm?no=${pageCnt}">>></a>
 					</c:if>
 				</div>
 			</td>
 			
 		</tr>
 	</table>
+	</div>
 	</body>
 	<script>
 		var msg = "${msg}";

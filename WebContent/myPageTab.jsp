@@ -14,6 +14,9 @@
 				background-color: yellow;
 				float: left;
 			}
+			#mptab a{
+				color: white;
+			}
 			#loginId{
 				position: absolute;
 				top: 20px;
@@ -21,23 +24,23 @@
 				background-color: orange;
 			}
 			#loginId a{
-			border: 1px solid yellow;
+				border: 1px solid yellow;
 			}
 			
 			.ty{
 				position:relative;
 				top: 100px;
 				left: 80px;
-				background-color: aqua;
+				background-color: #000042;
 				padding: 10px;
 			}
 			#ty1{
-				background-color: lime;
+				background-color: #2BA5BA;
 			}
 			#sp,#pd{
 				position:relative;
 				top: 200px;
-				background-color: aqua;
+				background-color: #000042;
 			}
 	
 			.cat{
