@@ -804,6 +804,7 @@ public class ProjectDAO {
 
       try {
          ps = conn.prepareStatement(sql);   
+         
          ps.setString(1, loginId);
          rs = ps.executeQuery();               
          while(rs.next()) {
