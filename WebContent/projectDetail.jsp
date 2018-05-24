@@ -38,6 +38,7 @@
 		</style>
 	</head>
 	<body>
+		<jsp:include page="loginBox.jsp"/> 
 		<jsp:include page="mainFrame.jsp" />
 		<!-- 투자자목록 받아오기(보네) -->
 		<c:forEach items="${sponlist}" var="sponlist">
