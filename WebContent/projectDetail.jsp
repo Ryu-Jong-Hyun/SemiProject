@@ -31,20 +31,10 @@
 				border: none;          
 			}
 			.qnaPlace{
-				position : absolute;
-				display : none;
-				width : 100%;
-				height: 700px;
-			}
-			#qnaTable{
-				border-top: 1px solid black;
-				border-bottom: 1px solid black;
-				padding: 0 10px;
-			}
-			#qnaTable th{
-				margin-top : 20px;
-				padding: 0 40px;
-			}
+            position : absolute;
+            margin-top  : 800px;
+            width : 100%;
+         }
 		</style>
 	</head>
 	<body>
@@ -115,10 +105,10 @@
 		</form><!-- 투자 form 종료 -->
 		<!--윤영 -QnA -->
 		<!-- 문의하기 팝업(div) -->
-<%-- 		<div class="qnaPlace">
+		<div class="qnaPlace">
 			<hr><strong>Q&A</strong><hr>
 			<jsp:include page="qnaBoard.jsp" /> <!-- 리스트&등록하기 -->
-		</div> --%>
+		</div>
 	</body>
 	<script>
 		var spon_item_chk ="";//리워드 아이템 항목 변수
@@ -140,7 +130,7 @@
 			obj.success = function(data){
 				console.log(data);
 				printInfo(data.dto);
-/* 				qnaList(data.qdto); */
+				qnaList(data.qdto);
 			};
 			ajaxCall(obj);
 			function printInfo(info){//상세보기 테이블 출력

@@ -20,6 +20,7 @@
 		}
 		a{
 			text-decoration:none;
+			color: black;
 		}
 		#list1{
 			position:absolute;

@@ -8,41 +8,67 @@
 		<title>아이디 / 비밀번호 찾기</title>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<style>
+			 table, td, th{
+            	border-collapse: collapse;
+            	padding: 5px 10px;
+            	text-align: center;
+            	font-size: 20px;
+            }
 			.search{
 				display: none;
+			}
+			#searchbox{
+				position: absolute;
+				top: 150px;
+				left: 40%;
+			}
+			.sb{
+				font-size: 20px
+			}
+			input{
+				width: 250px;
+				height: 40px;
+				font-size: 20px;
+			}
+			input[type='button']{
+				width: 150px;
+				height: 30px;
+				font-size: 15px;
 			}
 		</style>
 	</head>
 	<body>
 	<jsp:include page="mainFrame.jsp" />
-		<button onclick="showId()">아이디 찾기</button>
-		<button onclick="showPw()">비밀번호 찾기</button>
+	<div id="searchbox">
+		<button class="sb" onclick="showId()">아이디 찾기</button>
+		<button class="sb" onclick="showPw()">비밀번호 찾기</button>
 		<div class="search" id="sId">
-			<h3>아이디 찾기</h3>
+			
 			<table>
+				<tr>
+					<th>아이디 찾기</th>
+				<tr>
             	<tr>
-                	<th>이름</th>
                 	<td>
                 		<input type="text" id="userName" placeholder="name" onkeyup="chkword(this, 5)"/>
                 	</td>
            		</tr>
             	<tr>
-                	<th>폰 번호</th>
                 	<td>
                 		<input type="text" id="phone1" placeholder="phone number" onkeypress="hypNum()"/>
                		</td>
             	<tr>
-                	<td colspan="2">
+                	<td>
                   		<input id="searchId" type="button" value="아이디 찾기"/>
                		</td>
            		</tr>
             	<tr>
-                	<td colspan="2">
+                	<td>
                 	<input id="id" type="text" value="" />
            		</td>
             </tr>
             <tr>
-            	<td colspan="2">
+            	<td>
                     <input onclick="login()" type="button" value="로그인하러 가기"/>
                 </td>
 			</tr>
@@ -50,36 +76,37 @@
 		</div>
 		
 		<div class="search" id="sPw">
-		<h3>비밀번호 찾기</h3>
+		
 		<table>
+			<tr>
+				<th>비밀번호 찾기</th>
+			<tr>
             <tr>
-                <th>아이디</th>
                 <td>
                 	<input type="text" id="userId" placeholder="id" maxlength="11" onkeyup="chkword(this, 10)"/>
                 </td>
            	</tr>
             <tr>
-                <th>폰 번호</th>
                 <td>
                 	<input type="text" id="phone2" placeholder="phone number" onkeypress="hypNum()"/>
                	</td>
             <tr>
             <tr>
-                <th>이메일</th>
                 <td>
                 	<input type="text" id="email" placeholder="email@"/>
                	</td>
             <tr>
-                <td colspan="2">
+                <td>
                   	<input id="searchPw" type="button" value="비밀번호 찾기"/>
                	</td>
 			</tr>
 			<tr>
-            	<td colspan="2">
+            	<td>
                     <input onclick="login()" type="button" value="로그인하러 가기"/>
                 </td>
 			</tr>
         </table>
+		</div>
 		</div>
 	</body>
 	<script>

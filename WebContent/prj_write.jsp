@@ -18,104 +18,104 @@
             display : none;
          }
          #infoRw{
-         	display : none;
+            display : none;
          }
          #page1,#page2,#page3{
-         	border : 1px solid black;
-         	min-width: 700px;
-         	min-height : 570px;
-         	text-align : center;
-			font-size: 14pt;
-			font-family:"굴림";
-			font-weight: 600;
+            border : 1px solid black;
+            min-width: 700px;
+            min-height : 570px;
+            text-align : center;
+         font-size: 14pt;
+         font-family:"굴림";
+         font-weight: 600;
          }
          select{
-			width : 200px;
-			height : 25px;
+         width : 200px;
+         height : 25px;
          }
          input[type='text']{
-         	width : 300px;
-         	height : 25px;
+            width : 300px;
+            height : 25px;
          }
-		textarea{
-			width : 500px;
-         	height : 350px;
-         	resize : none;
+      textarea{
+         width : 500px;
+            height : 350px;
+            resize : none;
 
-		}
-		table, th, td{
-			border-collapse: collapse;
-			padding : 1px 3px;
-			text-align : center;
-			width : 30%;
-			margin : auto;
-		}
-		table, th{
-			border: 1px solid grey;
-		}
-		#infoRw{
-			background-color : white;
-			font-size : 12px;
-			font-weight : 100;
-			position : absolute;
-			top : 170px;
-			left : 500px;
-		}
-		.ui-datepicker{
-			font-size: 25px;
-			width: 245px;
-		}
-		#ui-datepicker-div, #prj_due{
-			width : 300px;
-		}
-		.btnClass1, .btnPrev, .btnNext, #btnSave{
- 			background-color : white;
-			border : 0;
-			outline : 0;
-			font-weight : 400;
-			font-size : 20px;
-		}
-		.btnClass1{
-			width : 33%;
-			height : 50px;
-			border : 1px solid grey;	
-			margin : 0;		
-		}
-		#prevSpan{
-			position : absolute;
-			top : 50%;
-			left : 100px;
-		}
-		#nextSpan{
-			position : absolute;
-			top : 50%;
-			right : 100px;
-		}
-		#btnSave{
-			border : 1px solid grey;
-			padding : 5px;
-			background-color : lightblue;
-		}
+      }
+      table, th, td{
+         border-collapse: collapse;
+         padding : 1px 3px;
+         text-align : center;
+         width : 30%;
+         margin : auto;
+      }
+      table, th{
+         border: 1px solid grey;
+      }
+      #infoRw{
+         background-color : white;
+         font-size : 12px;
+         font-weight : 100;
+         position : absolute;
+         top : 170px;
+         left : 500px;
+      }
+      .ui-datepicker{
+         font-size: 25px;
+         width: 245px;
+      }
+      #ui-datepicker-div, #prj_due{
+         width : 300px;
+      }
+      .btnClass1, .btnPrev, .btnNext, #btnSave{
+          background-color : white;
+         border : 0;
+         outline : 0;
+         font-weight : 400;
+         font-size : 20px;
+      }
+      .btnClass1{
+         width : 33%;
+         height : 50px;
+         border : 1px solid grey;   
+         margin : 0;      
+      }
+      #prevSpan{
+         position : absolute;
+         top : 50%;
+         left : 100px;
+      }
+      #nextSpan{
+         position : absolute;
+         top : 50%;
+         right : 100px;
+      }
+      #btnSave{
+         border : 1px solid grey;
+         padding : 5px;
+         background-color : lightblue;
+      }
       </style>
    </head>
    <body>
-   		<jsp:include page="loginBox.jsp" />
-		<jsp:include page="mainFrame.jsp" />
-		<form name ="prj_write" action="prj_write" method="post" enctype="multipart/form-data">
-		
-		
+         <jsp:include page="loginBox.jsp" />
+      <jsp:include page="mainFrame.jsp" />
+      <form name ="prj_write" action="prj_write" method="post" enctype="multipart/form-data">
+      
+      
          <input type="button" class="btnClass1" id="btn1" onclick="click1()" value="1단계">
          <input type="button" class="btnClass1" id="btn2" onclick="click2()" value="2단계">
          <input type="button" class="btnClass1" id="btn3" onclick="click3()" value="3단계">
          
          <!-- 페이지에 상관없이 버튼을 담은 span을 가장 위로 띄워줌 -->
          <span id="prevSpan">
-         	<input type="button" class="btnPrev" onclick="prevBtn()" value="◀ 이전단계">
+            <input type="button" class="btnPrev" onclick="prevBtn()" value="◀ 이전단계">
          </span>
          <span id="nextSpan">
-         	<input type="button" class="btnNext" onclick="nextBtn()" value="다음단계 ▶">
-         	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-         	&nbsp &nbsp &nbsp &nbsp<input type="button" id="btnSave" onclick="save()" value="저장"/>
+            <input type="button" class="btnNext" onclick="nextBtn()" value="다음단계 ▶">
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            &nbsp &nbsp &nbsp &nbsp<input type="button" id="btnSave" onclick="save()" value="저장"/>
          </span>
          
          
@@ -135,7 +135,7 @@
             </select>
             <br/><br/>프로젝트 이름 : <input type="text" name="prj_title" onkeyup="chkword(this, 500)" placeholder="                        30자 이내를 추천합니다."><br/>
             <br/>프로젝트 소개글 : <br/><textarea rows="5" name="prj_content" onkeyup="conChkword(this, 1000)"
-            		placeholder="                       1000자까지 입력 가능합니다."></textarea><br/>
+                  placeholder="                       1000자까지 입력 가능합니다."></textarea><br/>
             <br/>사진 : <input type="file" id="prj_photo" name="prj_photo" onchange="imgPhotoChk(this)"/>
             <input type="text" id="testPhoto" readOnly/>
          </div>
@@ -147,11 +147,11 @@
                <table>
                   <tr>
                      <td colspan="2">리워드 아이템<br/><input type="text" id="rw_name" name="rw_name" onkeyup="chkword(this, 200)"/></td>
-				</tr>
-				<tr>
-				     <td>리워드 최소금액<br/><input type="text" onkeyPress="onlyNum(this)" onkeyup="chkword(this, 10)" /></td>
+            </tr>
+            <tr>
+                 <td>리워드 최소금액<br/><input type="text" onkeyPress="onlyNum(this)" onkeyup="chkword(this, 10)" /></td>
                      <td>리워드 최대금액<br/><input type="text" onkeyPress="onlyNum(this)" onkeyup="chkword(this, 10)" /></td>
-				</tr>
+            </tr>
                </table>          
                
             </div>
@@ -188,7 +188,9 @@
       </form>
    </body>
    <script>
+   var chkval="";//null인지 체크하고 담는 변수
       $(document).ready(function(){//기본실행
+
          click1();//1페이지 띄우기
 
          /* datepicker 설정 */
@@ -307,102 +309,110 @@
          }
       }
       
-      
-      
-      
-      
+
+      /* 리워드 저장부분 */
       function rwChk(){
-          /* 리워드 저장부분 */
+         console.log("실행중");
           $('td').find('input').each(function(i, e){
-             console.log("리워드 : "+$(this).val());
-             if($(this).val() == ""){//리워드 null일 경우
-                selRw = $(this);          
-                chkval = "Y";
-                alert("리워드에는 공백이 들어갈 수 없습니다.");
-                click2();
-                selRw.focus();
-                return false;//여러번 중복해서 띄우지 않게
-             }else{//리워드 null 아닐경우
-                arrRw.push($(this).val());//배열에 담기
-                console.log(arrRw);
-                $("#arrRwSave").val(arrRw);//hidden에 담기
-             }
-
-          });
+              console.log("리워드 : "+$(this).val());
+              if($(this).val() == ""){//리워드 null일 경우
+                 selRw = $(this);          
+                 chkval = "Y";
+                 console.log(chkval);
+                 return false;//여러번 중복해서 띄우지 않게
+              }else{//리워드 null 아닐경우
+                 chkval = "N";
+                 arrRw.push($(this).val());//배열에 담기
+              }
+           }); 
+           $("#arrRwSave").val(arrRw);//hidden에 담기
       }
-
-
+      
+      
       function save(){
-         var chkval="";//null인지 체크하고 담는 변수
-         var selRw="";//this를 담는 변수. 후에 focus위해 설정
-         var fileSize;//사진 크기
-         var maxSize = 5 * 1024 * 1024;//5MB 사진 최대 크기
 
-         /*null값 없도록 확인*/                 
-         if($("select[name='prj_cat']").val()=="카테고리 선택"){//카테고리
-            alert("프로젝트 카테고리를 설정해주세요!");
-            $("input[name='prj_cat']").focus();
-            click1();
-         }else if($("input[name='prj_title']").val()==""){//제목
-            alert("프로젝트 제목을 작성해주세요!");
-            $("input[name='prj_title']").focus();
-            click1();
-         }else if($("textarea[name='prj_content']").val()==""){//내용
-            alert("프로젝트 소개글을 작성해주세요!");
-            $("input[name='prj_content']").focus();
-            click1();
-         }else if($("#prj_photo").val()=="" && $("#testPhoto").val()==""){//사진 없으면
-            if(confirm("사진을 등록하지 않을 경우 기본 이미지로 저장됩니다. 계속하시겠습니까?")){
-               $("#prj_photo").hide();
-               $("#testPhoto").show();
-               click1();
-               $("#testPhoto").val("테스트 이미지로 저장됩니다.");
-               $("#testPhoto").focus();
-            }else{
-               click1();
-               $("input[name='prj_photo']").focus();
-            }
-         }else if($("#prj_photo").val()!="" && $("#testPhoto").val()!=""){
-            fileSize= document.getElementById("prj_photo").files[0].size;
-            if(fileSize>maxSize){//사진이 큰 경우
-               alert("첨부파일 사이즈는 5MB 이내로 등록 가능합니다. ");
-               click1();
-               $("#prj_photo").val("");
-               $("#prj_photo").focus();
-            }
-         }else if($("input[name='prj_goal']").val()==""){//목표금액
-            alert("프로젝트 목표금액을 설정해주세요!");
-            $("input[name='prj_goal']").focus();
-            click2();
-            console.log("photo 값 : "+$("input[name='prj_photo']").val());
-         }else if(chkval == "Y"){
-            alert("리워드는 공백이 들어갈 수 없습니다.");
-            click2();
-            selRw.focus();
-            return false;
-         }else if($("select[name='prj_bank']").val()=="은행 선택"){//은행
-            alert("입금 받으실 은행명을 설정해주세요!");
-            $("input[name='prj_bank']").focus();
-            click3();
-         }else if($("input[name='prj_account']").val()==""){//계좌
-            alert("입금 받으실 은행의 계좌번호를 입력해주세요!");
-            $("input[name='prj_account']").focus();
-            click3();
-         }else if($("input[name='prj_due']").val()==""){//마감일
+          var selRw="";//this를 담는 변수. 후에 focus위해 설정
+          var fileSize;//사진 크기
+          var maxSize = 5 * 1024 * 1024;//5MB 사진 최대 크기
+
+         console.log("실행중");
+          $('td').find('input').each(function(i, e){
+              console.log("리워드 : "+$(this).val());
+              if($(this).val() == ""){//리워드 null일 경우
+                 selRw = $(this);          
+                 chkval = "Y";
+                 console.log(chkval);
+                 return false;//여러번 중복해서 띄우지 않게
+              }else{//리워드 null 아닐경우
+                 chkval = "N";
+                 arrRw.push($(this).val());//배열에 담기
+              }
+           }); 
+           $("#arrRwSave").val(arrRw);//hidden에 담기
+
+          /*null값 없도록 확인*/                 
+          if($("select[name='prj_cat']").val()=="카테고리 선택"){//카테고리
+             alert("프로젝트 카테고리를 설정해주세요!");
+             $("input[name='prj_cat']").focus();
+             click1();
+          }else if($("input[name='prj_title']").val()==""){//제목
+             alert("프로젝트 제목을 작성해주세요!");
+             $("input[name='prj_title']").focus();
+             click1();
+          }else if($("textarea[name='prj_content']").val()==""){//내용
+             alert("프로젝트 소개글을 작성해주세요!");
+             $("input[name='prj_content']").focus();
+             click1();
+          }else if($("#prj_photo").val()=="" && $("#testPhoto").val()==""){//사진 없으면
+             if(confirm("사진을 등록하지 않을 경우 기본 이미지로 저장됩니다. 계속하시겠습니까?")){
+                $("#prj_photo").hide();
+                $("#testPhoto").show();
+                click1();
+                $("#testPhoto").val("테스트 이미지로 저장됩니다.");
+                $("#testPhoto").focus();
+             }else{
+                click1();
+                $("input[name='prj_photo']").focus();
+             }
+          }else if($("#prj_photo").val()!="" && $("#testPhoto").val()!=""){
+             fileSize= document.getElementById("prj_photo").files[0].size;
+             if(fileSize>maxSize){//사진이 큰 경우
+                alert("첨부파일 사이즈는 5MB 이내로 등록 가능합니다. ");
+                click1();
+                $("#prj_photo").val("");
+                $("#prj_photo").focus();
+             }
+          }else if($("input[name='prj_goal']").val()==""){//목표금액
+             alert("프로젝트 목표금액을 설정해주세요!");
+             $("input[name='prj_goal']").focus();
+             click2();
+             console.log("photo 값 : "+$("input[name='prj_photo']").val());
+          }else if($("input[name='prj_due']").val()==""){//마감일
              alert("프로젝트 마감일을 설정해주세요!");
              $("input[name='prj_due']").focus();
+             click2();
+          }else if(chkval == "Y"){
+             alert("리워드는 공백이 들어갈 수 없습니다.");
+             click2();
+             selRw.focus();           
+          }else if($("select[name='prj_bank']").val()=="은행 선택"){//은행
+             alert("입금 받으실 은행명을 설정해주세요!");
+             $("input[name='prj_bank']").focus();
              click3();
-         }else{
-        	 arrRw=[];
-        	 rwChk();
-        	 return false;
-            if(confirm("저장하시겠습니까?")){
-                document.prj_write.submit(); //조건에 안걸리면 submit
-            }else{
-               alert("취소되었습니다.");
-            }
-         }               
-      }
+          }else if($("input[name='prj_account']").val()==""){//계좌
+             alert("입금 받으실 은행의 계좌번호를 입력해주세요!");
+             $("input[name='prj_account']").focus();
+             click3();
+          }else{
+             arrRw=[];
+             if(confirm("저장하시겠습니까?")){
+                rwChk();
+             document.prj_write.submit(); //조건에 안걸리면 submit
+             }else{
+                alert("취소되었습니다.");
+             }
+          }               
+       }
       
       /*글자수 제한*/
          /*onlyNum 이 끝났다는 표시 flag
@@ -482,20 +492,20 @@
             return true;
          } else {
             event.preventDefault(); 
-			alert("숫자만 입력해주세요!'");
+         alert("숫자만 입력해주세요!'");
             return false;
          } 
       }
       /*숫자와 하이픈 넣기*/
       function hypNum(){
-    	  console.log(event);
-    	  console.log(this.event);
+         console.log(event);
+         console.log(this.event);
          if ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 45) { /*숫자키와 하이픈 입력 */
             return true;
          } else {
             event.preventDefault();
-			alert("숫자와 '-'만 입력해주세요!'");
-            return false;			 
+         alert("숫자와 '-'만 입력해주세요!'");
+            return false;          
          } 
       }
       
