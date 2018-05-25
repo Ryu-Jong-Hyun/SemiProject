@@ -127,7 +127,7 @@ public class ProjectService {
               //리워드테이블에 prj_no 설정
               rwDTO.setPrj_no(Integer.parseInt(prj_no));
               rw_write(multi);
-              page = "main.jsp";
+              page = "main";
            }
            System.out.println("msg : "+msg);
            System.out.println("page : "+page);
@@ -704,6 +704,9 @@ public class ProjectService {
 		ProjectDTO prjDTO = new ProjectDTO();
 		prjDTO.setPrj_no(Integer.parseInt(request.getParameter("prj_no")));
 		prjDTO.setPrj_curr(Integer.parseInt(request.getParameter("prj_curr")));
+		
+		System.out.println("여기는 오는거지?");
+		System.out.println(Integer.parseInt(request.getParameter("prj_no")));
 
 		int success = prjDAO.adminApprovalPlus(prjDTO);
 

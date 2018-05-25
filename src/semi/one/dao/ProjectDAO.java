@@ -361,7 +361,8 @@ public class ProjectDAO {
             float a = dto.getPrj_curr();
             float b = dto.getPrj_goal();
             float c = (a/b)*100;
-            dto.setPrj_gc(c);
+            float z = Float.parseFloat(String.format("%.2f",c));
+            dto.setPrj_gc(z);          
             /*D-day*/
             SimpleDateFormat StringDate = new SimpleDateFormat("yyyy-MM-dd");
             String dday = StringDate.format(dto.getPrj_due()).toString(); 
@@ -943,7 +944,8 @@ public class ProjectDAO {
             float a = dto.getPrj_curr();
             float b = dto.getPrj_goal();
             float c = (a/b)*100;
-            dto.setPrj_gc(c);
+            float z = Float.parseFloat(String.format("%.2f",c));
+            dto.setPrj_gc(z);          
             list.add(dto);
          }
       } catch (SQLException e) {
@@ -1060,6 +1062,7 @@ public class ProjectDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				ProjectDTO dto = new ProjectDTO();
+				dto.setPrj_no(rs.getInt("prj_no"));
 				dto.setPd_id(rs.getString("pd_id"));
 				dto.setPrj_title(rs.getString("prj_title"));
 				dto.setPrj_account(rs.getString("prj_account"));

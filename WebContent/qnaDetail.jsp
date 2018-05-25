@@ -96,7 +96,7 @@
 		obj.success = function(data){
 			if(data.success == 1){
 				alert("문의 수정 완료");
-				location.href="projectDetail.jsp";
+				location.href="detail?prj_no="+prj_no;
 			}else{
 				alert("문의 수정  실패");
 			}

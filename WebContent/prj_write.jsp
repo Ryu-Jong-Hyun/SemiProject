@@ -150,7 +150,7 @@
          <div id="page2">
             <br/>목표금액 : <input type="text" name="prj_goal" onkeyPress="onlyNum(this)"/>코인<br/>
             <br/><div id="one"><!-- 리워드 -->
-               <table>
+               <table class="rw_Table">
                   <tr>
                      <td colspan="2">리워드 아이템<br/><input type="text" id="rw_name" name="rw_name" onkeyup="chkword(this, 200)"/></td>
             </tr>
@@ -288,7 +288,10 @@
 
       /*리워드*/
       var arrRw=[];//리워드 담을 배열 선언
-      var tCnt=1;//리워드 박스 개수
+/*       var tCnt=1;//리워드 박스 개수 */
+
+ 		var tCnt = $("input[name='rw_name']").length;
+ 		console.log("tCnt : ", tCnt);
       var htmlRw = "<table><tr><td colspan='2'>리워드 아이템<br/><input type='text' name='rw_name' onkeyup='chkword(this, 200)'>"+
       "</td></tr><tr><td>리워드 최소금액<input type='text' onkeyPress='onlyNum(this)' onkeyup='chkword(this, 10)'>"+
       "</td><td>리워드 최대금액<input type='text' onkeyPress='onlyNum(this)' onkeyup='chkword(this, 10)'>"+
@@ -314,17 +317,18 @@
          if(tCnt>=6){
             alert("리워드 개수는 5개까지 가능합니다.");
             tCnt=5;
-            $('table').last().remove(); 
+            $(".rw_Table").last().remove(); 
          }
       }
       function delRwBox(){//리워드 박스 삭제
          if(tCnt>1){
-            $('table').last().remove();
+             
+        	 $(".rw_Table").last().remove();             
             tCnt--;
             console.log(tCnt);
          }else{
             alert("최소한 1개의 리워드는 존재해야 합니다.");
-            tCnt=1;
+            tCnt=1; 
          }
       }
       
@@ -349,7 +353,6 @@
       
       
       function save(){
-
           var selRw="";//this를 담는 변수. 후에 focus위해 설정
           var fileSize;//사진 크기
           var maxSize = 5 * 1024 * 1024;//5MB 사진 최대 크기
@@ -382,6 +385,10 @@
              alert("프로젝트 소개글을 작성해주세요!");
              $("input[name='prj_content']").focus();
              click1();
+          }else if($("input[name='prj_goal']").val()==""){//목표금액
+              alert("프로젝트 목표금액을 설정해주세요!");
+              $("input[name='prj_goal']").focus();
+              click2();
           }else if($("#prj_photo").val()=="" && $("#testPhoto").val()==""){//사진 없으면
              if(confirm("사진을 등록하지 않을 경우 기본 이미지로 저장됩니다. 계속하시겠습니까?")){
                 $("#testPhoto").val("기본 이미지로 저장됩니다.");
@@ -399,15 +406,8 @@
                 $("#prj_photo").val("");
                 $("#prj_photo").focus();
              }
-          }else if($("input[name='prj_goal']").val()==""){//목표금액
-             alert("프로젝트 목표금액을 설정해주세요!");
-             $("input[name='prj_goal']").focus();
-             click2();
+
              console.log("photo 값 : "+$("input[name='prj_photo']").val());
-          }else if($("input[name='prj_due']").val()==""){//마감일
-             alert("프로젝트 마감일을 설정해주세요!");
-             $("input[name='prj_due']").focus();
-             click2();
           }else if(chkval == "Y"){
              alert("리워드는 공백이 들어갈 수 없습니다.");
              click2();
@@ -420,6 +420,10 @@
              alert("입금 받으실 은행의 계좌번호를 입력해주세요!");
              $("input[name='prj_account']").focus();
              click3();
+          }else if($("input[name='prj_due']").val()==""){//마감일
+              alert("프로젝트 마감일을 설정해주세요!");
+              $("input[name='prj_due']").focus();
+              click3();
           }else{
              arrRw=[];
              if(confirm("저장하시겠습니까?")){
@@ -430,6 +434,7 @@
              }
           }               
        }
+      
       
       /*글자수 제한*/
          /*onlyNum 이 끝났다는 표시 flag

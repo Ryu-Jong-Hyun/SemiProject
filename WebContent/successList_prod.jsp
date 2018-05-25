@@ -50,7 +50,7 @@
 				<td id="prj_title"><a href="reviewList?prj_no=${board.prj_no}&prj_title=${board.prj_title}">${board.prj_title}</a></td>	
 			</tr>
 			<tr>
-				<td colspan="2"><a href="detail?prj_no=${board.prj_no}">${board.prj_photo}</a></td>
+				<td colspan="2"><a href="detail?prj_no=${board.prj_no}"><img width = 200px" height="150px" id="img" src="./upload/${board.prj_photo}"/></a></td>
 			</tr>
 			</table>
 		   </div>

@@ -247,7 +247,7 @@ public class BoardService {
 	/*윤영 - (상세페이지)문의 삭제 요청*/
 	public void qnaDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int qno = Integer.parseInt(request.getParameter("qus_no"));
-		
+		String prj_no = (String) request.getSession().getAttribute("prj_no"); //해당프로젝트 번호
 		QuestionDAO dao = new QuestionDAO();
 		
 		String msg = "삭제 실패";
@@ -255,7 +255,7 @@ public class BoardService {
 			 msg="삭제 완료";
 	         request.setAttribute("msg", msg);
 		}
-		 RequestDispatcher dis = request.getRequestDispatcher("projectDetail.jsp");
+		RequestDispatcher dis= request.getRequestDispatcher("detail?prj_no="+prj_no);
 	     dis.forward(request, response);
 	}
 

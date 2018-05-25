@@ -32,7 +32,7 @@
          }
          .qnaPlace{
             position : absolute;
-            margin-top  : 800px;
+            margin-top  : 900px;
             width : 100%;
          }
       </style>
@@ -85,7 +85,7 @@
          <tr>
             <td rowspan="12" colspan="3"><textarea rows="30" cols="80" id="prj_content" readonly></textarea></td>
             <td><input type=button id="spon" onclick="fn_spon()" value="투자하기"/></td>
-            <td><inpu type="button" id="pick"/>PICK</td>
+            <td><input type="button" id="pick" value="PICK"/></td>
          </tr>
          <tr>
             <td><input id="bob" name="bob" type = "text" placeholder="투자금액" onkeyPress="onlyNum(this)" onchange="fn_bobChange()"></td>
@@ -262,10 +262,9 @@
             //프로젝트 번호
             var prj_no =$("#prj_no").val();
             console.log("prj_no:", prj_no);
-<<<<<<< HEAD
-=======
+
             $("#prj_no").val(prj_no);
->>>>>>> 9b7b5dd0d34e81e42331b256549bbd587c177921
+
             //로그인아이디
             console.log("loginId:", loginId);
             //해당 리워드

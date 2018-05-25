@@ -14,6 +14,9 @@
         		padding: 5px 10px;
         		text-align: center;
 			}
+			Table{
+				width : 1000px;
+			}
 			#ta2{
 				background-color: #2BA5BA;
 			}

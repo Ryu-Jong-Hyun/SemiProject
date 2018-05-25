@@ -27,6 +27,7 @@
 			<form action="adminApprovalPlus" method="post">
 				<table>
 					<tr>
+						<th>프로젝트번호</th>
 						<th>아이디</th>
 						<th>프로젝트명</th>
 						<th>은행</th>
@@ -36,12 +37,13 @@
 					<tr>
 					<c:forEach items="${adminSuccessList}" var="adminSuccessList">
 						<tr>
+							<td>${adminSuccessList.prj_no}</td>
 							<td>${adminSuccessList.pd_id}</td>
 							<td>${adminSuccessList.prj_title}</td>
 							<td>${adminSuccessList.prj_bank}</td>
 							<td>${adminSuccessList.prj_account}</td>
 							<td>${adminSuccessList.prj_curr}</td>
-							<td><input type="submit" onclick="ok()" value="승인"/></td>
+							<td><input type="submit" value="입금"/></td>
 							<input type ="hidden" name="prj_no" value="${adminSuccessList.prj_no}"/>
 							<input type ="hidden" name="prj_curr" value="${adminSuccessList.prj_curr}"/>
 						</tr>
